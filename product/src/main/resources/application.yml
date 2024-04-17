@@ -3,12 +3,14 @@ server:
 
 # -- Default spring configuration
 spring:
+  profiles:
+    include: key
   application:
     name: product
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:3306/ddib?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: root
     password: ***REMOVED***
 

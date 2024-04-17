@@ -1,0 +1,20 @@
+server:
+  port: 8082
+
+# -- Default spring configuration
+spring:
+  application:
+    name: product
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
+    password: ***REMOVED***
+
+
+# -- Eureka client
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URL:http://127.0.0.1:8761/eureka/}

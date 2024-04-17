@@ -22,7 +22,7 @@ public class ProductController {
     @PostMapping
     public ResponseEntity<?> createProduct(@RequestPart(value = "thumbnailImage") List<MultipartFile> thumbnails,
                                            @RequestPart(value = "productDetails") List<MultipartFile> details,
-                                           @RequestBody ProductCreateRequestDto dto) {
+                                           @RequestPart(value = "dto") ProductCreateRequestDto dto) {
         log.info("PRODUCT CREATE REQUEST");
         productService.createProduct(thumbnails, details, dto);
         return new ResponseEntity<>(HttpStatus.OK);

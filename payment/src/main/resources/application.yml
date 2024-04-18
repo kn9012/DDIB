@@ -5,10 +5,14 @@ server:
 spring:
   application:
     name: payment
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:3306/?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: root
     password: 1234
 
@@ -20,6 +24,19 @@ eureka:
       defaultZone: ${EUREKA_URL:http://127.0.0.1:8761/eureka/}
 
 # -- KakaoPay
-kakaopay:
-  admin-key:18b3474f6f25b0e6476c9fbda75738bb
-  cid: TC0ONETIME
+pay:
+  kakao:
+    cid: TC0ONETIME
+    secret-key: DEVAE9FEAE218AFEA4E18CD6B53A4589DD8E8F3F
+#   admin_key: 18b3474f6f25b0e6476c9fbda75738bb
+
+# Swagger
+springdoc:
+  swagger-ui:
+    path: /swagger.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /api-docs
+  default-consumes-media-type: application/json;charset=UTF-8
+  default-produces-media-type: application/json;charset=UTF-8

@@ -41,10 +41,9 @@ public class ProductResponseDto {
 
     private ProductCategory category;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ProductDetail> details;
+    private List<ProductDetailResponseDto> details;
 
-    public static ProductResponseDto of(Product product){
+    public static ProductResponseDto of(Product product) {
         return ProductResponseDto.builder()
                 .productId(product.getProductId())
                 .name(product.getName())
@@ -57,7 +56,10 @@ public class ProductResponseDto {
                 .discount(product.getDiscount())
                 .thumbnailImage(product.getThumbnailImage())
                 .category(product.getCategory())
-                .details(product.getDetails()) // dto 변환 필요
+                .details(product.getDetails()
+                        .stream()
+                        .map(ProductDetailResponseDto::from)
+                        .toList()) // dto 변환 필요
                 .build();
     }
 }

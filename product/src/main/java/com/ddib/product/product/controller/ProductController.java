@@ -1,6 +1,8 @@
 package com.ddib.product.product.controller;
 
 import com.ddib.product.product.dto.request.ProductCreateRequestDto;
+import com.ddib.product.product.dto.response.ProductMainResponseDto;
+import com.ddib.product.product.dto.response.ProductResponseDto;
 import com.ddib.product.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @RestController
@@ -27,5 +30,19 @@ public class ProductController {
         productService.createProduct(thumbnails, details, dto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @GetMapping("/main")
+    public ResponseEntity<ProductMainResponseDto> getMainPageData() {
+        ProductMainResponseDto dto = productService.getMainPageData();
+        return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<ProductResponseDto>> findByConditions(@RequestParam(required = false) String keyword,
+                                                                     @RequestParam(required = false) String category) {
+        List<ProductResponseDto> dtos = productService.findByConditions(keyword, category);
+        return new ResponseEntity<>(dtos, HttpStatus.OK);
+    }
+
 
 }

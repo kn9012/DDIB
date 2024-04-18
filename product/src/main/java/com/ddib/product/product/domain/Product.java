@@ -44,6 +44,8 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductDetail> details;
 
+    private boolean isOver;
+
     public void updateStock(int amount){
         isStockShortage(amount);
         stock -= amount;

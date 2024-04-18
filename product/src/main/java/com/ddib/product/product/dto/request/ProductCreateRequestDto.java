@@ -30,7 +30,7 @@ public class ProductCreateRequestDto {
 
     private double discount;
 
-    private ProductCategory category;
+    private String category;
 
     public Product toEntity(String thumbnail, List<ProductDetail> details) {
         return Product.builder()
@@ -44,6 +44,8 @@ public class ProductCreateRequestDto {
                 .eventEndTime(getEventEndTime())
                 .details(details)
                 .thumbnailImage(thumbnail)
+                .isOver(false)
+                .category(ProductCategory.valueOf(category))
                 .build();
 
     }

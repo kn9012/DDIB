@@ -59,4 +59,9 @@ public class ProductController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PostMapping("/like")
+    public ResponseEntity<?> likeProduct(@RequestBody ProductLikeRequestDto dto){
+        productService.likeProduct(dto);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

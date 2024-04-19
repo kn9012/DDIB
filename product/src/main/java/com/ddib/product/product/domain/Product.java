@@ -46,9 +46,13 @@ public class Product {
 
     private boolean isOver;
 
-    public void updateStock(int amount){
+    public void decreaseStock(int amount){
         isStockShortage(amount);
         stock -= amount;
+    }
+
+    public void updateStock(int amount) {
+        this.stock = amount;
     }
 
     private void isStockShortage(int amount){

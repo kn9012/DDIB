@@ -1,6 +1,9 @@
 package com.ddib.product.product.controller;
 
 import com.ddib.product.product.dto.request.ProductCreateRequestDto;
+import com.ddib.product.product.dto.request.ProductLikeRequestDto;
+import com.ddib.product.product.dto.request.ProductStockDecreaseRequestDto;
+import com.ddib.product.product.dto.request.ProductStockUpdateRequestDto;
 import com.ddib.product.product.dto.response.ProductMainResponseDto;
 import com.ddib.product.product.dto.response.ProductResponseDto;
 import com.ddib.product.product.service.ProductService;
@@ -11,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 @RestController
@@ -44,5 +46,17 @@ public class ProductController {
         return new ResponseEntity<>(dtos, HttpStatus.OK);
     }
 
+    // 재고량 수정
+    @PostMapping("/stock/decrease")
+    public ResponseEntity<?> decreaseStock(@RequestBody ProductStockDecreaseRequestDto dto){
+        productService.decreaseStock(dto);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/stock/update")
+    public ResponseEntity<?> updateStock(@RequestBody ProductStockUpdateRequestDto dto){
+        productService.updateStock(dto);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 }

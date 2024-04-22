@@ -18,6 +18,10 @@ public class ProductRepositorySupport {
     @Autowired
     private JPAQueryFactory jpaQueryFactory;
 
+    private static final int WEEK_DAYS = 7;
+
+    private static final int ONE_DAY = 1;
+
     QProduct qProduct = QProduct.product;
 
 //    @Deprecated
@@ -37,7 +41,7 @@ public class ProductRepositorySupport {
 
     public List<Product> getTodayList() {
         LocalDate today = LocalDate.now();
-        LocalDate tomorrow = today.plusDays(1);
+        LocalDate tomorrow = today.plusDays(ONE_DAY);
 
         return jpaQueryFactory
                 .selectFrom(qProduct)
@@ -52,7 +56,7 @@ public class ProductRepositorySupport {
 
     public List<Product> getWeekList() {
         LocalDate startDate = LocalDate.now();
-        LocalDate endDate = startDate.plusDays(7);
+        LocalDate endDate = startDate.plusDays(WEEK_DAYS);
 
         return jpaQueryFactory
                 .selectFrom(qProduct)
@@ -65,7 +69,7 @@ public class ProductRepositorySupport {
 
     public List<Product> getTodayListNotOver() {
         LocalDate today = LocalDate.now();
-        LocalDate tomorrow = today.plusDays(1);
+        LocalDate tomorrow = today.plusDays(ONE_DAY);
 
         return jpaQueryFactory
                 .selectFrom(qProduct)

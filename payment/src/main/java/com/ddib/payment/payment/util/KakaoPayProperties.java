@@ -11,7 +11,7 @@
 //    public static String readyUrl;
 //    public static String approveUrl;
 //
-//    @Value("${kakaopay.admin-key}")
+//    @Value("${kakaopay.admin-key}")e
 //    public void setAdminKey(String adminKey) {
 //        KakaoPayProperties.adminKey = adminKey;
 //    }

@@ -1,9 +1,11 @@
 package com.ddib.payment.payment.service;
 
+import com.ddib.payment.payment.dto.request.KakaoReadyRequestDto;
 import com.ddib.payment.payment.dto.response.KakaoApproveResponseDto;
 import com.ddib.payment.payment.dto.response.KakaoReadyResponseDto;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -12,6 +14,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 //@Transactional
@@ -32,32 +35,34 @@ public class KakaoPayService {
      *
      * @return
      */
-    public KakaoReadyResponseDto kakaoPayReady() {
+    public KakaoReadyResponseDto kakaoPayReady(KakaoReadyRequestDto kakaoReadyRequestDto) {
 
         // 카카오페이 요청 양식
-        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
+        log.info("cid: {}", cid);
         params.add("cid", cid); // 가맹점 코드
-        params.add("partner_order_id", "partner_order_id"); // 가맹점 주문번호
-        params.add("partner_user_id", "partner_user_id"); // 가맹점 회원 ID
-        params.add("item_name", "초코파이"); // 상품명
-        params.add("quantity", "1"); // 상품 수량
-        params.add("total_amount", "2200"); // 상품 총액
-        params.add("vat_amount", "200");
-        params.add("tax_free_amount", "0"); // 상품 비과세 금액
+        params.add("partner_order_id", kakaoReadyRequestDto.getPartnerOrderId()); // 가맹점 주문번호
+        params.add("partner_user_id", "DDIB"); // 가맹점 회원 ID
+        params.add("item_name", kakaoReadyRequestDto.getItemName()); // 상품명
+        params.add("quantity", kakaoReadyRequestDto.getQuantity()); // 상품 수량
+        params.add("total_amount", kakaoReadyRequestDto.getTotalAmount()); // 상품 총액
+        params.add("tax_free_amount", kakaoReadyRequestDto.getTaxFreeAmount()); // 상품 비과세 금액
+//        params.add("approval_url", "https://developers.kakao.com/success"); // 결제 성공 시 redirect url
         params.add("approval_url", "https://developers.kakao.com/success"); // 결제 성공 시 redirect url
         params.add("cancel_url", "https://developers.kakao.com/cancel"); // 결제 취소 시 redirect url
         params.add("fail_url", "https://developers.kakao.com/fail"); // 결제 실패 시 redirect url
 
         // 파라미터, 헤더 담기
-        HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(params, this.getHeaders());
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(params, this.getHeaders());
 
-        // 외부에 보낼 url
+        // 외부 API 호출 및 Server to Server 통신을 위해 사용
         RestTemplate restTemplate = new RestTemplate();
 
         // 결제정보를 담아 카카오페이 서버에 post 요청 보내기
         // 결제 고유번호(TID), URL 응답받음
         kakaoReadyResponseDto = restTemplate.postForObject(
-                "https://kapi.kakao.com/v1/payment/ready",
+//                "https://kapi.kakao.com/v1/payment/ready",
+                "https://open-api.kakaopay.com/online/v1/payment/ready",
                 requestEntity,
                 KakaoReadyResponseDto.class
         );
@@ -73,10 +78,12 @@ public class KakaoPayService {
     private HttpHeaders getHeaders() {
         HttpHeaders httpHeaders = new HttpHeaders();
 
-        String authorization = "KaKaoAK " + secretKey;
+//        String authorization = "KaKaoAK " + secretKey;
+        String authorization = "SECRET_KEY " + secretKey;
 
         httpHeaders.set("Authorization", authorization);
-        httpHeaders.set("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
+//        httpHeaders.set("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
+        httpHeaders.set("Content-Type", "application/json");
 
         return httpHeaders;
     }
@@ -92,7 +99,8 @@ public class KakaoPayService {
         // 카카오 요청
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("cid", cid);
-        params.add("tid", kakaoPayReady().getTid());
+//        params.add("tid", kakaoPayReady().getTid());
+        params.add("tid", "1"); // 임시
         params.add("partner_order_id", "partner_order_id");
         params.add("partner_user_id", "partner_user_id");
         params.add("pg_token", pgToken);

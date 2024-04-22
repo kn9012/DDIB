@@ -137,4 +137,17 @@ public class ProductService {
                 .map(ProductResponseDto::of)
                 .toList();
     }
+
+    public List<ProductResponseDto> findProductsInWeekend() {
+        return productRepositorySupport.getWeekList()
+                .stream()
+                .map(ProductResponseDto::of)
+                .toList();
+    }
+
+    public ProductResponseDto findProductByProductId(int productId) {
+        Product product = productRepository.findByProductId(productId)
+                .orElseThrow(ProductNotFoundException::new);
+        return ProductResponseDto.of(product);
+    }
 }

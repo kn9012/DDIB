@@ -40,7 +40,7 @@ public class ProductController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<ProductResponseDto>> findByConditions(@RequestParam(required = false) String keyword,
+    public ResponseEntity<List<ProductResponseDto>> findProductsByConditions(@RequestParam(required = false) String keyword,
                                                                      @RequestParam(required = false) String category) {
         List<ProductResponseDto> dtos = productService.findProductsByConditions(keyword, category);
         return new ResponseEntity<>(dtos, HttpStatus.OK);
@@ -65,9 +65,6 @@ public class ProductController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    // 상품별 좋아요한 사람조회
-
-
     // 사람별 좋아요한 상품조회
     @GetMapping("/like/user/{userId}")
     public ResponseEntity<List<ProductResponseDto>> findFavoriteProductsByUserId(@PathVariable("userId") int userId) {
@@ -80,6 +77,18 @@ public class ProductController {
     public ResponseEntity<List<ProductResponseDto>> findProductsBySellerId(@PathVariable("sellerId") int sellerId) {
         List<ProductResponseDto> dtos = productService.findProductsBySellerId(sellerId);
         return new ResponseEntity<>(dtos, HttpStatus.OK);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<ProductResponseDto>> findProductsInWeekend(){
+        List<ProductResponseDto> dtos = productService.findProductsInWeekend();
+        return new ResponseEntity<>(dtos, HttpStatus.OK);
+    }
+
+    @GetMapping("/{productId}")
+    public ResponseEntity<ProductResponseDto> findProductByProductId(@PathVariable("productId") int productId){
+        ProductResponseDto dto = productService.findProductByProductId(productId);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
 }

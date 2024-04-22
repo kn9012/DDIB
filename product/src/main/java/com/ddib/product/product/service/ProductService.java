@@ -41,7 +41,7 @@ public class ProductService {
 
     private final S3Uploader s3Uploader;
 
-    private final AlarmClient alarmClient;
+//    private final AlarmClient alarmClient;
 
     public void createProduct(List<MultipartFile> thumbnails, List<MultipartFile> details, ProductCreateRequestDto dto) {
         log.info("PRODUCT SERVICE : SAVE PRODUCT : {}", dto.getName());
@@ -91,22 +91,35 @@ public class ProductService {
 
     public void updateStock(ProductStockUpdateRequestDto dto) {
         Product product = productRepository.findByProductId(dto.getProductId())
-            .orElseThrow(ProductNotExistException::new);
+                .orElseThrow(ProductNotExistException::new);
         product.updateStock(dto.getAmount());
     }
 
     public void likeProduct(ProductLikeRequestDto dto) {
         // 개별 알람
         // 해당 상품 완료 여부
-        FavoriteProduct favoriteProduct = FavoriteProduct.builder()
-                .build();
 
         Product product = productRepository.findByProductId(dto.getProductId())
                 .orElseThrow(ProductNotExistException::new);
         User user = userRepository.findByUserId(dto.getUserId())
                 .orElseThrow();
 
+        FavoriteProduct favoriteProduct = FavoriteProduct.builder()
+                .product(product)
+                .user(user)
+                .build();
+
         product.getLikedUsers().add(favoriteProduct);
         user.getLikedProducts().add(favoriteProduct);
+    }
+
+    public List<ProductResponseDto> findFavoriteProductByUserId(int userId) {
+        return userRepository.findByUserId(userId)
+                .orElseThrow()
+                .getLikedProducts()
+                .stream()
+                .map(FavoriteProduct::getProduct)
+                .map(ProductResponseDto::of)
+                .toList();
     }
 }

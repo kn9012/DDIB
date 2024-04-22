@@ -64,4 +64,12 @@ public class ProductController {
         productService.likeProduct(dto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    // 상품별 좋아요한 사람조회
+    // 사람별 좋아요한 상품조회
+    @GetMapping("/like/user/{userId}")
+    public ResponseEntity<List<ProductResponseDto>> findFavoriteProductByUserId(@PathVariable("userId") int userId){
+        List<ProductResponseDto> dtos = productService.findFavoriteProductByUserId(userId);
+        return new ResponseEntity<>(dtos, HttpStatus.OK);
+    }
 }

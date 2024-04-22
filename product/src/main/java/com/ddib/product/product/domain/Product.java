@@ -1,6 +1,7 @@
 package com.ddib.product.product.domain;
 
 import com.ddib.product.product.exception.ProductStockShortageException;
+import com.ddib.product.user.domain.Seller;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -47,9 +48,15 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FavoriteProduct> likedUsers;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn
+    private Seller seller;
+
     private boolean isOver;
 
-    public void decreaseStock(int amount){
+    private boolean isNeedPayment;
+
+    public void decreaseStock(int amount) {
         isStockShortage(amount);
         stock -= amount;
     }
@@ -58,8 +65,12 @@ public class Product {
         this.stock = amount;
     }
 
-    private void isStockShortage(int amount){
-        if(stock - amount < 0){
+    public void updateIsOver(boolean isOver) {
+        this.isOver = isOver;
+    }
+
+    private void isStockShortage(int amount) {
+        if (stock - amount < 0) {
             throw new ProductStockShortageException();
         }
     }

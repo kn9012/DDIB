@@ -2,9 +2,6 @@ package com.ddib.product.product.dto.response;
 
 import com.ddib.product.product.domain.Product;
 import com.ddib.product.product.domain.ProductCategory;
-import com.ddib.product.product.domain.ProductDetail;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -43,6 +40,18 @@ public class ProductResponseDto {
 
     private List<ProductDetailResponseDto> details;
 
+    private int likeCount;
+
+    private Integer sellerId;
+
+    private String companyName;
+
+    private long businessNumber;
+
+    private long companyPhone;
+
+    private String companyEmail;
+
     public static ProductResponseDto of(Product product) {
         return ProductResponseDto.builder()
                 .productId(product.getProductId())
@@ -60,6 +69,12 @@ public class ProductResponseDto {
                         .stream()
                         .map(ProductDetailResponseDto::from)
                         .toList()) // dto 변환 필요
+                .likeCount(product.getLikedUsers().size())
+                .sellerId(product.getSeller().getSellerId())
+                .companyName(product.getSeller().getCompanyName())
+                .businessNumber(product.getSeller().getBusinessNumber())
+                .companyPhone(product.getSeller().getCompanyPhone())
+                .companyEmail(product.getSeller().getCompanyEmail())
                 .build();
     }
 }

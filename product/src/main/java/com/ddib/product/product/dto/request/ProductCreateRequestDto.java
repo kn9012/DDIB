@@ -3,8 +3,8 @@ package com.ddib.product.product.dto.request;
 import com.ddib.product.product.domain.Product;
 import com.ddib.product.product.domain.ProductCategory;
 import com.ddib.product.product.domain.ProductDetail;
+import com.ddib.product.user.domain.Seller;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -32,7 +32,9 @@ public class ProductCreateRequestDto {
 
     private String category;
 
-    public Product toEntity(String thumbnail, List<ProductDetail> details) {
+    private int sellerId;
+
+    public Product toEntity(String thumbnail, List<ProductDetail> details, Seller seller) {
         return Product.builder()
                 .name(getName())
                 .price(getPrice())
@@ -47,6 +49,6 @@ public class ProductCreateRequestDto {
                 .isOver(false)
                 .category(ProductCategory.valueOf(category))
                 .build();
-
     }
+
 }

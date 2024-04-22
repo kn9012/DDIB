@@ -42,34 +42,44 @@ public class ProductController {
     @GetMapping("/search")
     public ResponseEntity<List<ProductResponseDto>> findByConditions(@RequestParam(required = false) String keyword,
                                                                      @RequestParam(required = false) String category) {
-        List<ProductResponseDto> dtos = productService.findByConditions(keyword, category);
+        List<ProductResponseDto> dtos = productService.findProductsByConditions(keyword, category);
         return new ResponseEntity<>(dtos, HttpStatus.OK);
     }
 
     // 재고량 수정
     @PostMapping("/stock/decrease")
-    public ResponseEntity<?> decreaseStock(@RequestBody ProductStockDecreaseRequestDto dto){
+    public ResponseEntity<?> decreaseStock(@RequestBody ProductStockDecreaseRequestDto dto) {
         productService.decreaseStock(dto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/stock/update")
-    public ResponseEntity<?> updateStock(@RequestBody ProductStockUpdateRequestDto dto){
+    public ResponseEntity<?> updateStock(@RequestBody ProductStockUpdateRequestDto dto) {
         productService.updateStock(dto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/like")
-    public ResponseEntity<?> likeProduct(@RequestBody ProductLikeRequestDto dto){
+    public ResponseEntity<?> likeProduct(@RequestBody ProductLikeRequestDto dto) {
         productService.likeProduct(dto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     // 상품별 좋아요한 사람조회
+
+
     // 사람별 좋아요한 상품조회
     @GetMapping("/like/user/{userId}")
-    public ResponseEntity<List<ProductResponseDto>> findFavoriteProductByUserId(@PathVariable("userId") int userId){
+    public ResponseEntity<List<ProductResponseDto>> findFavoriteProductsByUserId(@PathVariable("userId") int userId) {
         List<ProductResponseDto> dtos = productService.findFavoriteProductByUserId(userId);
         return new ResponseEntity<>(dtos, HttpStatus.OK);
     }
+
+    // 해당판매자의 판매 리스트 조회
+    @GetMapping("/seller/{sellerId}")
+    public ResponseEntity<List<ProductResponseDto>> findProductsBySellerId(@PathVariable("sellerId") int sellerId) {
+        List<ProductResponseDto> dtos = productService.findProductsBySellerId(sellerId);
+        return new ResponseEntity<>(dtos, HttpStatus.OK);
+    }
+
 }

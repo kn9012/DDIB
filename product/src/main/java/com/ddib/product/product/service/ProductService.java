@@ -1,6 +1,5 @@
 package com.ddib.product.product.service;
 
-import com.ddib.product.user.client.AlarmClient;
 import com.ddib.product.common.file.util.S3Uploader;
 import com.ddib.product.product.domain.FavoriteProduct;
 import com.ddib.product.product.domain.Product;
@@ -11,10 +10,13 @@ import com.ddib.product.product.dto.request.ProductStockDecreaseRequestDto;
 import com.ddib.product.product.dto.request.ProductStockUpdateRequestDto;
 import com.ddib.product.product.dto.response.ProductMainResponseDto;
 import com.ddib.product.product.dto.response.ProductResponseDto;
-import com.ddib.product.product.exception.ProductNotExistException;
+import com.ddib.product.product.exception.ProductNotFoundException;
 import com.ddib.product.product.repository.ProductRepository;
 import com.ddib.product.product.repository.ProductRepositorySupport;
+import com.ddib.product.user.domain.Seller;
 import com.ddib.product.user.domain.User;
+import com.ddib.product.user.exception.SellerNotFoundException;
+import com.ddib.product.user.repository.SellerRepository;
 import com.ddib.product.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,6 +39,8 @@ public class ProductService {
 
     private final UserRepository userRepository;
 
+    private final SellerRepository sellerRepository;
+
     private final ProductRepositorySupport productRepositorySupport;
 
     private final S3Uploader s3Uploader;
@@ -45,13 +49,15 @@ public class ProductService {
 
     public void createProduct(List<MultipartFile> thumbnails, List<MultipartFile> details, ProductCreateRequestDto dto) {
         log.info("PRODUCT SERVICE : SAVE PRODUCT : {}", dto.getName());
+        Seller seller = sellerRepository.findBySellerId(dto.getSellerId())
+                .orElseThrow(SellerNotFoundException::new);
         List<String> urls = s3Uploader.storeImages(PRODUCT_DETAIL, details);
         List<String> thumbnail = s3Uploader.storeImages(PRODUCT_THUMBNAIL, thumbnails);
 //        List<String> urls = new ArrayList<>(); // 테스트 -> S3 저장 API 비호출 위한 주석 처리
 //        List<String> thumbnail = new ArrayList<>();
         thumbnail.add("hello");
         urls.add("hello");
-        Product product = dto.toEntity(thumbnail.get(0), ProductDetail.of(urls));
+        Product product = dto.toEntity(thumbnail.get(0), ProductDetail.of(urls), seller);
         productRepository.save(product);
     }
 
@@ -75,7 +81,7 @@ public class ProductService {
                 .build();
     }
 
-    public List<ProductResponseDto> findByConditions(String keyword, String category) {
+    public List<ProductResponseDto> findProductsByConditions(String keyword, String category) {
         log.info("PRODUCT SERVICE : SEARCH BY CONDITIONS : {} , {}", keyword, category);
         return productRepositorySupport.findByConditions(keyword, category)
                 .stream()
@@ -85,13 +91,13 @@ public class ProductService {
 
     public void decreaseStock(ProductStockDecreaseRequestDto dto) {
         Product product = productRepository.findByProductId(dto.getProductId())
-                .orElseThrow(ProductNotExistException::new);
+                .orElseThrow(ProductNotFoundException::new);
         product.decreaseStock(dto.getAmount());
     }
 
     public void updateStock(ProductStockUpdateRequestDto dto) {
         Product product = productRepository.findByProductId(dto.getProductId())
-                .orElseThrow(ProductNotExistException::new);
+                .orElseThrow(ProductNotFoundException::new);
         product.updateStock(dto.getAmount());
     }
 
@@ -100,7 +106,7 @@ public class ProductService {
         // 해당 상품 완료 여부
 
         Product product = productRepository.findByProductId(dto.getProductId())
-                .orElseThrow(ProductNotExistException::new);
+                .orElseThrow(ProductNotFoundException::new);
         User user = userRepository.findByUserId(dto.getUserId())
                 .orElseThrow();
 
@@ -119,6 +125,15 @@ public class ProductService {
                 .getLikedProducts()
                 .stream()
                 .map(FavoriteProduct::getProduct)
+                .map(ProductResponseDto::of)
+                .toList();
+    }
+
+    public List<ProductResponseDto> findProductsBySellerId(int sellerId) {
+        return sellerRepository.findBySellerId(sellerId)
+                .orElseThrow()
+                .getProducts()
+                .stream()
                 .map(ProductResponseDto::of)
                 .toList();
     }

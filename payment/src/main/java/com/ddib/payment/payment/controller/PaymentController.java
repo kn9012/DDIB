@@ -1,5 +1,6 @@
 package com.ddib.payment.payment.controller;
 
+import com.ddib.payment.payment.dto.request.KakaoReadyRequestDto;
 import com.ddib.payment.payment.dto.response.KakaoApproveResponseDto;
 import com.ddib.payment.payment.dto.response.KakaoReadyResponseDto;
 import com.ddib.payment.payment.service.KakaoPayService;
@@ -23,8 +24,8 @@ public class PaymentController {
     @Operation(summary = "카카오페이 결제 요청 API")
     @ApiResponse(responseCode = "200", description = "성공")
     @PostMapping("/ready")
-    public ResponseEntity<KakaoReadyResponseDto> readyToKakaoPay() {
-        KakaoReadyResponseDto kakaoReadyResponseDto = kakaoPayService.kakaoPayReady();
+    public ResponseEntity<KakaoReadyResponseDto> readyToKakaoPay(@RequestBody KakaoReadyRequestDto kakaoReadyRequestDto) {
+        KakaoReadyResponseDto kakaoReadyResponseDto = kakaoPayService.kakaoPayReady(kakaoReadyRequestDto);
         return new ResponseEntity<>(kakaoReadyResponseDto, HttpStatus.OK);
     }
 

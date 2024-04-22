@@ -84,13 +84,13 @@ public class ProductRepositorySupport {
     public List<Product> findByConditions(String keyword, String category) {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
 
-        if(keyword != null){
+        if (keyword != null && !keyword.isEmpty()) {
             booleanBuilder.or(qProduct.name.like(keyword));
 
             booleanBuilder.or(qProduct.category.eq(ProductCategory.searchCategoryByKeyword(keyword)));
         }
 
-        if(category != null){
+        if (category != null && !category.isEmpty()) {
             booleanBuilder.or(qProduct.category.eq(ProductCategory.valueOf(category)));
         }
 

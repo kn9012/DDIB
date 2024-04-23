@@ -7,17 +7,13 @@ import lombok.Getter;
 @Getter
 public class KakaoReadyRequestDto {
 
-//    @Schema(description = "가맹점 코드, 10자")
-//    @NotNull
-//    private String cid;
-
-    @Schema(description = "가맹점 주문번호, 최대 100자")
+    @Schema(description = "회원 식별키 (주문번호 생성 용도)")
     @NotNull
-    private String partnerOrderId;
+    private int userId;
 
-    @Schema(description = "가맹점 회원 id, 최대 100자")
+    @Schema(description = "상품 식별키 (주문번호 생성 용도)")
     @NotNull
-    private String partnerUserId;
+    private int productId;
 
     @Schema(description = "상품명, 최대 100자")
     @NotNull
@@ -34,17 +30,5 @@ public class KakaoReadyRequestDto {
     @Schema(description = "상품 비과세 금액")
     @NotNull
     private int taxFreeAmount;
-
-    @Schema(description = "결제 성공 시 redirect url, 최대 255자")
-    @NotNull
-    private String approvalUrl;
-
-    @Schema(description = "결제 취소 시 redirect url, 최대 255자")
-    @NotNull
-    private String cancelUrl;
-
-    @Schema(description = "결제 실패 시 redirect url, 최대 255자")
-    @NotNull
-    private String failUrl;
 
 }

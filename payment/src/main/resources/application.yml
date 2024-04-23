@@ -6,8 +6,8 @@ spring:
   application:
     name: payment
   jpa:
-    hibernate:
-      ddl-auto: update
+#    hibernate:
+#      ddl-auto: update
     show-sql: true
 
   datasource:

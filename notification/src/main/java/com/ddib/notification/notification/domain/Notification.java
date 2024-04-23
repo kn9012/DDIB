@@ -10,14 +10,14 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @Getter
-@Schema(description = "유언")
+@Schema(description = "알림")
 public class Notification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Schema(description = "알림 식별키")
     private Integer notificationId;
 
-    @Schema(description = "유언 식별키")
+    @Schema(description = "회원 식별키")
     @ManyToOne
     private User user;
 
@@ -29,5 +29,4 @@ public class Notification {
 
     @Schema(description = "읽음 여부")
     private boolean isRead;
-
 }

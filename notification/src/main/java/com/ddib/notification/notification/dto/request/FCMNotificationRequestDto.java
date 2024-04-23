@@ -15,7 +15,5 @@ import java.util.Map;
 public class FCMNotificationRequestDto {
     private Integer targetUserId;
     private String title;
-    private String content;
-//    private String image;
-//    private Map<String, String> data;
+    private String body;
 }

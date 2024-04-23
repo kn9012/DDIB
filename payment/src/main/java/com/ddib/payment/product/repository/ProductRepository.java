@@ -1,4 +1,7 @@
 package com.ddib.payment.product.repository;
 
-public interface ProductRepository {
+import com.ddib.payment.product.domain.Product;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ProductRepository extends JpaRepository<Product, Integer> {
 }

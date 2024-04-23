@@ -1,14 +1,18 @@
 package com.ddib.payment.product.domain;
 
-import com.ddib.payment.user.domain.User;
+import com.ddib.payment.seller.domain.Seller;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
 
 @Entity
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Product {
 
     @Schema(description = "상품 식별키")
@@ -16,9 +20,12 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int productId;
 
-//    @Schema(description = "")
-//    @ManyToMany(mappedBy = "user")
-//    private User user;
+    @Schema(description = "판매회원 정보")
+    @ManyToOne
+    private Seller seller;
+
+    @Schema(description = "카테고리")
+    private boolean category;
 
     @Schema(description = "상품명")
     private String name;
@@ -38,6 +45,9 @@ public class Product {
     @Schema(description = "이벤트 종료시간")
     private int eventEndTime;
 
+    @Schema(description = "이벤트 종료 여부")
+    private boolean isOver;
+
     @Schema(description = "원가")
     private int price;
 
@@ -46,5 +56,8 @@ public class Product {
 
     @Schema(description = "상품 대표사진")
     private String thumbnailImage;
+
+    @Schema(description = "결제 필요 여부")
+    private boolean isNeedPayment;
 
 }

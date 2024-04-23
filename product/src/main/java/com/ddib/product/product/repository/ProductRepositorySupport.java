@@ -78,6 +78,7 @@ public class ProductRepositorySupport {
                         qProduct.eventDate.lt(Timestamp.valueOf(tomorrow.atStartOfDay())),
                         qProduct.isOver.eq(false)
                 )
+                .limit(3)
                 .fetch();
     }
 

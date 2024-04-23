@@ -6,6 +6,7 @@ import com.ddib.product.product.dto.request.ProductStockDecreaseRequestDto;
 import com.ddib.product.product.dto.request.ProductStockUpdateRequestDto;
 import com.ddib.product.product.dto.response.ProductMainResponseDto;
 import com.ddib.product.product.dto.response.ProductResponseDto;
+import com.ddib.product.product.dto.response.ProductViewResponseDto;
 import com.ddib.product.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -41,19 +42,19 @@ public class ProductController {
 
     @GetMapping("/search")
     public ResponseEntity<List<ProductResponseDto>> findProductsByConditions(@RequestParam(required = false) String keyword,
-                                                                     @RequestParam(required = false) String category) {
+                                                                             @RequestParam(required = false) String category) {
         List<ProductResponseDto> dtos = productService.findProductsByConditions(keyword, category);
         return new ResponseEntity<>(dtos, HttpStatus.OK);
     }
 
     // 재고량 수정
-    @PostMapping("/stock/decrease")
+    @PutMapping("/stock/decrease")
     public ResponseEntity<?> decreaseStock(@RequestBody ProductStockDecreaseRequestDto dto) {
         productService.decreaseStock(dto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/stock/update")
+    @PutMapping("/stock/update")
     public ResponseEntity<?> updateStock(@RequestBody ProductStockUpdateRequestDto dto) {
         productService.updateStock(dto);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -80,14 +81,14 @@ public class ProductController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<ProductResponseDto>> findProductsInWeekend(){
+    public ResponseEntity<List<ProductResponseDto>> findProductsInWeekend() {
         List<ProductResponseDto> dtos = productService.findProductsInWeekend();
         return new ResponseEntity<>(dtos, HttpStatus.OK);
     }
 
-    @GetMapping("/{productId}")
-    public ResponseEntity<ProductResponseDto> findProductByProductId(@PathVariable("productId") int productId){
-        ProductResponseDto dto = productService.findProductByProductId(productId);
+    @GetMapping("/{productId}/{userId}")
+    public ResponseEntity<ProductViewResponseDto> findProductByProductId(@PathVariable("productId") int productId, @PathVariable("userId") int userId) {
+        ProductViewResponseDto dto = productService.findProductByProductId(productId, userId);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 

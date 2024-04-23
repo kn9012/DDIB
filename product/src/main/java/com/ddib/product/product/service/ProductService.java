@@ -10,12 +10,14 @@ import com.ddib.product.product.dto.request.ProductStockDecreaseRequestDto;
 import com.ddib.product.product.dto.request.ProductStockUpdateRequestDto;
 import com.ddib.product.product.dto.response.ProductMainResponseDto;
 import com.ddib.product.product.dto.response.ProductResponseDto;
+import com.ddib.product.product.dto.response.ProductViewResponseDto;
 import com.ddib.product.product.exception.ProductNotFoundException;
 import com.ddib.product.product.repository.ProductRepository;
 import com.ddib.product.product.repository.ProductRepositorySupport;
 import com.ddib.product.user.domain.Seller;
 import com.ddib.product.user.domain.User;
 import com.ddib.product.user.exception.SellerNotFoundException;
+import com.ddib.product.user.exception.UserNotFoundException;
 import com.ddib.product.user.repository.SellerRepository;
 import com.ddib.product.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -142,10 +144,13 @@ public class ProductService {
                 .toList();
     }
 
-    public ProductResponseDto findProductByProductId(int productId) {
+    public ProductViewResponseDto findProductByProductId(int productId, int userId) {
         Product product = productRepository.findByProductId(productId)
                 .orElseThrow(ProductNotFoundException::new);
-        return ProductResponseDto.of(product);
+        User user = userRepository.findByUserId(userId)
+                .orElseThrow(UserNotFoundException::new);
+        boolean isLiked = user.getLikedProducts().contains(product);
+        return ProductViewResponseDto.of(product, isLiked);
     }
 
 }

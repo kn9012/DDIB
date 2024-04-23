@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
     
     @Schema(description = "회원 식별키")

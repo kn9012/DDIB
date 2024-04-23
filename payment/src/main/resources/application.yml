@@ -6,13 +6,13 @@ spring:
   application:
     name: payment
   jpa:
-#    hibernate:
-#      ddl-auto: update
+    hibernate:
+      ddl-auto: create
     show-sql: true
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:3306/DDIB?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: root
     password: ***REMOVED***
 
@@ -28,7 +28,6 @@ pay:
   kakao:
     cid: TC0ONETIME
     secret-key: ***REMOVED***
-#   admin_key: ***REMOVED***
 
 # Swagger
 springdoc:

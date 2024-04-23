@@ -3,10 +3,9 @@ package com.ddib.product.product.controller;
 import com.ddib.product.product.dto.request.ProductCreateRequestDto;
 import com.ddib.product.product.dto.response.ProductMainResponseDto;
 import com.ddib.product.product.dto.response.ProductResponseDto;
+import com.ddib.product.product.dto.response.ProductViewResponseDto;
 import com.ddib.product.product.service.ProductService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.http.HttpEntity;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,23 +14,16 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.mock.web.MockPart;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.jsonPath;
@@ -56,6 +48,8 @@ class ProductControllerTest {
     private List<ProductResponseDto> productResponseDtos;
 
     private ProductMainResponseDto productMainResponseDto;
+
+    private ProductViewResponseDto productViewResponseDto;
 
     @BeforeEach
     public void init() {
@@ -168,13 +162,13 @@ class ProductControllerTest {
 
     @Test
     void findProductByProductId() throws Exception {
-        given(productService.findProductByProductId(1)).willReturn(productResponseDto);
+        given(productService.findProductByProductId(1, 1)).willReturn(productViewResponseDto);
 
         mockMvc.perform(get("/api/product/1"))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.productId").isEmpty())
                 .andDo(print());
 
-        verify(productService, times(1)).findProductByProductId(1);
+        verify(productService, times(1)).findProductByProductId(1, 1);
     }
 }

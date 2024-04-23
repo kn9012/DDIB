@@ -17,10 +17,6 @@ public class Notification {
     @Schema(description = "알림 식별키")
     private Integer notificationId;
 
-    @Schema(description = "회원 식별키")
-    @ManyToOne
-    private User user;
-
     @Schema(description = "제목")
     private String title;
 

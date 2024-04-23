@@ -11,10 +11,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
@@ -34,7 +31,7 @@ public class NotificationController {
         return fcmNotificationService.sendNotificationByToken(requestDto);
     }
 
-    @Operation(summary = "알림 신청 API")
+    @Operation(summary = "구독 알림 신청 API")
     @ApiResponse(responseCode = "200", description = "성공")
     @PostMapping("/subscribe")
     public ResponseEntity<Void> applyNotification(Principal principal, @RequestBody List<SubscriptionCategoryRequestDto> categories) {
@@ -43,7 +40,12 @@ public class NotificationController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @Operation(summary = "알림 취소 API")
+    @Operation(summary = "구독 알림 취소 API")
     @ApiResponse(responseCode = "200", description = "성공")
-    @
+    @PutMapping("/subscribe/cancel")
+    public ResponseEntity<Void> cancelNotification(Principal principal) {
+        userService.findByEmail(principal).updateNotSubscribed();
+        subscriptionCategoryService.deleteSubscriptionCategory(principal);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

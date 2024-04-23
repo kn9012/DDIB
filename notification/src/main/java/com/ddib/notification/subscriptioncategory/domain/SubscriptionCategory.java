@@ -20,7 +20,7 @@ public class SubscriptionCategory {
     @Schema(description = "구독 카테고리 식별키")
     private Integer subscriptionCategoryId;
 
-    @Schema(description = "히원 식별키")
+    @Schema(description = "회원 식별키")
     @ManyToOne
     private User user;
 

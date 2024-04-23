@@ -5,6 +5,7 @@ import com.ddib.notification.subscriptioncategory.dto.request.SubscriptionCatego
 import com.ddib.notification.subscriptioncategory.repository.SubscriptionCategoryRepository;
 import com.ddib.notification.user.domain.User;
 import com.ddib.notification.user.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -28,5 +29,10 @@ public class SubscriptionCategoryService {
 
             subscriptionCategoryRepository.save(subscriptionCategory);
         }
+    }
+
+    @Transactional
+    public void deleteSubscriptionCategory(Principal principal) {
+        subscriptionCategoryRepository.deleteSubscriptionCategoriesByUserEmail(principal.getName());
     }
 }

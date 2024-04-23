@@ -50,7 +50,7 @@ public class User {
     private String fcmToken;
 
     @Schema(description = "알림")
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     private List<Notification> notifications;
 
     public void updateSubscribed() {

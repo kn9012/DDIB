@@ -7,4 +7,5 @@ public interface AlarmClient {
 
 //    @PostMapping("/알람요청URL")
     public void requestAlarm(ProductLikeRequestDto dto);
+
 }

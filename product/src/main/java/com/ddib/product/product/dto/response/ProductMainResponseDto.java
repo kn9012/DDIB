@@ -12,4 +12,5 @@ public class ProductMainResponseDto {
     private List<ProductResponseDto> todayNotOverProducts;
 
     private List<ProductResponseDto> todayProducts;
+
 }

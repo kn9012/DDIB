@@ -26,4 +26,5 @@ public enum ProductCategory {
             return ProductCategory.NONE;
         }
     }
+
 }

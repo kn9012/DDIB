@@ -16,10 +16,11 @@ public class ProductDetailResponseDto {
 
     private String imageUrl;
 
-    public static ProductDetailResponseDto from(ProductDetail productDetail){
+    public static ProductDetailResponseDto from(ProductDetail productDetail) {
         return ProductDetailResponseDto.builder()
                 .imageUrl(productDetail.getImageUrl())
                 .productDetailId(productDetail.getProductDetailId())
                 .build();
     }
+
 }

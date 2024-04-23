@@ -25,4 +25,5 @@ public class FavoriteProduct {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     private User user;
+
 }

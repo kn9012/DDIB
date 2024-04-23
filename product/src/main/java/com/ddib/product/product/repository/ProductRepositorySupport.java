@@ -100,4 +100,5 @@ public class ProductRepositorySupport {
                 .where(booleanBuilder)
                 .fetch();
     }
+
 }

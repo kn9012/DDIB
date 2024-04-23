@@ -16,4 +16,5 @@ public class QueryDSLConfig {
     public JPAQueryFactory queryFactory() {
         return new JPAQueryFactory(entityManager);
     }
+
 }

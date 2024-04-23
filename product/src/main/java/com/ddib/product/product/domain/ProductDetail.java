@@ -33,4 +33,5 @@ public class ProductDetail {
                         .build())
                 .collect(Collectors.toList());
     }
+
 }

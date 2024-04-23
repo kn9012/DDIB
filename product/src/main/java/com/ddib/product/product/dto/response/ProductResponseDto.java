@@ -77,4 +77,5 @@ public class ProductResponseDto {
                 .companyEmail(product.getSeller().getCompanyEmail())
                 .build();
     }
+
 }

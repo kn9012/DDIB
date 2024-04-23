@@ -10,4 +10,5 @@ public class ProductStockShortageException extends RuntimeException {
     public ProductStockShortageException() {
         super(MESSAGE);
     }
+
 }

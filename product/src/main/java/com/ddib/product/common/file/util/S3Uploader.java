@@ -18,13 +18,13 @@ import java.util.List;
 @Slf4j
 public class S3Uploader {
 
-    private final AmazonS3Client amazonS3Client;
-
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
     @Value("${cloud.aws.prefix}")
     private String prefix;
+
+    private final AmazonS3Client amazonS3Client;
 
     public List<String> storeImages(String domain, List<MultipartFile> files) {
         List<String> images = new ArrayList<>();
@@ -45,4 +45,5 @@ public class S3Uploader {
         }
         return images;
     }
+
 }

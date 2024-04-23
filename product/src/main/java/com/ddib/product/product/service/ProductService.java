@@ -102,9 +102,6 @@ public class ProductService {
     }
 
     public void likeProduct(ProductLikeRequestDto dto) {
-        // 개별 알람
-        // 해당 상품 완료 여부
-
         Product product = productRepository.findByProductId(dto.getProductId())
                 .orElseThrow(ProductNotFoundException::new);
         User user = userRepository.findByUserId(dto.getUserId())

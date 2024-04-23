@@ -87,11 +87,11 @@ public class ProductRepositorySupport {
         if (keyword != null && !keyword.isEmpty()) {
             booleanBuilder.or(qProduct.name.like(keyword));
 
-            booleanBuilder.or(qProduct.category.eq(ProductCategory.searchCategoryByKeyword(keyword)));
+            booleanBuilder.or(qProduct.category.eq(ProductCategory.searchCategoryByKeyword(keyword.toUpperCase())));
         }
 
         if (category != null && !category.isEmpty()) {
-            booleanBuilder.or(qProduct.category.eq(ProductCategory.valueOf(category)));
+            booleanBuilder.or(qProduct.category.eq(ProductCategory.valueOf(category.toUpperCase())));
         }
 
         return jpaQueryFactory

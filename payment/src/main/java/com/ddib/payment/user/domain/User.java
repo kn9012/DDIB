@@ -1,10 +1,7 @@
 package com.ddib.payment.user.domain;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,6 +22,7 @@ public class User {
     private String name;
     
     @Schema(description = "이메일")
+    @Column(nullable = false)
     private String email;
 
     @Schema(description = "핸드폰 번호")
@@ -37,10 +35,10 @@ public class User {
     private String detailAddress;
 
     @Schema(description = "우편번호")
-    private int zipcode;
+    private String zipcode;
 
     @Schema(description = "구독 여부")
-    private boolean isSubscribed;
+    private Boolean isSubscribed;
 
     @Schema(description = "FCM 토큰")
     private String fcmToken;

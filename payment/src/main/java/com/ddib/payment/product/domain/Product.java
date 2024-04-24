@@ -3,6 +3,10 @@ package com.ddib.payment.product.domain;
 import com.ddib.payment.seller.domain.Seller;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,43 +25,52 @@ public class Product {
     private int productId;
 
     @Schema(description = "판매회원 정보")
+    @JoinColumn(nullable = false)
     @ManyToOne
     private Seller seller;
 
     @Schema(description = "카테고리")
+    @Column(nullable = false)
     private boolean category;
 
     @Schema(description = "상품명")
+    @Column(nullable = false)
     private String name;
 
     @Schema(description = "총 재고")
+    @Column(nullable = false)
     private int totalStock;
 
     @Schema(description = "재고")
+    @Column(nullable = false)
     private int stock;
 
     @Schema(description = "이벤트일")
+    @Column(nullable = false)
     private Timestamp eventDate;
 
     @Schema(description = "이벤트 시작시간")
+    @Column(nullable = false)
     private int eventStartTime;
 
     @Schema(description = "이벤트 종료시간")
+    @Column(nullable = false)
     private int eventEndTime;
 
     @Schema(description = "이벤트 종료 여부")
+    @Column(nullable = false)
     private boolean isOver;
 
     @Schema(description = "원가")
+    @Column(nullable = false)
     private int price;
 
     @Schema(description = "할인율")
+    @Column(nullable = false)
     private double discount;
 
     @Schema(description = "상품 대표사진")
+    @Column(nullable = false)
     private String thumbnailImage;
-
-    @Schema(description = "결제 필요 여부")
-    private boolean isNeedPayment;
 
 }

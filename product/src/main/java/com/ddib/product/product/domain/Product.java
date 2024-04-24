@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -22,12 +23,14 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer productId;
 
+    @Column(nullable = false)
     private String name;
 
     private int totalStock;
 
     private int stock;
 
+    @Column(nullable = false)
     private Timestamp eventDate;
 
     private int eventStartTime;
@@ -40,6 +43,7 @@ public class Product {
 
     private String thumbnailImage;
 
+    @Column(nullable = false)
     private ProductCategory category;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -54,11 +58,13 @@ public class Product {
 
     private boolean isOver;
 
-    private boolean isNeedPayment;
-
     public void decreaseStock(int amount) {
         isStockShortage(amount);
         stock -= amount;
+
+        if (stock == 0) {
+            this.isOver = true;
+        }
     }
 
     public void updateStock(int amount) {

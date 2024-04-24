@@ -15,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductViewResponseDto {
+
     private Integer productId;
 
     private String name;
@@ -53,6 +54,8 @@ public class ProductViewResponseDto {
 
     private boolean isLiked;
 
+    private boolean isOver;
+
     public static ProductViewResponseDto of(Product product, boolean isLiked) {
         return ProductViewResponseDto.builder()
                 .productId(product.getProductId())
@@ -77,6 +80,7 @@ public class ProductViewResponseDto {
                 .companyPhone(product.getSeller().getCompanyPhone())
                 .companyEmail(product.getSeller().getCompanyEmail())
                 .isLiked(isLiked)
+                .isOver(product.isOver())
                 .build();
     }
 }

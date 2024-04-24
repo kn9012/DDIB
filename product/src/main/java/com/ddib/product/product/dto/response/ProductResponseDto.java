@@ -52,6 +52,8 @@ public class ProductResponseDto {
 
     private String companyEmail;
 
+    private boolean isOver;
+
     public static ProductResponseDto of(Product product) {
         return ProductResponseDto.builder()
                 .productId(product.getProductId())
@@ -75,6 +77,7 @@ public class ProductResponseDto {
                 .businessNumber(product.getSeller().getBusinessNumber())
                 .companyPhone(product.getSeller().getCompanyPhone())
                 .companyEmail(product.getSeller().getCompanyEmail())
+                .isOver(product.isOver())
                 .build();
     }
 

@@ -37,6 +37,6 @@ public class KakaoReadyRequestDto {
 
     @Schema(description = "주문 상품을 배송할 우편번호")
     @NotNull
-    private int orderZipcode;
+    private String orderZipcode;
 
 }

@@ -1,10 +1,7 @@
 package com.ddib.payment.seller.domain;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,6 +18,10 @@ public class Seller {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int sellerId;
 
+    @Schema(description = "기업 이메일")
+    @Column(nullable = false)
+    private String companyEmail;
+
     @Schema(description = "기업명")
     @NotNull
     private String companyName;
@@ -30,8 +31,5 @@ public class Seller {
 
     @Schema(description = "대표 전화번호")
     private int companyPhone;
-
-    @Schema(description = "기업 이메일")
-    private String companyEmail;
 
 }

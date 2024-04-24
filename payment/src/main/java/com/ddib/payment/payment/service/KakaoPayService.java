@@ -148,14 +148,33 @@ public class KakaoPayService {
                 requestEntity,
                 KakaoApproveResponseDto.class);
 
+        log.info("===== 결제 테이블에 Data Insert =====");
+        log.info("aid: {}", kakaoApproveResponseDto.getAid());
+        log.info("tid: {}", kakaoApproveResponseDto.getTid());
+        log.info("cid: {}", kakaoApproveResponseDto.getCid());
+        log.info("partner_order_id: {}", kakaoApproveResponseDto.getPartnerOrderId());
+        log.info("partner_user_id: {}", kakaoApproveResponseDto.getPartnerUserId());
+        log.info("paymentMethodType: {}", kakaoApproveResponseDto.getPaymentMethodType());
+        log.info("amount(total): {}", kakaoApproveResponseDto.getAmount().getTotal());
+//        log.info("cardInfo(cardType): {}", kakaoApproveResponseDto.getCardInfo().getCardType());
+        log.info("itemName: {}", kakaoApproveResponseDto.getItemName());
+        log.info("itemCode: {}", kakaoApproveResponseDto.getItemCode());
+        log.info("quantity: {}", kakaoApproveResponseDto.getQuantity());
+        log.info("createdAt: {}", kakaoApproveResponseDto.getCreatedAt());
+        log.info("paymentDate(approvedAt) : {}", kakaoApproveResponseDto.getApprovedAt());
+        log.info("payload: {}", kakaoApproveResponseDto.getPayload());
+
         // 결제 테이블에 Data Insert
         Payment payment = Payment.builder()
-                .tid(kakaoReadyResponseDto.getTid())
+                .tid(kakaoApproveResponseDto.getTid())
                 .totalAmount(kakaoApproveResponseDto.getAmount().getTotal())
-                .paymentMethodType(kakaoApproveResponseDto.getPaymentMethodType())
-                .paymentDate(kakaoApproveResponseDto.getApprovedAt())
+//                .paymentMethodType(kakaoApproveResponseDto.getPaymentMethodType())
+//                .paymentDate(kakaoApproveResponseDto.getApprovedAt())
+                // 결제 승인 시각 null 로 들어와서 현재시간으로 결제 시각 처리
+                .paymentDate(new Timestamp(System.currentTimeMillis()))
 //                .user(userRepository.findByEmail(principal.getName()))
                 .user(userRepository.findByEmail("tpwls101@naver.com"))
+                .order(orderRepository.findByOrderId(partnerOrderId))
                 .build();
         paymentRepository.save(payment);
 

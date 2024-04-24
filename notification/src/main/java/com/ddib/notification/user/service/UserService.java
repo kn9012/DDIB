@@ -15,4 +15,8 @@ public class UserService {
     public User findByEmail(Principal principal) {
         return userRepository.findByEmail(principal.getName());
     }
+
+//    public User findByEmail(String email) {
+//        return userRepository.findByEmail(email);
+//    }
 }

@@ -26,9 +26,10 @@ public class ProductDetail {
 
     private String imageUrl;
 
-    public static List<ProductDetail> of(List<String> urls) {
+    public static List<ProductDetail> of(List<String> urls, Product product) {
         return urls.stream()
                 .map(url -> ProductDetail.builder()
+                        .product(product)
                         .imageUrl(url)
                         .build())
                 .collect(Collectors.toList());

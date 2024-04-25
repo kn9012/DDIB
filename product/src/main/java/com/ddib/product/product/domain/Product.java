@@ -9,7 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -47,13 +47,14 @@ public class Product {
     private ProductCategory category;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ProductDetail> details;
+    @Builder.Default
+    private List<ProductDetail> details = new ArrayList<>();
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FavoriteProduct> likedUsers;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
+    @JoinColumn(nullable = false)
     private Seller seller;
 
     private boolean isOver;
@@ -73,6 +74,14 @@ public class Product {
 
     public void updateIsOver(boolean isOver) {
         this.isOver = isOver;
+    }
+
+    public void updateThumbnail(String thumbnailImageUrl){
+        this.thumbnailImage = thumbnailImageUrl;
+    }
+
+    public void insertProductDetails(List<ProductDetail> details){
+        this.details.addAll(details);
     }
 
     private void isStockShortage(int amount) {

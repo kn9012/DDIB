@@ -53,13 +53,13 @@ public class ProductService {
         log.info("PRODUCT SERVICE : SAVE PRODUCT : {}", dto.getName());
         Seller seller = sellerRepository.findBySellerId(dto.getSellerId())
                 .orElseThrow(SellerNotFoundException::new);
-        List<String> urls = s3Uploader.storeImages(PRODUCT_DETAIL, details);
+
+        List<String> detail = s3Uploader.storeImages(PRODUCT_DETAIL, details);
         List<String> thumbnail = s3Uploader.storeImages(PRODUCT_THUMBNAIL, thumbnails);
-//        List<String> urls = new ArrayList<>(); // 테스트 -> S3 저장 API 비호출 위한 주석 처리
-//        List<String> thumbnail = new ArrayList<>();
-        thumbnail.add("hello");
-        urls.add("hello");
-        Product product = dto.toEntity(thumbnail.get(0), ProductDetail.of(urls), seller);
+
+        Product product = dto.toEntity(seller);
+        product.updateThumbnail(thumbnail.get(0));
+        product.insertProductDetails(ProductDetail.of(detail, product));
         productRepository.save(product);
     }
 
@@ -153,4 +153,7 @@ public class ProductService {
         return ProductViewResponseDto.of(product, isLiked);
     }
 
+    public void cancelFavoriteProduct(int productId, int userId) {
+
+    }
 }

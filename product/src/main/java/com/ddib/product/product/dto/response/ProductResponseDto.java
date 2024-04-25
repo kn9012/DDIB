@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -24,7 +25,7 @@ public class ProductResponseDto {
 
     private int stock;
 
-    private Timestamp eventDate;
+    private LocalDateTime eventDate;
 
     private int eventStartTime;
 
@@ -60,7 +61,7 @@ public class ProductResponseDto {
                 .name(product.getName())
                 .totalStock(product.getTotalStock())
                 .stock(product.getStock())
-                .eventDate(product.getEventDate())
+                .eventDate(product.getEventDate().toLocalDateTime())
                 .eventStartTime(product.getEventStartTime())
                 .eventEndTime(product.getEventEndTime())
                 .price(product.getPrice())

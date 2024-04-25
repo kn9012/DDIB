@@ -12,6 +12,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table(uniqueConstraints = {
+                @UniqueConstraint(
+                        name = "unique_key",
+                        columnNames = {"product_product_id", "user_user_id"}
+                )
+        }
+)
 public class FavoriteProduct {
 
     @Id
@@ -19,11 +26,11 @@ public class FavoriteProduct {
     private Integer favoriteProductId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
+    @JoinColumn(name = "product_product_id")
     private Product product;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
+    @JoinColumn(name = "user_user_id")
     private User user;
 
 }

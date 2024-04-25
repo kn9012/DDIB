@@ -9,7 +9,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -26,14 +26,17 @@ public class Payment {
     @Column(nullable = false)
     private int totalAmount;
 
-//    @Schema(description = "결제 수단 (CARD or MONEY)")
-//    @Column(nullable = false)
-//    private String paymentMethodType;
+    @Schema(description = "결제 비과세 금액")
+    @Column(nullable = false)
+    private int taxFree;
+
+    @Schema(description = "결제 수단 (CARD or MONEY)")
+    @Column(nullable = false)
+    private String paymentMethodType;
 
     @Schema(description = "결제 시간 (결제 승인 시각)")
     @Column(nullable = false)
-//    private String paymentDate;
-    private Timestamp paymentDate;
+    private LocalDateTime paymentDate;
 
     @Schema(description = "결제자")
     @JoinColumn(nullable = false)
@@ -44,5 +47,20 @@ public class Payment {
     @JoinColumn(nullable = false)
     @OneToOne
     private Order order;
+
+    @Schema(description = "결제 상태 (결제완료 / 환불완료)")
+    @Column(nullable = false)
+    private PaymentStatus status;
+
+    @Schema(description = "환불 시각")
+    private LocalDateTime refundedAt;
+
+    public void updateStatus(PaymentStatus status) {
+        this.status = status;
+    }
+
+    public void updateRefundedAt(LocalDateTime refundedAt) {
+        this.refundedAt = refundedAt;
+    }
 
 }

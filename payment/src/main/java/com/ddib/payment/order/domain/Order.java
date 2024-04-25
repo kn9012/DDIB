@@ -23,7 +23,7 @@ public class Order {
     @Id
     private String orderId;
 
-    @Schema(description = "회원 정보")
+    @Schema(description = "주문한 회원 정보")
     @JoinColumn(nullable = false)
     @ManyToOne
     private User user;
@@ -45,6 +45,14 @@ public class Order {
     @Column(nullable = false)
     private int totalPrice;
 
+    @Schema(description = "배송 받는 사람 이름")
+    @Column(nullable = false)
+    private String receiverName;
+
+    @Schema(description = "배송 받는 사람 핸드폰 번호")
+    @Column(nullable = false)
+    private String receiverPhone;
+
     @Schema(description = "배송할 도로명 주소")
     @Column(nullable = false)
     private String orderRoadAddress;
@@ -56,5 +64,13 @@ public class Order {
     @Schema(description = "배송할 우편번호")
     @Column(nullable = false)
     private String orderZipcode;
+
+    @Schema(description = "주문 상태")
+    @Column(nullable = false)
+    private OrderStatus status;
+
+    public void updateStatus(OrderStatus status) {
+        this.status = status;
+    }
 
 }

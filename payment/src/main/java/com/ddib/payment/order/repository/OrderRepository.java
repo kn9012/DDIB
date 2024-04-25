@@ -7,4 +7,6 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 
     Order findByOrderId(String orderId);
 
+    void deleteByOrderId(String orderId);
+
 }

@@ -27,6 +27,14 @@ public class KakaoReadyRequestDto {
     @NotNull
     private int taxFreeAmount;
 
+    @Schema(description = "배송 받는 사람 이름")
+    @NotNull
+    private String receiverName;
+
+    @Schema(description = "배송 받는 사람 핸드폰 번호")
+    @NotNull
+    private String receiverPhone;
+
     @Schema(description = "주문 상품을 배송할 도로명 주소")
     @NotNull
     private String orderRoadAddress;

@@ -13,7 +13,7 @@ public class Amount {
     private int total;
 
     @Schema(description = "비과세 금액")
-    private int taxFree;
+    private int tax_free;
 
     @Schema(description = "부가세 금액")
     private int vat;

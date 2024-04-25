@@ -1,25 +1,24 @@
 package com.ddib.payment.payment.service;
 
 import com.ddib.payment.order.domain.Order;
+import com.ddib.payment.order.domain.OrderStatus;
 import com.ddib.payment.order.repository.OrderRepository;
 import com.ddib.payment.payment.domain.Payment;
+import com.ddib.payment.payment.domain.PaymentStatus;
 import com.ddib.payment.payment.dto.request.KakaoReadyRequestDto;
 import com.ddib.payment.payment.dto.response.KakaoApproveResponseDto;
 import com.ddib.payment.payment.dto.response.KakaoReadyResponseDto;
+import com.ddib.payment.payment.dto.response.KakaoRefundResponseDto;
 import com.ddib.payment.payment.repository.PaymentRepository;
 import com.ddib.payment.product.repository.ProductRepository;
 import com.ddib.payment.user.repository.UserRepository;
-import com.netflix.discovery.converters.Auto;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.security.Principal;
@@ -71,7 +70,7 @@ public class KakaoPayService {
         }
 
         partnerOrderId = "D" + dateString + randomString;
-        log.info("partnerOrderId: {}", partnerOrderId);
+        log.info("결제 준비 요청 시 생성된 partnerOrderId: {}", partnerOrderId);
 
         // 카카오페이 요청 양식
         Map<String, Object> params = new HashMap<>();
@@ -82,9 +81,9 @@ public class KakaoPayService {
         params.put("quantity", kakaoReadyRequestDto.getQuantity()); // 상품 수량
         params.put("total_amount", kakaoReadyRequestDto.getTotalAmount()); // 상품 총액
         params.put("tax_free_amount", kakaoReadyRequestDto.getTaxFreeAmount()); // 상품 비과세 금액
-        params.put("approval_url", "http://localhost:8083/payment/success"); // 결제 성공 시 redirect url
-        params.put("cancel_url", "http://localhost:8083/payment/cancel"); // 결제 취소 시 redirect url
-        params.put("fail_url", "http://localhost:8083/payment/fail"); // 결제 실패 시 redirect url
+        params.put("approval_url", "http://localhost:8083/payment/success?product_id=" + kakaoReadyRequestDto.getProductId()); // 결제 성공 시 redirect url (인증이 완료되면 approval_url로 redirect)
+        params.put("cancel_url", "http://localhost:8083/payment/cancel?partner_order_id=" + partnerOrderId); // 결제 취소 시 redirect url
+        params.put("fail_url", "http://localhost:8083/payment/fail?partner_order_id=" + partnerOrderId); // 결제 실패 시 redirect url
 
         // 파라미터, 헤더 담기
         HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(params, this.getHeaders());
@@ -99,8 +98,7 @@ public class KakaoPayService {
         kakaoReadyResponseDto = restTemplate.postForObject(
                 "https://open-api.kakaopay.com/online/v1/payment/ready",
                 requestEntity,
-                KakaoReadyResponseDto.class
-        );
+                KakaoReadyResponseDto.class);
         log.info("kakaoReadyResponseDto: {}", kakaoReadyResponseDto);
 
         // 주문 테이블에 Data Insert
@@ -112,9 +110,12 @@ public class KakaoPayService {
                 .orderDate(new Timestamp(System.currentTimeMillis()))
                 .productCount(kakaoReadyRequestDto.getQuantity())
                 .totalPrice(kakaoReadyRequestDto.getTotalAmount())
+                .receiverName(kakaoReadyRequestDto.getReceiverName())
+                .receiverPhone(kakaoReadyRequestDto.getReceiverPhone())
                 .orderRoadAddress(kakaoReadyRequestDto.getOrderRoadAddress())
                 .orderDetailAddress(kakaoReadyRequestDto.getOrderDetailAddress())
                 .orderZipcode(kakaoReadyRequestDto.getOrderZipcode())
+                .status(OrderStatus.PAYMENT_COMPLETED)
                 .build();
         orderRepository.save(order);
 
@@ -148,37 +149,77 @@ public class KakaoPayService {
                 requestEntity,
                 KakaoApproveResponseDto.class);
 
-        log.info("===== 결제 테이블에 Data Insert =====");
-        log.info("aid: {}", kakaoApproveResponseDto.getAid());
-        log.info("tid: {}", kakaoApproveResponseDto.getTid());
-        log.info("cid: {}", kakaoApproveResponseDto.getCid());
-        log.info("partner_order_id: {}", kakaoApproveResponseDto.getPartnerOrderId());
-        log.info("partner_user_id: {}", kakaoApproveResponseDto.getPartnerUserId());
-        log.info("paymentMethodType: {}", kakaoApproveResponseDto.getPaymentMethodType());
-        log.info("amount(total): {}", kakaoApproveResponseDto.getAmount().getTotal());
-//        log.info("cardInfo(cardType): {}", kakaoApproveResponseDto.getCardInfo().getCardType());
-        log.info("itemName: {}", kakaoApproveResponseDto.getItemName());
-        log.info("itemCode: {}", kakaoApproveResponseDto.getItemCode());
-        log.info("quantity: {}", kakaoApproveResponseDto.getQuantity());
-        log.info("createdAt: {}", kakaoApproveResponseDto.getCreatedAt());
-        log.info("paymentDate(approvedAt) : {}", kakaoApproveResponseDto.getApprovedAt());
-        log.info("payload: {}", kakaoApproveResponseDto.getPayload());
-
         // 결제 테이블에 Data Insert
+        log.info("===== 결제 테이블에 Data Insert =====");
+        log.info("결제 승인 시각 : {}", kakaoApproveResponseDto.getApproved_at());
+
         Payment payment = Payment.builder()
                 .tid(kakaoApproveResponseDto.getTid())
                 .totalAmount(kakaoApproveResponseDto.getAmount().getTotal())
-//                .paymentMethodType(kakaoApproveResponseDto.getPaymentMethodType())
-//                .paymentDate(kakaoApproveResponseDto.getApprovedAt())
-                // 결제 승인 시각 null 로 들어와서 현재시간으로 결제 시각 처리
-                .paymentDate(new Timestamp(System.currentTimeMillis()))
+                .taxFree(kakaoApproveResponseDto.getAmount().getTax_free())
+                .paymentMethodType(kakaoApproveResponseDto.getPayment_method_type())
+                .paymentDate(kakaoApproveResponseDto.getApproved_at())
 //                .user(userRepository.findByEmail(principal.getName()))
                 .user(userRepository.findByEmail("tpwls101@naver.com"))
                 .order(orderRepository.findByOrderId(partnerOrderId))
+                .status(PaymentStatus.PAYMENT_COMPLETED)
                 .build();
         paymentRepository.save(payment);
 
         return kakaoApproveResponseDto;
+    }
+
+    /**
+     * 결제 진행 중 취소
+     * 결제 준비 요청에서 insert된 주문 데이터 삭제
+     */
+    @Transactional
+    public void cancel(String orderId) {
+        orderRepository.deleteByOrderId(orderId);
+    }
+
+    /**
+     * 결제 실패
+     * 결제 준비 요청에서 insert된 주문 데이터 삭제
+     */
+    @Transactional
+    public void fail(String orderId) {
+        orderRepository.deleteByOrderId(orderId);
+    }
+
+    /**
+     * 환불 (결제 취소)
+     *
+     * 결제 고유번호(tid)에 해당하는 결제건에 대해 지정한 금액만큼 결제 취소를 요청
+     * 취소 요청시 비과세(tax_free_amount)와 부가세(vat_amount)를 맞게 요청해야 함
+     */
+    @Transactional
+    public void refund(String orderId) {
+        Payment payment = paymentRepository.findByOrderId(orderId);
+        Order order = orderRepository.findByOrderId(orderId);
+
+        // 카카오 요청 양식
+        Map<String, Object> params = new HashMap<>();
+        params.put("cid", cid); // 가맹점 코드
+        params.put("tid", payment.getTid()); // 결제 고유번호
+        params.put("cancel_amount", payment.getTotalAmount()); // 취소 금액
+        params.put("cancel_tax_free_amount", payment.getTaxFree()); // 취소 비과세 금액
+
+        HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(params, this.getHeaders());
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        KakaoRefundResponseDto kakaoRefundResponseDto = restTemplate.postForObject(
+                "https://open-api.kakaopay.com/online/v1/payment/cancel",
+                requestEntity,
+                KakaoRefundResponseDto.class);
+
+        // 주문 및 결제 상태 바꾸기
+        payment.updateStatus(PaymentStatus.REFUND_COMPLETED);
+        order.updateStatus(OrderStatus.CANCELED);
+
+        // 환불 시간 기록
+        payment.updateRefundedAt(kakaoRefundResponseDto.getCanceled_at());
     }
 
     /**

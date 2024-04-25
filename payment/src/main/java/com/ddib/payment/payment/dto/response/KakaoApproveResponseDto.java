@@ -5,6 +5,8 @@ import com.ddib.payment.payment.dto.CardInfo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
+
 @Getter
 public class KakaoApproveResponseDto {
 
@@ -18,34 +20,34 @@ public class KakaoApproveResponseDto {
     private String cid;
 
     @Schema(description = "가맹점 주문번호 (최대 100자)")
-    private String partnerOrderId;
+    private String partner_order_id;
 
     @Schema(description = "가맹점 회원 ID (최대 100자)")
-    private String partnerUserId;
+    private String partner_user_id;
 
     @Schema(description = "결제 수단 (CARD or MONEY)")
-    private String paymentMethodType;
+    private String payment_method_type;
 
     @Schema(description = "결제 금액 정보")
     private Amount amount;
 
     @Schema(description = "결제 상세 정보 (결제 수단이 카드일 경우만)")
-    private CardInfo cardInfo;
+    private CardInfo card_info;
 
     @Schema(description = "상품 이름 (최대 100자)")
-    private String itemName;
+    private String item_name;
 
     @Schema(description = "상품 코드 (최대 100자)")
-    private String itemCode;
+    private String item_code;
 
     @Schema(description = "상품 수량")
     private int quantity;
 
     @Schema(description = "결제 준비 요청 시각")
-    private String createdAt;
+    private LocalDateTime created_at;
 
     @Schema(description = "결제 승인 시각")
-    private String approvedAt;
+    private LocalDateTime approved_at;
 
     @Schema(description = "결제 승인 요청에 대해 저장한 값, 요청 시 전달된 내용")
     private String payload;

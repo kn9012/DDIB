@@ -4,6 +4,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
+
 @Getter
 public class KakaoReadyResponseDto {
 
@@ -17,6 +19,6 @@ public class KakaoReadyResponseDto {
 
     @Schema(description = "결제 준비 요청 시간")
     @NotNull
-    private String created_at;
+    private LocalDateTime created_at;
 
 }

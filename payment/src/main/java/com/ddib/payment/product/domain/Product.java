@@ -73,4 +73,8 @@ public class Product {
     @Column(nullable = false)
     private String thumbnailImage;
 
+    public void updateStock(int currentStock) {
+        this.stock = currentStock - 1;
+    }
+
 }

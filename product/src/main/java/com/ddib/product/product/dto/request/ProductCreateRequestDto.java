@@ -34,7 +34,7 @@ public class ProductCreateRequestDto {
 
     private int sellerId;
 
-    public Product toEntity(String thumbnail, List<ProductDetail> details, Seller seller) {
+    public Product toEntity(Seller seller) {
         return Product.builder()
                 .name(getName())
                 .price(getPrice())
@@ -44,9 +44,8 @@ public class ProductCreateRequestDto {
                 .eventDate(Timestamp.valueOf(eventStartDate))
                 .eventStartTime(eventStartDate.getHour())
                 .eventEndTime(eventEndDate.getHour())
-                .details(details)
-                .thumbnailImage(thumbnail)
                 .isOver(false)
+                .seller(seller)
                 .category(ProductCategory.valueOf(category))
                 .build();
     }

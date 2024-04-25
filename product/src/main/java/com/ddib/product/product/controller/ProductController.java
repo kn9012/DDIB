@@ -92,4 +92,10 @@ public class ProductController {
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
+    @DeleteMapping("/{productId}/{userId}")
+    public ResponseEntity<?> cancelFavoriteProduct(@PathVariable("productId") int productId, @PathVariable("userId") int userId) {
+        productService.cancelFavoriteProduct(productId, userId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

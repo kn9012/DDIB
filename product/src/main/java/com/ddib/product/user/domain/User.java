@@ -23,4 +23,7 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FavoriteProduct> likedProducts;
 
+    public void cancelLikedProducts(FavoriteProduct favoriteProduct){
+        likedProducts.remove(favoriteProduct);
+    }
 }

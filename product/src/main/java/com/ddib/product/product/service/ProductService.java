@@ -107,7 +107,7 @@ public class ProductService {
         Product product = productRepository.findByProductId(dto.getProductId())
                 .orElseThrow(ProductNotFoundException::new);
         User user = userRepository.findByUserId(dto.getUserId())
-                .orElseThrow();
+                .orElseThrow(UserNotFoundException::new);
 
         FavoriteProduct favoriteProduct = FavoriteProduct.builder()
                 .product(product)
@@ -120,7 +120,7 @@ public class ProductService {
 
     public List<ProductResponseDto> findFavoriteProductByUserId(int userId) {
         return userRepository.findByUserId(userId)
-                .orElseThrow()
+                .orElseThrow(UserNotFoundException::new)
                 .getLikedProducts()
                 .stream()
                 .map(FavoriteProduct::getProduct)
@@ -149,11 +149,26 @@ public class ProductService {
                 .orElseThrow(ProductNotFoundException::new);
         User user = userRepository.findByUserId(userId)
                 .orElseThrow(UserNotFoundException::new);
-        boolean isLiked = user.getLikedProducts().contains(product);
+        boolean isLiked = user.getLikedProducts()
+                .stream()
+                .anyMatch(fp -> fp.getProduct().equals(product));
         return ProductViewResponseDto.of(product, isLiked);
     }
 
     public void cancelFavoriteProduct(int productId, int userId) {
+        User user = userRepository.findByUserId(userId)
+                .orElseThrow(UserNotFoundException::new);
 
+        Product product = productRepository.findByProductId(productId).orElseThrow(ProductNotFoundException::new);
+
+        List<FavoriteProduct> fps =  user.getLikedProducts();
+        for(FavoriteProduct fp : fps){
+            if(fp.getProduct().equals(product)){
+                user.getLikedProducts().remove(fp);
+                product.getLikedUsers().remove(fp);
+                break;
+            }
+        }
     }
+
 }

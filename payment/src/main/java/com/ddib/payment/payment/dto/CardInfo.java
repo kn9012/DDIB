@@ -8,39 +8,39 @@ import lombok.Getter;
 public class CardInfo {
 
     @Schema(description = "카카오페이 매입사명")
-    private String kakaopayPurchaseCorp;
+    private String kakaopay_purchase_corp;
 
     @Schema(description = "카카오페이 매입사 코드")
-    private String kakaopayPurchaseCorpCode;
+    private String kakaopay_purchase_corp_code;
 
     @Schema(description = "카카오페이 발급사명")
-    private String kakaopayIssuerCorp;
+    private String kakaopay_issuer_corp;
 
     @Schema(description = "카카오페이 발급사 코드")
-    private String kakaopayIssuerCorpCode;
+    private String kakaopay_issuer_corp_code;
 
     @Schema(description = "카드 BIN")
     private String bin;
 
     @Schema(description = "카드 타입")
-    private String cardType;
+    private String card_type;
 
     @Schema(description = "할부 개월 수")
-    private String installMonth;
+    private String install_month;
 
     @Schema(description = "카드사 승인번호")
-    private String approvedId;
+    private String approved_id;
 
     @Schema(description = "카드사 가맹점 번호")
-    private String cardMid;
+    private String card_mid;
 
     @Schema(description = "무이자할부 여부(Y/N)")
-    private String interestFreeInstall;
+    private String interest_free_install;
 
     @Schema(description = "할부 유형 - CARD_INSTALLMENT: 업종 무이자 / SHARE_INSTALLMENT: 분담 무이자")
-    private String installmentType;
+    private String installment_type;
 
     @Schema(description = "카드 상품 코드")
-    private String cardItemCode;
+    private String card_item_code;
 
 }

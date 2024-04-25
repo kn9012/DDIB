@@ -46,8 +46,8 @@ public class ProductRepositorySupport {
         return jpaQueryFactory
                 .selectFrom(qProduct)
                 .where(
-                        qProduct.eventDate.goe(Timestamp.valueOf(today.atStartOfDay())),
-                        qProduct.eventDate.lt(Timestamp.valueOf(tomorrow.atStartOfDay())),
+                        qProduct.eventStartDate.goe(Timestamp.valueOf(today.atStartOfDay())),
+                        qProduct.eventStartDate.lt(Timestamp.valueOf(tomorrow.atStartOfDay())),
                         qProduct.isOver.eq(false)
                 )
                 .orderBy(qProduct.eventStartTime.asc())
@@ -60,10 +60,10 @@ public class ProductRepositorySupport {
 
         return jpaQueryFactory
                 .selectFrom(qProduct)
-                .where(qProduct.eventDate.between(
+                .where(qProduct.eventStartDate.between(
                         Timestamp.valueOf(startDate.atStartOfDay()),
                         Timestamp.valueOf(endDate.atStartOfDay())))
-                .orderBy(qProduct.eventDate.asc(), qProduct.eventStartTime.asc())
+                .orderBy(qProduct.eventStartDate.asc(), qProduct.eventStartTime.asc())
                 .fetch();
     }
 
@@ -74,8 +74,8 @@ public class ProductRepositorySupport {
         return jpaQueryFactory
                 .selectFrom(qProduct)
                 .where(
-                        qProduct.eventDate.goe(Timestamp.valueOf(today.atStartOfDay())),
-                        qProduct.eventDate.lt(Timestamp.valueOf(tomorrow.atStartOfDay())),
+                        qProduct.eventStartDate.goe(Timestamp.valueOf(today.atStartOfDay())),
+                        qProduct.eventStartDate.lt(Timestamp.valueOf(tomorrow.atStartOfDay())),
                         qProduct.isOver.eq(false)
                 )
                 .limit(3)

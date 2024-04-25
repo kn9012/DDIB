@@ -31,7 +31,9 @@ public class Product {
     private int stock;
 
     @Column(nullable = false)
-    private Timestamp eventDate;
+    private Timestamp eventStartDate;
+
+    private Timestamp eventEndDate;
 
     private int eventStartTime;
 

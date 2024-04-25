@@ -25,7 +25,9 @@ public class ProductResponseDto {
 
     private int stock;
 
-    private LocalDateTime eventDate;
+    private LocalDateTime eventStartDate;
+
+    private LocalDateTime eventEndDate;
 
     private int eventStartTime;
 
@@ -37,7 +39,7 @@ public class ProductResponseDto {
 
     private String thumbnailImage;
 
-    private ProductCategory category;
+    private String category;
 
     private List<ProductDetailResponseDto> details;
 
@@ -61,13 +63,14 @@ public class ProductResponseDto {
                 .name(product.getName())
                 .totalStock(product.getTotalStock())
                 .stock(product.getStock())
-                .eventDate(product.getEventDate().toLocalDateTime())
+                .eventStartDate(product.getEventStartDate().toLocalDateTime())
+                .eventEndDate(product.getEventEndDate().toLocalDateTime())
                 .eventStartTime(product.getEventStartTime())
                 .eventEndTime(product.getEventEndTime())
                 .price(product.getPrice())
                 .discount(product.getDiscount())
                 .thumbnailImage(product.getThumbnailImage())
-                .category(product.getCategory())
+                .category(product.getCategory().getValue())
                 .details(product.getDetails()
                         .stream()
                         .map(ProductDetailResponseDto::from)

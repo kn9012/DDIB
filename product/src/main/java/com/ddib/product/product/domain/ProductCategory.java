@@ -7,17 +7,19 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum ProductCategory {
 
-    NONE("없음"),
-    FASHION("패션"),
-    BEAUTY("뷰티"),
-    FOOD("식품"),
-    APPLIANCE("가전"),
-    SPORTS("스포츠"),
-    LIVING("생활용품"),
-    PET("반려용품"),
-    TRAVEL("여행");
+    NONE("없음", "None"),
+    FASHION("패션", "Fashion"),
+    BEAUTY("뷰티", "Beauty"),
+    FOOD("식품", "Food"),
+    APPLIANCE("가전", "Appliance"),
+    SPORTS("스포츠", "Sports"),
+    LIVING("생활용품", "Living"),
+    PET("반려용품", "Pet"),
+    TRAVEL("여행", "Travel");
 
     private final String meaning;
+
+    private final String value;
 
     public static ProductCategory searchCategoryByKeyword(String keyword) {
         try {

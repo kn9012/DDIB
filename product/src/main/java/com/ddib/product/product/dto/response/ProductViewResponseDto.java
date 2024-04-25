@@ -24,7 +24,9 @@ public class ProductViewResponseDto {
 
     private int stock;
 
-    private Timestamp eventDate;
+    private Timestamp eventStartDate;
+
+    private Timestamp eventEndDate;
 
     private int eventStartTime;
 
@@ -36,7 +38,7 @@ public class ProductViewResponseDto {
 
     private String thumbnailImage;
 
-    private ProductCategory category;
+    private String category;
 
     private List<ProductDetailResponseDto> details;
 
@@ -62,13 +64,14 @@ public class ProductViewResponseDto {
                 .name(product.getName())
                 .totalStock(product.getTotalStock())
                 .stock(product.getStock())
-                .eventDate(product.getEventDate())
+                .eventStartDate(product.getEventStartDate())
+                .eventEndDate(product.getEventEndDate())
                 .eventStartTime(product.getEventStartTime())
                 .eventEndTime(product.getEventEndTime())
                 .price(product.getPrice())
                 .discount(product.getDiscount())
                 .thumbnailImage(product.getThumbnailImage())
-                .category(product.getCategory())
+                .category(product.getCategory().getValue())
                 .details(product.getDetails()
                         .stream()
                         .map(ProductDetailResponseDto::from)

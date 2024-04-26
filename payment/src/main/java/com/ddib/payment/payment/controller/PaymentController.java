@@ -1,10 +1,12 @@
 package com.ddib.payment.payment.controller;
 
+import com.ddib.payment.order.service.OrderService;
+import com.ddib.payment.order.util.OrderIdGenerator;
 import com.ddib.payment.payment.dto.request.KakaoReadyRequestDto;
 import com.ddib.payment.payment.dto.response.KakaoApproveResponseDto;
 import com.ddib.payment.payment.dto.response.KakaoReadyResponseDto;
+import com.ddib.payment.payment.service.KakaoPayAsyncService;
 import com.ddib.payment.payment.service.KakaoPayService;
-import com.ddib.payment.product.repository.ProductRepository;
 import com.ddib.payment.product.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -16,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.concurrent.CompletableFuture;
 
 @Slf4j
 @RestController
@@ -24,7 +27,10 @@ import java.security.Principal;
 public class PaymentController {
 
     private final KakaoPayService kakaoPayService;
+    private final KakaoPayAsyncService kakaoPayAsyncService;
     private final ProductService productService;
+    private final OrderService orderService;
+    private final OrderIdGenerator orderIdGenerator;
 
     /**
      * 결제 요청
@@ -35,15 +41,41 @@ public class PaymentController {
             @ApiResponse(responseCode = "400", description = "재고 없음")
     })
     @PostMapping("/ready")
-    public ResponseEntity<?> readyToKakaoPay(@RequestBody KakaoReadyRequestDto kakaoReadyRequestDto, Principal principal) {
+//    public CompletableFuture<?> readyToKakaoPay(@RequestBody KakaoReadyRequestDto kakaoReadyRequestDto, Principal principal) {
+//    public CompletableFuture<CompletableFuture<KakaoReadyResponseDto>> readyToKakaoPay(@RequestBody KakaoReadyRequestDto kakaoReadyRequestDto, Principal principal) {
+    public CompletableFuture<KakaoReadyResponseDto> readyToKakaoPay(@RequestBody KakaoReadyRequestDto kakaoReadyRequestDto, Principal principal) {
+//    public ResponseEntity<?> readyToKakaoPay(@RequestBody KakaoReadyRequestDto kakaoReadyRequestDto, Principal principal) {
+        log.info("================================");
         // 재고 조회
         int stock = productService.checkStock(kakaoReadyRequestDto.getProductId());
 
         if(stock > 0) {
-            KakaoReadyResponseDto kakaoReadyResponseDto = kakaoPayService.kakaoPayReady(kakaoReadyRequestDto, principal);
-            return new ResponseEntity<>(kakaoReadyResponseDto, HttpStatus.OK);
+            // 1. 동기 방식
+//            KakaoReadyResponseDto kakaoReadyResponseDto = kakaoPayService.kakaoPayReady(kakaoReadyRequestDto, principal);
+
+            // 2. 비동기 방식 (스레드 풀x)
+            String orderId = OrderIdGenerator.generateOrderId();
+            CompletableFuture<KakaoReadyResponseDto> kakaoReadyResponseDto = kakaoPayAsyncService.kakaoPayReady(kakaoReadyRequestDto, orderId);
+            kakaoPayAsyncService.insertOrderData(kakaoReadyRequestDto, orderId, principal);
+
+//            return new ResponseEntity<>(kakaoReadyResponseDto.supplyAsync(() -> kakaoReadyResponseDto), HttpStatus.OK);
+//            return new ResponseEntity<>(CompletableFuture.supplyAsync(() -> kakaoReadyResponseDto), HttpStatus.OK); ////////////
+//            return new ResponseEntity<>(CompletableFuture.supplyAsync(kakaoReadyResponseDto::join), HttpStatus.OK);
+//            return new ResponseEntity<>(CompletableFuture.completedFuture(kakaoReadyResponseDto), HttpStatus.OK);
+            log.info("============= 끝 ===================");
+
+//            return CompletableFuture.supplyAsync(() -> {
+//                CompletableFuture<KakaoReadyResponseDto> dto = kakaoReadyResponseDto;
+//                log.info("============= return ===================");
+//                log.info(Thread.currentThread().getName());
+//                return dto;});
+
+            return CompletableFuture.supplyAsync(() -> kakaoReadyResponseDto).join();
+
+//            return CompletableFuture.supplyAsync(() -> new ResponseEntity<>(kakaoReadyResponseDto, HttpStatus.OK));
         } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return null;
         }
     }
 
@@ -56,7 +88,12 @@ public class PaymentController {
     @GetMapping("/success")
     public ResponseEntity<KakaoApproveResponseDto> afterPayApproveRequest(@RequestParam("pg_token") String pgToken, @RequestParam("product_id") int productId, Principal principal) {
         log.info("===== 결제 승인 API 시작 =====");
-        KakaoApproveResponseDto kakaoApproveResponseDto = kakaoPayService.kakaoPayApprove(pgToken, principal);
+
+        // 1. 동기 방식
+//        KakaoApproveResponseDto kakaoApproveResponseDto = kakaoPayService.kakaoPayApprove(pgToken, principal);
+
+        // 2. 비동기 방식 (스레드 풀x)
+        KakaoApproveResponseDto kakaoApproveResponseDto = kakaoPayAsyncService.kakaoPayApprove(pgToken, principal);
 
         // 재고 차감
         productService.updateStock(productId);
@@ -72,7 +109,13 @@ public class PaymentController {
     @GetMapping("/cancel")
     public ResponseEntity<String> cancel(@RequestParam("partner_order_id") String orderId) {
         log.info("===== 결제 진행 중 취소 =====");
-        kakaoPayService.cancel(orderId);
+
+        // 1. 동기 방식
+//        kakaoPayService.cancel(orderId);
+
+        // 2. 비동기 방식 (스레드 풀x)
+        kakaoPayAsyncService.cancel(orderId);
+
         return new ResponseEntity<>("사용자가 결제 진행 중 결제를 취소했습니다.", HttpStatus.OK);
     }
 
@@ -88,7 +131,13 @@ public class PaymentController {
     @GetMapping("/fail")
     public ResponseEntity<String> fail(@RequestParam("partner_order_id") String orderId) {
         log.info("===== 결제 실패 =====");
-        kakaoPayService.fail(orderId);
+
+        // 1. 동기 방식
+//        kakaoPayService.fail(orderId);
+
+        // 2. 비동기 방식 (스레드 풀x)
+        kakaoPayAsyncService.fail(orderId);
+
         return new ResponseEntity<>("사용자가 결제에 실패했습니다.", HttpStatus.OK);
     }
 
@@ -99,7 +148,13 @@ public class PaymentController {
     @ApiResponse(responseCode = "200", description = "성공")
     @PostMapping("/refund/{orderId}")
     public ResponseEntity<Void> refund(@PathVariable String orderId) {
-        kakaoPayService.refund(orderId);
+
+        // 1. 동기 방식
+//        kakaoPayService.refund(orderId);
+
+        // 2. 비동기 방식 (스레드 풀x)
+        CompletableFuture.runAsync(() -> kakaoPayAsyncService.refund(orderId));
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

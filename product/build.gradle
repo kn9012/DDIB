@@ -48,6 +48,7 @@ dependencies {
 
 	// OpenFeign
 	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:4.1.0'
+//	implementation("io.github.openfeign:feign-micrometer")
 
 	// spring batch
 	implementation 'org.springframework.boot:spring-boot-starter-batch'
@@ -56,6 +57,11 @@ dependencies {
 
 	// Swagger
 	implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.2.0'
+
+	// micrometer & zipkin
+	implementation 'io.zipkin.reporter2:zipkin-reporter-brave'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'io.micrometer:micrometer-tracing-bridge-brave'
 }
 
 dependencyManagement {

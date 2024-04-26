@@ -7,7 +7,6 @@ spring:
     include: key
   application:
     name: product
-
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/ddib?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
@@ -22,7 +21,22 @@ spring:
         show_sql: true
         format_sql: true
 
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+    propagation:
+      consume: b3
+      produce: b3_multi
+  zipkin:
+    tracing:
+      endpoint: "http://127.0.0.1:9411/api/v2/spans"
 
+logging:
+#  level:
+#    com.ddib.product.user: DEBUG
+  pattern:
+    level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
 # -- Eureka client
 eureka:
   client:

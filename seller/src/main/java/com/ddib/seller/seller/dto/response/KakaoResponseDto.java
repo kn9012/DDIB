@@ -6,10 +6,12 @@ public class KakaoResponseDto implements OAuth2ResponseDto {
 
     private final Map<String, Object> attribute;
     private final Map<String, Object> kakaoAccount;
+    private final Map<String, Object> kakaoProfile;
 
     public KakaoResponseDto(Map<String, Object> attribute) {
         this.attribute = attribute;
         this.kakaoAccount = (Map<String, Object>) attribute.get("kakao_account");
+        this.kakaoProfile = (Map<String, Object>) kakaoAccount.get("profile");
     }
 
     @Override
@@ -19,6 +21,6 @@ public class KakaoResponseDto implements OAuth2ResponseDto {
 
     @Override
     public String getNickName() {
-        return "이름 입력";
+        return kakaoProfile.get("nickname").toString();
     }
 }

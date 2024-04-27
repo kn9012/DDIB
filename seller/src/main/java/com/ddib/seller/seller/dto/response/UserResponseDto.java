@@ -9,7 +9,6 @@ import lombok.Getter;
 @Builder
 @Schema(description = "일반회원 응답 DTO")
 public class UserResponseDto {
-    @NotNull
     @Schema(description = "이름")
     private String name;
 

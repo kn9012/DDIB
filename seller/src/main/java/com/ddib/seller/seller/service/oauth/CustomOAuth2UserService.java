@@ -40,17 +40,21 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
         if (existData == null) {
             Seller user = Seller.builder()
+                    .ceoName(oAuth2Response.getNickName())
                     .sellerEmail(oAuth2Response.getEmail())
                     .build();
 
             sellerRepository.save(user);
 
             UserResponseDto responseDto = UserResponseDto.builder()
+                    .name(user.getCeoName())
                     .email(user.getSellerEmail())
                     .build();
+
             return new CustomOAuth2User(responseDto);
         } else {
             UserResponseDto responseDto = UserResponseDto.builder()
+                    .name(existData.getCeoName())
                     .email(existData.getSellerEmail())
                     .build();
             return new CustomOAuth2User(responseDto);

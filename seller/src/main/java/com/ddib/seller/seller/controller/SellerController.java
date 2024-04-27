@@ -9,10 +9,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
@@ -21,8 +18,10 @@ import java.security.Principal;
 @RequiredArgsConstructor
 @Tag(name = "Seller Controller", description = "판매회원 API")
 public class SellerController {
+
     private final SellerService sellerService;
-    @PostMapping("/apply")
+
+    @PutMapping("/apply")
     @Operation(summary = "판매회원 신청 API")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "판매회원 신청 성공"),

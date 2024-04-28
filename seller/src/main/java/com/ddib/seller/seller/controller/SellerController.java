@@ -1,5 +1,6 @@
 package com.ddib.seller.seller.controller;
 
+import com.ddib.seller.seller.dto.request.SellerModifyRequestDto;
 import com.ddib.seller.seller.dto.request.SellerRequestDto;
 import com.ddib.seller.seller.service.seller.SellerService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -30,6 +31,37 @@ public class SellerController {
     public ResponseEntity<?> sellerApply(@RequestBody SellerRequestDto requestDto, Principal principal) {
         try {
             sellerService.applySeller(requestDto, principal);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping
+    @Operation(summary = "판매회원 정보 조회 API")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "판매회원 정보 조회 성공"),
+            @ApiResponse(responseCode = "400", description = "판매회원 정보 조회 실패")
+    })
+    public ResponseEntity<?> sellerDetails(Principal principal) {
+        try {
+            return new ResponseEntity<>(sellerService.findSeller(principal), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping
+    @Operation(summary = "판매회원 정보 수정 API")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "판매회원 정보 수정 성공"),
+            @ApiResponse(responseCode = "400", description = "판매회원 정보 수정 실패")
+    })
+    public ResponseEntity<?> userInfoModify(@RequestBody SellerModifyRequestDto requestDto, Principal principal) {
+        try {
+            sellerService.modifySeller(requestDto, principal);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,5 +1,6 @@
 package com.ddib.seller.seller.domain;
 
+import com.ddib.seller.seller.dto.request.SellerModifyRequestDto;
 import com.ddib.seller.seller.dto.request.SellerRequestDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
@@ -37,7 +38,15 @@ public class Seller {
     @Schema(description = "대표 전화번호")
     private String ceoPhone;
 
-    public void updateSeller(SellerRequestDto requestDto) {
+    public void applySeller(SellerRequestDto requestDto) {
+        this.companyName = requestDto.getCompanyName();
+        this.businessNumber = requestDto.getBusinessNumber();
+        this.ceoName = requestDto.getCeoName();
+        this.ceoEmail = requestDto.getCeoEmail();
+        this.ceoPhone = requestDto.getCeoPhone();
+    }
+
+    public void updateSeller(SellerModifyRequestDto requestDto) {
         this.companyName = requestDto.getCompanyName();
         this.businessNumber = requestDto.getBusinessNumber();
         this.ceoName = requestDto.getCeoName();

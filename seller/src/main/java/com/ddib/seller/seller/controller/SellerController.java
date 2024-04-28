@@ -59,9 +59,25 @@ public class SellerController {
             @ApiResponse(responseCode = "200", description = "판매회원 정보 수정 성공"),
             @ApiResponse(responseCode = "400", description = "판매회원 정보 수정 실패")
     })
-    public ResponseEntity<?> userInfoModify(@RequestBody SellerModifyRequestDto requestDto, Principal principal) {
+    public ResponseEntity<?> sellerModify(@RequestBody SellerModifyRequestDto requestDto, Principal principal) {
         try {
             sellerService.modifySeller(requestDto, principal);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @DeleteMapping
+    @Operation(summary = "판매회원 탈퇴 API")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "판매회원 탈퇴 성공"),
+            @ApiResponse(responseCode = "400", description = "판매회원 탈퇴 실패")
+    })
+    public ResponseEntity<?> sellerDelete(Principal principal) {
+        try {
+            sellerService.deleteSeller(principal);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

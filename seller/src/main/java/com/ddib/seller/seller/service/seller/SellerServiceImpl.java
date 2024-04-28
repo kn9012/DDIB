@@ -41,4 +41,10 @@ public class SellerServiceImpl implements SellerService {
     public void modifySeller(SellerModifyRequestDto requestDto, Principal principal) {
         sellerRepository.findBySellerEmail(principal.getName()).updateSeller(requestDto);
     }
+
+    @Transactional
+    @Override
+    public void deleteSeller(Principal principal) {
+        sellerRepository.deleteBySellerEmail(principal.getName());
+    }
 }

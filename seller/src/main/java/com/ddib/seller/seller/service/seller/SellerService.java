@@ -12,4 +12,5 @@ public interface SellerService {
     void applySeller(SellerRequestDto requestDto, Principal principal);
     SellerInfoDto findSeller(Principal principal);
     void modifySeller(SellerModifyRequestDto requestDto, Principal principal);
+    void deleteSeller(Principal principal);
 }

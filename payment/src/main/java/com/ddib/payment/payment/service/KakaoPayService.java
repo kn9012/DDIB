@@ -3,6 +3,7 @@ package com.ddib.payment.payment.service;
 import com.ddib.payment.order.domain.Order;
 import com.ddib.payment.order.domain.OrderStatus;
 import com.ddib.payment.order.repository.OrderRepository;
+import com.ddib.payment.order.util.OrderIdGenerator;
 import com.ddib.payment.payment.domain.Payment;
 import com.ddib.payment.payment.domain.PaymentStatus;
 import com.ddib.payment.payment.dto.request.KakaoReadyRequestDto;
@@ -56,20 +57,10 @@ public class KakaoPayService {
      */
     public KakaoReadyResponseDto kakaoPayReady(KakaoReadyRequestDto kakaoReadyRequestDto, Principal principal) {
 
+        log.info("===== Thread Name : " + Thread.currentThread().getName() + " =====");
+
         // 주문번호 생성 : 문자(1)+날짜(6)+랜덤숫자(6)
-        // 1. 날짜
-        Date date = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd");
-        String dateString = sdf.format(date);
-
-        // 2. 6자리 랜덤 숫자 만들기
-        Random random = new Random();
-        StringBuilder randomString = new StringBuilder();
-        for(int i=0; i<6; i++) {
-            randomString.append(random.nextInt(10));
-        }
-
-        partnerOrderId = "D" + dateString + randomString;
+        partnerOrderId = OrderIdGenerator.generateOrderId();
         log.info("결제 준비 요청 시 생성된 partnerOrderId: {}", partnerOrderId);
 
         // 카카오페이 요청 양식
@@ -84,10 +75,12 @@ public class KakaoPayService {
         params.put("approval_url", "http://localhost:8083/payment/success?product_id=" + kakaoReadyRequestDto.getProductId()); // 결제 성공 시 redirect url (인증이 완료되면 approval_url로 redirect)
         params.put("cancel_url", "http://localhost:8083/payment/cancel?partner_order_id=" + partnerOrderId); // 결제 취소 시 redirect url
         params.put("fail_url", "http://localhost:8083/payment/fail?partner_order_id=" + partnerOrderId); // 결제 실패 시 redirect url
+        log.info("===== Thread Name : " + Thread.currentThread().getName() + " 카카오페이 요청 양식 준비 완료 =====");
 
         // 파라미터, 헤더 담기
         HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(params, this.getHeaders());
         log.info("requestEntity: {}", requestEntity);
+        log.info("===== Thread Name : " + Thread.currentThread().getName() + " httpEntity 생성 완료 =====");
 
         // 외부 API 호출 및 Server to Server 통신을 위해 사용
         RestTemplate restTemplate = new RestTemplate();
@@ -100,8 +93,10 @@ public class KakaoPayService {
                 requestEntity,
                 KakaoReadyResponseDto.class);
         log.info("kakaoReadyResponseDto: {}", kakaoReadyResponseDto);
+        log.info("===== Thread Name : " + Thread.currentThread().getName() + " 카카오페이 서버에서 데이터 응답 완료 =====");
 
         // 주문 테이블에 Data Insert
+        log.info("===== Thread Name : " + Thread.currentThread().getName() + " 주문 테이블에 Data Insert 시작 =====");
         Order order = Order.builder()
                 .orderId(partnerOrderId)
 //                .user(userRepository.findByEmail(principal.getName()))
@@ -118,6 +113,7 @@ public class KakaoPayService {
                 .status(OrderStatus.PAYMENT_COMPLETED)
                 .build();
         orderRepository.save(order);
+        log.info("===== Thread Name : " + Thread.currentThread().getName() + " 응답 테이블에 Data Insert 완료 =====");
 
         return kakaoReadyResponseDto;
     }

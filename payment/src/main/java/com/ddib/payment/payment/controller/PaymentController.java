@@ -1,5 +1,6 @@
 package com.ddib.payment.payment.controller;
 
+import com.ddib.payment.PaymentApplication;
 import com.ddib.payment.order.service.OrderService;
 import com.ddib.payment.order.util.OrderIdGenerator;
 import com.ddib.payment.payment.dto.request.KakaoReadyRequestDto;
@@ -13,12 +14,15 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
 
 @Slf4j
 @RestController
@@ -32,6 +36,9 @@ public class PaymentController {
     private final OrderService orderService;
     private final OrderIdGenerator orderIdGenerator;
 
+    @Qualifier("taskExecutor")
+    private final Executor executor;
+
     /**
      * 결제 요청
      */
@@ -41,27 +48,55 @@ public class PaymentController {
             @ApiResponse(responseCode = "400", description = "재고 없음")
     })
     @PostMapping("/ready")
-//    public CompletableFuture<?> readyToKakaoPay(@RequestBody KakaoReadyRequestDto kakaoReadyRequestDto, Principal principal) {
-//    public CompletableFuture<CompletableFuture<KakaoReadyResponseDto>> readyToKakaoPay(@RequestBody KakaoReadyRequestDto kakaoReadyRequestDto, Principal principal) {
-    public CompletableFuture<KakaoReadyResponseDto> readyToKakaoPay(@RequestBody KakaoReadyRequestDto kakaoReadyRequestDto, Principal principal) {
+    // 1. 동기 방식
 //    public ResponseEntity<?> readyToKakaoPay(@RequestBody KakaoReadyRequestDto kakaoReadyRequestDto, Principal principal) {
+//        // 재고 조회
+//        int stock = productService.checkStock(kakaoReadyRequestDto.getProductId());
+//
+//        if(stock > 0) {
+//            KakaoReadyResponseDto kakaoReadyResponseDto = kakaoPayService.kakaoPayReady(kakaoReadyRequestDto, principal);
+//            return new ResponseEntity<>(kakaoReadyResponseDto, HttpStatus.OK);
+//        } else {
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//    }
+
+    // 2. 비동기 방식 (스레드 풀x)
+//    public CompletableFuture<KakaoReadyResponseDto> readyToKakaoPay(@RequestBody KakaoReadyRequestDto kakaoReadyRequestDto, Principal principal) {
+//        log.info("================================");
+//        // 재고 조회
+//        int stock = productService.checkStock(kakaoReadyRequestDto.getProductId());
+//
+//        if(stock > 0) {
+//            String orderId = OrderIdGenerator.generateOrderId();
+//            CompletableFuture<KakaoReadyResponseDto> kakaoReadyResponseDto = kakaoPayAsyncService.kakaoPayReady(kakaoReadyRequestDto, orderId);
+//            kakaoPayAsyncService.insertOrderData(kakaoReadyRequestDto, orderId, principal);
+//
+//            log.info("============= 끝 ===================");
+//
+////            return CompletableFuture.supplyAsync(() -> {
+////                CompletableFuture<KakaoReadyResponseDto> dto = kakaoReadyResponseDto;
+////                log.info("============= return ===================");
+////                log.info(Thread.currentThread().getName());
+////                return dto;});
+//
+//            return CompletableFuture.supplyAsync(() -> kakaoReadyResponseDto).join();
+//        } else {
+//            return null;
+//        }
+//    }
+
+    // 3. 비동기 방식 (스레드 풀)
+    public CompletableFuture<KakaoReadyResponseDto> readyToKakaoPay(@RequestBody KakaoReadyRequestDto kakaoReadyRequestDto, Principal principal) {
         log.info("================================");
         // 재고 조회
         int stock = productService.checkStock(kakaoReadyRequestDto.getProductId());
 
         if(stock > 0) {
-            // 1. 동기 방식
-//            KakaoReadyResponseDto kakaoReadyResponseDto = kakaoPayService.kakaoPayReady(kakaoReadyRequestDto, principal);
-
-            // 2. 비동기 방식 (스레드 풀x)
             String orderId = OrderIdGenerator.generateOrderId();
             CompletableFuture<KakaoReadyResponseDto> kakaoReadyResponseDto = kakaoPayAsyncService.kakaoPayReady(kakaoReadyRequestDto, orderId);
             kakaoPayAsyncService.insertOrderData(kakaoReadyRequestDto, orderId, principal);
 
-//            return new ResponseEntity<>(kakaoReadyResponseDto.supplyAsync(() -> kakaoReadyResponseDto), HttpStatus.OK);
-//            return new ResponseEntity<>(CompletableFuture.supplyAsync(() -> kakaoReadyResponseDto), HttpStatus.OK); ////////////
-//            return new ResponseEntity<>(CompletableFuture.supplyAsync(kakaoReadyResponseDto::join), HttpStatus.OK);
-//            return new ResponseEntity<>(CompletableFuture.completedFuture(kakaoReadyResponseDto), HttpStatus.OK);
             log.info("============= 끝 ===================");
 
 //            return CompletableFuture.supplyAsync(() -> {
@@ -70,11 +105,8 @@ public class PaymentController {
 //                log.info(Thread.currentThread().getName());
 //                return dto;});
 
-            return CompletableFuture.supplyAsync(() -> kakaoReadyResponseDto).join();
-
-//            return CompletableFuture.supplyAsync(() -> new ResponseEntity<>(kakaoReadyResponseDto, HttpStatus.OK));
+            return CompletableFuture.supplyAsync(() -> kakaoReadyResponseDto, executor).join();
         } else {
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             return null;
         }
     }

@@ -24,11 +24,8 @@ import org.springframework.web.client.RestTemplate;
 
 import java.security.Principal;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 @Slf4j
 @Service
@@ -55,7 +52,8 @@ public class KakaoPayService {
      * Secret Key를 헤더에 담아 파라미터 값들과 함께 POST로 요청
      * 결제 고유번호(TID)와 redirect URL을 응답받음
      */
-    public KakaoReadyResponseDto kakaoPayReady(KakaoReadyRequestDto kakaoReadyRequestDto, Principal principal) {
+//    public KakaoReadyResponseDto kakaoPayReady(KakaoReadyRequestDto kakaoReadyRequestDto, Principal principal) {
+    public KakaoReadyResponseDto kakaoPayReady(KakaoReadyRequestDto kakaoReadyRequestDto) {
 
         log.info("===== Thread Name : " + Thread.currentThread().getName() + " =====");
 
@@ -124,7 +122,8 @@ public class KakaoPayService {
      * 인증 완료시(테스트의 경우 비밀번호 입력 안하므로 결제하기 버튼 클릭시) 응답받은 pg_token과 tid로 최종 승인 요청함
      * 결제 승인 API를 호출하면 결제 준비 단계에서 시작된 결제건이 승인으로 완료 처리됨
      */
-    public KakaoApproveResponseDto kakaoPayApprove(String pgToken, Principal principal) {
+//    public KakaoApproveResponseDto kakaoPayApprove(String pgToken, Principal principal) {
+    public KakaoApproveResponseDto kakaoPayApprove(String pgToken) {
 
         // 카카오페이 요청 양식
         Map<String, String> params = new HashMap<>();

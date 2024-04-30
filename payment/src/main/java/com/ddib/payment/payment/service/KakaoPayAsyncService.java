@@ -98,7 +98,8 @@ public class KakaoPayAsyncService {
     }
 
     @Async
-    public void insertOrderData(KakaoReadyRequestDto kakaoReadyRequestDto, String orderId, Principal principal) {
+//    public void insertOrderData(KakaoReadyRequestDto kakaoReadyRequestDto, String orderId, Principal principal) {
+    public void insertOrderData(KakaoReadyRequestDto kakaoReadyRequestDto, String orderId) {
 
         log.info("===== Thread Name : " + Thread.currentThread().getName() + " =====");
 

@@ -23,7 +23,7 @@ public class ThreadPoolConfig {
      * - ThreadPoolExecutor.CallerRunsPolicy : shutdown 상태가 아니라면 ThreadPoolTaskExecutor에 요청한 Caller 스레드에서 직접 처리한다. (태스크 유실 최소화)
      * - setWaitForTasksToCompleteOnShutdown : true로 설정하면 애플리케이션 종료 요청 시 queue에 남아있는 모든 작업들이 완료될 때까지 기다린 후 종료된다.
      */
-    @Bean(name = "taskExecutor")
+    @Bean(name = "executor")
     public Executor taskExecutor() {
         ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
 

@@ -50,11 +50,13 @@ public class PaymentController {
     @PostMapping("/ready")
     // 1. 동기 방식
 //    public ResponseEntity<?> readyToKakaoPay(@RequestBody KakaoReadyRequestDto kakaoReadyRequestDto, Principal principal) {
+//    public ResponseEntity<?> readyToKakaoPay(@RequestBody KakaoReadyRequestDto kakaoReadyRequestDto) {
 //        // 재고 조회
 //        int stock = productService.checkStock(kakaoReadyRequestDto.getProductId());
 //
 //        if(stock > 0) {
 //            KakaoReadyResponseDto kakaoReadyResponseDto = kakaoPayService.kakaoPayReady(kakaoReadyRequestDto, principal);
+//            KakaoReadyResponseDto kakaoReadyResponseDto = kakaoPayService.kakaoPayReady(kakaoReadyRequestDto);
 //            return new ResponseEntity<>(kakaoReadyResponseDto, HttpStatus.OK);
 //        } else {
 //            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -63,6 +65,7 @@ public class PaymentController {
 
     // 2. 비동기 방식 (스레드 풀x)
 //    public CompletableFuture<KakaoReadyResponseDto> readyToKakaoPay(@RequestBody KakaoReadyRequestDto kakaoReadyRequestDto, Principal principal) {
+//    public CompletableFuture<KakaoReadyResponseDto> readyToKakaoPay(@RequestBody KakaoReadyRequestDto kakaoReadyRequestDto) {
 //        log.info("================================");
 //        // 재고 조회
 //        int stock = productService.checkStock(kakaoReadyRequestDto.getProductId());
@@ -71,6 +74,7 @@ public class PaymentController {
 //            String orderId = OrderIdGenerator.generateOrderId();
 //            CompletableFuture<KakaoReadyResponseDto> kakaoReadyResponseDto = kakaoPayAsyncService.kakaoPayReady(kakaoReadyRequestDto, orderId);
 //            kakaoPayAsyncService.insertOrderData(kakaoReadyRequestDto, orderId, principal);
+//            kakaoPayAsyncService.insertOrderData(kakaoReadyRequestDto, orderId);
 //
 //            log.info("============= 끝 ===================");
 //
@@ -87,7 +91,8 @@ public class PaymentController {
 //    }
 
     // 3. 비동기 방식 (스레드 풀)
-    public CompletableFuture<KakaoReadyResponseDto> readyToKakaoPay(@RequestBody KakaoReadyRequestDto kakaoReadyRequestDto, Principal principal) {
+//    public CompletableFuture<KakaoReadyResponseDto> readyToKakaoPay(@RequestBody KakaoReadyRequestDto kakaoReadyRequestDto, Principal principal) {
+    public CompletableFuture<KakaoReadyResponseDto> readyToKakaoPay(@RequestBody KakaoReadyRequestDto kakaoReadyRequestDto) {
         log.info("================================");
         // 재고 조회
         int stock = productService.checkStock(kakaoReadyRequestDto.getProductId());
@@ -95,7 +100,8 @@ public class PaymentController {
         if(stock > 0) {
             String orderId = OrderIdGenerator.generateOrderId();
             CompletableFuture<KakaoReadyResponseDto> kakaoReadyResponseDto = kakaoPayAsyncService.kakaoPayReady(kakaoReadyRequestDto, orderId);
-            kakaoPayAsyncService.insertOrderData(kakaoReadyRequestDto, orderId, principal);
+//            kakaoPayAsyncService.insertOrderData(kakaoReadyRequestDto, orderId, principal);
+            kakaoPayAsyncService.insertOrderData(kakaoReadyRequestDto, orderId);
 
             log.info("============= 끝 ===================");
 

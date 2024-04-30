@@ -130,7 +130,7 @@ public class ProductService {
 
     public List<ProductResponseDto> findProductsBySellerId(int sellerId) {
         return sellerRepository.findBySellerId(sellerId)
-                .orElseThrow()
+                .orElseThrow(SellerNotFoundException::new)
                 .getProducts()
                 .stream()
                 .map(ProductResponseDto::of)

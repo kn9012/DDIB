@@ -24,7 +24,7 @@ public class SellerServiceImpl implements SellerService {
 
     @Override
     public SellerInfoDto findSeller(Principal principal) {
-        Seller seller = sellerRepository.findBySellerEmail(principal.getName());
+        Seller seller = sellerRepository.findBySellerEmail("kn9012@naver.com");
         SellerInfoDto sellerInfoDto = SellerInfoDto.builder()
                 .companyName(seller.getCompanyName())
                 .businessNumber(seller.getBusinessNumber())

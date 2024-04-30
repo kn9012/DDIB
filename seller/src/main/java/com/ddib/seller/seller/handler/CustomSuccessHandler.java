@@ -58,11 +58,11 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         // redis 에 담아서 refresh token 관리
         redisService.setValues(email, refresh, refreshExpireMs);
 
-//        response.addCookie(createCookie("refresh", refresh));
-//        response.addCookie(createCookie("Authorization", access));
+        response.addCookie(createCookie("refresh", refresh));
+        response.addCookie(createCookie("Authorization", access));
 
-        response.addHeader("Authorization", "Bearer " + access);
-        response.addHeader("Authorization", "Bearer " + access);
+//        response.addHeader("Authorization", "Bearer " + access);
+//        response.addHeader("Authorization", "Bearer " + access);
         log.info("response " + response.getHeader("Authorization"));
 
 //        response.sendRedirect("http://" + releaseHostName);

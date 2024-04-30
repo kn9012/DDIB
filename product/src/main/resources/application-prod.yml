@@ -1,0 +1,44 @@
+server:
+  port: 8082
+
+# -- Default spring configuration
+spring:
+  profiles:
+    include: key
+  application:
+    name: product
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://k10c102.p.ssafy.io:3306/ddib?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
+    password: ***REMOVED***
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        show_sql: true
+        format_sql: true
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+    propagation:
+      consume: b3
+      produce: b3_multi
+  zipkin:
+    tracing:
+      endpoint: "http://k10c102.p.ssafy.io:9411/api/v2/spans"
+
+logging:
+  #  level:
+  #    com.ddib.product.user: DEBUG
+  pattern:
+    level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
+# -- Eureka client
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URL:http://k10c102.p.ssafy.io:8761/eureka/}

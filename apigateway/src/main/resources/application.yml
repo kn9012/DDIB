@@ -4,7 +4,7 @@ server:
 # -- Default spring configuration
 spring:
   application:
-    name: apigateway
+  0i name: apigateway
   cloud:
     gateway:
       mvc:
@@ -64,11 +64,5 @@ spring:
 ##                headerName: Authorization
 ##                granted: Bearer
 #
-## -- Eureka client
-#eureka:
-#  client:
-#    serviceUrl:
-#      defaultZone: ${EUREKA_URL:http://127.0.0.1:8761/eureka/}
-
 jwt:
   secret: ***REMOVED***

@@ -11,9 +11,9 @@ public class FilterConfig {
     @Bean
     public RouteLocator gatewayRoutes(RouteLocatorBuilder builder) {
         return builder.routes()
-                .route(r -> r.path("/api/user/**")
+                .route(r -> r.path("/api/user/**", "/api/oauth2/ddib/kakao")
                         .uri("http://localhost:8081"))
-                .route(r -> r.path("/api/seller/**")
+                .route(r -> r.path("/api/seller/**", "/api/oauth2/bidd/kakao")
                         .uri("http://localhost:8085"))
                 .route(r -> r.path("/api/notification/**")
                         .uri("http://localhost:8084"))

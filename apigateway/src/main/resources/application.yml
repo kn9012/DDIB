@@ -13,25 +13,62 @@ spring:
           uri: http://localhost:8081
           predicates:
             - Path=/api/user/**
+          filters:
+            - name: PreGatewayAuthorizationFilterFactory
+              args:
+                headerName: Authorization
+                granted: Bearer
+
+        - id: user
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/oauth2/ddib/**
+#          filters:
+#            - RemoveRequestHeader=Cookie
+#            - RewritePath=/user/(?<segment>.*), /$\{segment}
+#            - AuthorizationHeaderFilter
         - id: seller
           uri: http://localhost:8085
           predicates:
-            - Path=/api/seller/**
+            - Path=/api/seller/**, /api/oauth2/bidd/**
+#          filters:
+#            - name: PreGatewayAuthorizationFilterFactory
+#              args:
+#                headerName: Authorization
+#                granted: Bearer
         - id: notification
           uri: http://localhost:8084
           predicates:
             - Path=/api/notification/**
+#          filters:
+#            - name: PreGatewayAuthorizationFilterFactory
+#              args:
+#                headerName: Authorization
+#                granted: Bearer
         - id: product
           uri: http://localhost:8082
           predicates:
             - Path=/api/product/**
+#          filters:
+#            - name: PreGatewayAuthorizationFilterFactory
+#              args:
+#                headerName: Authorization
+#                granted: Bearer
         - id: payment
           uri: http://localhost:8083
           predicates:
             - Path=/api/payment/**
+#          filters:
+#            - name: PreGatewayAuthorizationFilterFactory
+#              args:
+#                headerName: Authorization
+#                granted: Bearer
 
 # -- Eureka client
 eureka:
   client:
     serviceUrl:
       defaultZone: ${EUREKA_URL:http://127.0.0.1:8761/eureka/}
+
+jwt:
+  secret: ***REMOVED***

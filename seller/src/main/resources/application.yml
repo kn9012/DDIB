@@ -13,6 +13,7 @@ spring:
           kakao:
             client-id: ***REMOVED***
             client-secret: ***REMOVED***
+#            redirect-uri: http://k10c102.p.ssafy.io:8085/login/oauth2/code/bidd
             redirect-uri: http://localhost:8085/login/oauth2/code/bidd
             authorization-grant-type: authorization_code
             client-name: Kakao
@@ -58,7 +59,7 @@ refresh:
     expiration:
       time: 864000000
 
-releaseHostName: localhost:8085
+releaseHostName: localhost:8081
 
 # -- Eureka client
 eureka:

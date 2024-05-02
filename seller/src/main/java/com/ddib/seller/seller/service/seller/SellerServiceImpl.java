@@ -26,6 +26,7 @@ public class SellerServiceImpl implements SellerService {
     public SellerInfoDto findSeller(Principal principal) {
         Seller seller = sellerRepository.findBySellerEmail("kn9012@naver.com");
         SellerInfoDto sellerInfoDto = SellerInfoDto.builder()
+                .sellerId(seller.getSellerId())
                 .companyName(seller.getCompanyName())
                 .businessNumber(seller.getBusinessNumber())
                 .ceoName(seller.getCeoName())

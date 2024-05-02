@@ -93,6 +93,8 @@ public class SecurityConfig {
                 .oauth2Login((oauth2) -> oauth2
                         .userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig
                                 .userService(customOAuth2UserService))
+                        .authorizationEndpoint(redirection -> redirection
+                                .baseUri("/oauth2/bidd"))
                         .successHandler(customSuccessHandler)
                 );
 

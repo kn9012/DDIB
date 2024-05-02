@@ -7,6 +7,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -78,6 +80,30 @@ public class SellerController {
     public ResponseEntity<?> sellerDelete(Principal principal) {
         try {
             sellerService.deleteSeller(principal);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/logout")
+    @Operation(summary = "판매회원 로그아웃 API")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "판매회원 로그아웃 성공"),
+            @ApiResponse(responseCode = "400", description = "판매회원 로그아웃 실패")
+    })
+    public ResponseEntity<?> logout(HttpServletResponse response) {
+        try {
+            Cookie refresh = new Cookie("refresh", null);
+            Cookie access = new Cookie("Authorization", null);
+
+            refresh.setMaxAge(0);
+            access.setMaxAge(0);
+
+            response.addCookie(refresh);
+            response.addCookie(access);
+
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

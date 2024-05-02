@@ -4,13 +4,13 @@ server:
 # -- Default spring configuration
 spring:
   application:
-  0i name: apigateway
+   name: apigateway
   cloud:
     gateway:
       mvc:
         routes:
         - id: user
-          uri: http://ddib-user-service.default.svc.cluster.local:8081
+          uri: http://ddib-user-service.default.svc.cluster.local
           predicates:
             - Path=/api/user/**
 #          filters:
@@ -20,7 +20,7 @@ spring:
 #                granted: Bearer
 
         - id: user
-          uri: http://ddib-user-service.default.svc.cluster.local:8081
+          uri: http://ddib-user-service.default.svc.cluster.local
           predicates:
             - Path=/api/oauth2/ddib/**
 #          filters:

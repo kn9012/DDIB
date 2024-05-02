@@ -19,7 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+import java.util.*;
 
 @Tag(name = "Product Server API Docs", description = "상품 서버 Swagger 입니다 ㅎ_ㅎ")
 @RestController
@@ -101,8 +101,9 @@ public class ProductController {
     @Operation(summary = "1주일간 전체 상품 조회 API", description = "현 시점부터 1주일간의 모든 상품들을 조회한다.")
     @ApiResponse(responseCode = "200", description = "성공")
     @GetMapping("/all")
-    public ResponseEntity<List<ProductResponseDto>> findProductsInWeekend() {
-        List<ProductResponseDto> dtos = productService.findProductsInWeekend();
+    public ResponseEntity<List<List<ProductResponseDto>>> findProductsInWeekend() {
+        log.info("PRODUCT 1주일간 상품 조회");
+        List<List<ProductResponseDto>> dtos = productService.findProductsInWeekend();
         return new ResponseEntity<>(dtos, HttpStatus.OK);
     }
 

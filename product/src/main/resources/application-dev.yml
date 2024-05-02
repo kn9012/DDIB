@@ -3,8 +3,6 @@ server:
 
 # -- Default spring configuration
 spring:
-  profiles:
-    include: key
   application:
     name: product
   datasource:
@@ -38,7 +36,7 @@ logging:
   pattern:
     level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
 # -- Eureka client
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: ${EUREKA_URL:http://127.0.0.1:8761/eureka/}
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: ${EUREKA_URL:http://127.0.0.1:8761/eureka/}

@@ -38,7 +38,7 @@ logging:
   pattern:
     level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
 # -- Eureka client
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: ${EUREKA_URL:http://k10c102.p.ssafy.io:8761/eureka/}
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: ${EUREKA_URL:http://k10c102.p.ssafy.io:8761/eureka/}

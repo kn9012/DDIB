@@ -24,25 +24,11 @@ public class OrderIdGenerator {
         SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd");
         String dateString = sdf.format(date);
 
+        SecureRandom random = new SecureRandom();
         StringBuilder randomString = new StringBuilder();
-
-        try {
-            // SecureRandom random = new SecureRandom();
-            SecureRandom random = SecureRandom.getInstanceStrong();
-
-            for(int i=0; i<6; i++) {
-                randomString.append(random.nextInt(10));
-            }
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+        for(int i=0; i<6; i++) {
+            randomString.append(random.nextInt(10));
         }
-
-//        SecureRandom random = new SecureRandom();
-//        SecureRandom random = SecureRandom.getInstanceStrong();
-//        StringBuilder randomString = new StringBuilder();
-//        for(int i=0; i<6; i++) {
-//            randomString.append(random.nextInt(10));
-//        }
 
         orderId = "D" + dateString + randomString;
         return orderId;

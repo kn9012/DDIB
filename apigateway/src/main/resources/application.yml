@@ -4,7 +4,7 @@ server:
 # -- Default spring configuration
 spring:
   application:
-    name: apigateway
+  0i name: apigateway
   cloud:
     gateway:
       mvc:

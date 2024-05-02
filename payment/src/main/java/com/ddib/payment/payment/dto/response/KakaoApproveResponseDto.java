@@ -1,8 +1,10 @@
 package com.ddib.payment.payment.dto.response;
 
+import com.ddib.payment.order.domain.Order;
 import com.ddib.payment.payment.dto.Amount;
 import com.ddib.payment.payment.dto.CardInfo;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -31,6 +33,12 @@ public class KakaoApproveResponseDto {
     @Schema(description = "결제 금액 정보")
     private Amount amount;
 
+    @Schema(description = "상품 원가")
+    private int price;
+
+    @Schema(description = "할인율")
+    private double discount;
+
     @Schema(description = "결제 상세 정보 (결제 수단이 카드일 경우만)")
     private CardInfo card_info;
 
@@ -51,5 +59,30 @@ public class KakaoApproveResponseDto {
 
     @Schema(description = "결제 승인 요청에 대해 저장한 값, 요청 시 전달된 내용")
     private String payload;
+
+    @Schema(description = "배송 받는 사람 이름")
+    private String receiverName;
+
+    @Schema(description = "배송 받는 사람 핸드폰 번호")
+    private String receiverPhone;
+
+    @Schema(description = "주문 상품을 배송할 도로명 주소")
+    private String orderRoadAddress;
+
+    @Schema(description = "주문 상품을 배송할 상세 주소")
+    private String orderDetailAddress;
+
+    @Schema(description = "주문 상품을 배송할 우편번호")
+    private String orderZipcode;
+
+    public void updateKakaoApproveResponseDto(Order order) {
+        this.price = order.getProduct().getPrice();
+        this.discount = order.getProduct().getDiscount();
+        this.receiverName = order.getReceiverName();
+        this.receiverPhone = order.getReceiverPhone();
+        this.orderRoadAddress = order.getOrderRoadAddress();
+        this.orderDetailAddress = order.getOrderDetailAddress();
+        this.orderZipcode = order.getOrderZipcode();
+    }
 
 }

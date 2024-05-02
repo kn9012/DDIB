@@ -15,13 +15,12 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.task.TaskExecutionAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
-
 @AutoConfigureMockMvc
 @SpringBootTest
 @Slf4j
@@ -33,7 +32,7 @@ public class PaymentControllerTest {
     @Autowired
     private KakaoPayAsyncService kakaoPayAsyncService;
     @Autowired
-    @Qualifier("executor")
+    @Qualifier("taskExecutor")
     private Executor executor;
 
 
@@ -85,16 +84,16 @@ public class PaymentControllerTest {
 //                .orderZipcode("08715")
 //                .build();
 //
-//        String orderId = OrderIdGenerator.generateOrderId();
-//
 //        long startTime = System.currentTimeMillis();
 //        for(int i=0; i<100; i++) {
-//            kakaoPayAsyncService.kakaoPayReady(kakaoReadyRequestDto, orderId);
+//            String orderId = OrderIdGenerator.generateOrderId();
+//            CompletableFuture<KakaoReadyResponseDto> kakaoReadyResponseDto = kakaoPayAsyncService.kakaoPayReady(kakaoReadyRequestDto, orderId);
 //            kakaoPayAsyncService.insertOrderData(kakaoReadyRequestDto, orderId);
+//            CompletableFuture.supplyAsync(() -> kakaoReadyResponseDto).join();
 //        }
 //        long endTime = System.currentTimeMillis();
 //        long elapsedTime = endTime - startTime;
-//        log.info("===== Async Execution Time : " + elapsedTime + " =====");
+//        log.info("===== Async Execution Time (Default ThreadPoolTaskExecutor) : " + elapsedTime + " =====");
 //    }
 
     @Test
@@ -113,17 +112,16 @@ public class PaymentControllerTest {
                 .orderZipcode("08715")
                 .build();
 
-        String orderId = OrderIdGenerator.generateOrderId();
-
         long startTime = System.currentTimeMillis();
         for(int i=0; i<100; i++) {
+            String orderId = OrderIdGenerator.generateOrderId();
             CompletableFuture<KakaoReadyResponseDto> kakaoReadyResponseDto = kakaoPayAsyncService.kakaoPayReady(kakaoReadyRequestDto, orderId);
             kakaoPayAsyncService.insertOrderData(kakaoReadyRequestDto, orderId);
             CompletableFuture.supplyAsync(() -> kakaoReadyResponseDto, executor).join();
         }
         long endTime = System.currentTimeMillis();
         long elapsedTime = endTime - startTime;
-        log.info("===== Async Execution Time : " + elapsedTime + " =====");
+        log.info("===== Async Execution Time (Custom ThreadPoolTaskExecutor) : " + elapsedTime + " =====");
     }
 
 }

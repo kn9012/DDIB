@@ -72,21 +72,23 @@ public class KakaoPayAsyncService {
         params.put("quantity", kakaoReadyRequestDto.getQuantity()); // 상품 수량
         params.put("total_amount", kakaoReadyRequestDto.getTotalAmount()); // 상품 총액
         params.put("tax_free_amount", kakaoReadyRequestDto.getTaxFreeAmount()); // 상품 비과세 금액
-        params.put("approval_url", "http://localhost:8083/payment/success?product_id=" + kakaoReadyRequestDto.getProductId()); // 결제 성공 시 redirect url (인증이 완료되면 approval_url로 redirect)
-        params.put("cancel_url", "http://localhost:8083/payment/cancel?partner_order_id=" + partnerOrderId); // 결제 취소 시 redirect url
-        params.put("fail_url", "http://localhost:8083/payment/fail?partner_order_id=" + partnerOrderId); // 결제 실패 시 redirect url
+        params.put("approval_url", "http://localhost:8083/api/payment/success?product_id=" + kakaoReadyRequestDto.getProductId()); // 결제 성공 시 redirect url (인증이 완료되면 approval_url로 redirect)
+        params.put("cancel_url", "http://localhost:8083/api/payment/cancel?partner_order_id=" + partnerOrderId); // 결제 취소 시 redirect url
+        params.put("fail_url", "http://localhost:8083/api/payment/fail?partner_order_id=" + partnerOrderId); // 결제 실패 시 redirect url
 
         // 파라미터, 헤더 담기
         HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(params, this.getHeaders());
-        log.info("requestEntity: {}", requestEntity);
-        log.info("===== Thread Name : " + Thread.currentThread().getName() + " httpEntity 생성 완료 =====");
+//        log.info("requestEntity: {}", requestEntity);
+//        log.info("===== Thread Name : " + Thread.currentThread().getName() + " httpEntity 생성 완료 =====");
 
         // 외부 API 호출 및 Server to Server 통신을 위해 사용
         RestTemplate restTemplate = new RestTemplate();
 
         // 결제정보를 담아 카카오페이 서버에 post 요청 보내기
         // 결제 고유번호(TID), URL 응답받음
-        log.info("===== 카카오페이 서버로 post 요청 전송 =====");
+
+
+//        log.info("===== 카카오페이 서버로 post 요청 전송 =====");
         kakaoReadyResponseDto = restTemplate.postForObject(
                 "https://open-api.kakaopay.com/online/v1/payment/ready",
                 requestEntity,
@@ -102,8 +104,10 @@ public class KakaoPayAsyncService {
     public void insertOrderData(KakaoReadyRequestDto kakaoReadyRequestDto, String orderId) {
 
         log.info("===== Thread Name : " + Thread.currentThread().getName() + " =====");
+//        log.info("===== Thread Name : " + Thread.currentThread().getName() + " insertOrderData 메서드 진입 =====");
 
         // 주문 테이블에 Data Insert
+        log.info("===== Thread Name : " + Thread.currentThread().getName() + " 주문 데이터 insert 시작 =====");
         Order order = Order.builder()
                 .orderId(orderId)
 //                .user(userRepository.findByEmail(principal.getName()))
@@ -124,11 +128,13 @@ public class KakaoPayAsyncService {
     }
 
     /**
+     *
      * 2. Approve (결제 승인)
      * 사용자가 결제 수단을 선택하고 비밀번호를 입력해 결제 인증을 완료한 뒤, 최종적으로 결제 완료 처리를 하는 단계
      * 인증 완료시(테스트의 경우 비밀번호 입력 안하므로 결제하기 버튼 클릭시) 응답받은 pg_token과 tid로 최종 승인 요청함
      * 결제 승인 API를 호출하면 결제 준비 단계에서 시작된 결제건이 승인으로 완료 처리됨
      */
+    @Transactional
     public KakaoApproveResponseDto kakaoPayApprove(String pgToken, Principal principal) {
 
         // 카카오페이 요청 양식
@@ -150,9 +156,12 @@ public class KakaoPayAsyncService {
                 requestEntity,
                 KakaoApproveResponseDto.class);
 
+        // 배송 정보 등 필요한 데이터 추가 업데이트
+        Order order = orderRepository.findByOrderId(partnerOrderId);
+        kakaoApproveResponseDto.updateKakaoApproveResponseDto(order);
+
         // 결제 테이블에 Data Insert
         log.info("===== 결제 테이블에 Data Insert =====");
-        log.info("결제 승인 시각 : {}", kakaoApproveResponseDto.getApproved_at());
 
         Payment payment = Payment.builder()
                 .tid(kakaoApproveResponseDto.getTid())
@@ -219,11 +228,11 @@ public class KakaoPayAsyncService {
 
         HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(params, this.getHeaders());
         log.info("===== Thread Name : " + Thread.currentThread().getName() + " httpEntity 생성 완료 =====");
-        try {
-            Thread.sleep(3000L);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Thread.sleep(3000L);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
         RestTemplate restTemplate = new RestTemplate();
 

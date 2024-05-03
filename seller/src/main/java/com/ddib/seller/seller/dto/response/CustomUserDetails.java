@@ -28,7 +28,7 @@ public class CustomUserDetails implements UserDetails {
     // 주의 : getUsername() 메소드이지만 userId 반환
     @Override
     public String getUsername() {
-        return null;
+        return user.getSellerEmail();
     }
 
     // 계정이 만료되지 않음을 확인

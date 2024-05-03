@@ -48,7 +48,6 @@ public class SellerController {
     })
     public ResponseEntity<?> sellerDetails(Principal principal) {
         try {
-            System.out.println(principal.getName());
             return new ResponseEntity<>(sellerService.findSeller(principal), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

@@ -7,11 +7,13 @@ import com.ddib.seller.seller.dto.response.SellerInfoDto;
 import com.ddib.seller.seller.repository.SellerRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class SellerServiceImpl implements SellerService {
     private final SellerRepository sellerRepository;
@@ -44,6 +46,7 @@ public class SellerServiceImpl implements SellerService {
     @Transactional
     @Override
     public void deleteSeller(Principal principal) {
+        log.info("principal = {}", principal.getName());
         sellerRepository.deleteBySellerEmail(principal.getName());
     }
 }

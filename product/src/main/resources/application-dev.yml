@@ -30,15 +30,6 @@ spring:
 #    tracing:
 #      endpoint: "http://127.0.0.1:9411/api/v2/spans"
 
-logging:
-  level:
-    com:
-      ddib:
-        product: info
-  config: classpath:logback.xml
-#  pattern:
-#    level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
-# -- Eureka client
 eureka:
   client:
     serviceUrl:

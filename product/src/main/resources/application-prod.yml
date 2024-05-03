@@ -3,8 +3,6 @@ server:
 
 # -- Default spring configuration
 spring:
-  profiles:
-    include: key
   application:
     name: product
   datasource:
@@ -32,12 +30,6 @@ spring:
 #    tracing:
 #      endpoint: "http://k10c102.p.ssafy.io:9411/api/v2/spans"
 
-logging:
-  level:
-    com:
-      ddib:
-        product: info
-  config: classpath:logback.xml
 #  pattern:
 #    level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
 # -- Eureka client

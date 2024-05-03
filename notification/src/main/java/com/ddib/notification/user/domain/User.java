@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.util.List;
 
@@ -40,9 +41,8 @@ public class User {
     @Schema(description = "우편번호")
     private int zipcode;
 
-    @Schema(description = "회원 분류")
-    private String userType;
-
+    @ColumnDefault("false")
+    @Column(columnDefinition = "TINYINT(1)")
     @Schema(description = "구독 여부")
     private boolean isSubscribed;
 
@@ -50,6 +50,14 @@ public class User {
     private String fcmToken;
 
     @Schema(description = "알림")
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     private List<Notification> notifications;
+
+    public void updateSubscribed() {
+        this.isSubscribed = true;
+    }
+
+    public void updateNotSubscribed() {
+        this.isSubscribed = false;
+    }
 }

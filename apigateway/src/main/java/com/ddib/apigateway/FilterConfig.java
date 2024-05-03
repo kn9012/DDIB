@@ -1,18 +1,26 @@
 package com.ddib.apigateway;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+
+@Slf4j
 @Configuration
 public class FilterConfig {
 
     @Bean
     public RouteLocator gatewayRoutes(RouteLocatorBuilder builder) {
+        log.info("요청 들어왔다 " + builder.toString());
         return builder.routes()
                 .route(r -> r.path("/api/user/**", "/api/oauth2/ddib/kakao")
+<<<<<<< HEAD
                         .uri("http://localhost:8081"))
+=======
+                        .uri("http://ddib-user-service.default.svc.cluster.local"))
+>>>>>>> 800af188470911db0278d3edf438588135e043ab
 //                .route(r -> r.path("/api/seller/**", "/api/oauth2/bidd/kakao")
 //package com.ddib.apigateway;
 //

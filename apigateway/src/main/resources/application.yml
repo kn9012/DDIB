@@ -1,8 +1,6 @@
 spring:
-<<<<<<< HEAD
   profiles:
     active: dev
-=======
   application:
    name: apigateway
   cloud:
@@ -66,4 +64,3 @@ spring:
 #
 jwt:
   secret: ***REMOVED***
->>>>>>> 800af188470911db0278d3edf438588135e043ab

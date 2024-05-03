@@ -150,7 +150,8 @@ class ProductControllerTest {
 
     @Test
     void findProductsInWeekend() throws Exception {
-        given(productService.findProductsInWeekend()).willReturn(productResponseDtos);
+        List<List<ProductResponseDto>> examples = new ArrayList<>();
+        given(productService.findProductsInWeekend()).willReturn(examples);
 
         mockMvc.perform(get("/api/product/all"))
                 .andExpect(status().isOk())

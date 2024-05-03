@@ -26,7 +26,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.ddib.product.common.file.constant.S3Domain.PRODUCT_DETAIL;
 import static com.ddib.product.common.file.constant.S3Domain.PRODUCT_THUMBNAIL;
@@ -130,18 +135,35 @@ public class ProductService {
 
     public List<ProductResponseDto> findProductsBySellerId(int sellerId) {
         return sellerRepository.findBySellerId(sellerId)
-                .orElseThrow()
+                .orElseThrow(SellerNotFoundException::new)
                 .getProducts()
                 .stream()
                 .map(ProductResponseDto::of)
                 .toList();
     }
 
-    public List<ProductResponseDto> findProductsInWeekend() {
-        return productRepositorySupport.getWeekList()
+    public List<List<ProductResponseDto>> findProductsInWeekend() {
+        List<ProductResponseDto> dtos = productRepositorySupport.getWeekList()
                 .stream()
                 .map(ProductResponseDto::of)
                 .toList();
+
+        // list -> map 에서 다시 key값 안쓰는 배열로 변환해주기 -> list<list>
+        Map<String, List<ProductResponseDto>> resultMap = new LinkedHashMap<>();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        LocalDate start = LocalDate.parse(LocalDate.now().toString().split("T")[0], formatter);
+        for(int day = 0 ; day < 7 ; day++){
+            String key = formatter.format(start.plusDays(day));
+            resultMap.computeIfAbsent(key, k -> new ArrayList<>());
+        }
+        for (ProductResponseDto dto : dtos) {
+            LocalDate startDate = LocalDate.parse(dto.getEventStartDate().toString().split("T")[0], formatter);
+            String key = formatter.format(startDate);
+            resultMap.get(key).add(dto);
+        }
+
+        return new ArrayList<>(resultMap.values());
     }
 
     public ProductViewResponseDto findProductByProductId(int productId, int userId) {

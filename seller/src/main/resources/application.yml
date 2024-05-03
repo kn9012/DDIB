@@ -60,9 +60,3 @@ refresh:
       time: 864000000
 
 releaseHostName: localhost:8081
-
-# -- Eureka client
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: ${EUREKA_URL:http://127.0.0.1:8761/eureka/}

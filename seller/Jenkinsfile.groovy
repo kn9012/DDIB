@@ -17,16 +17,6 @@ pipeline {
                 git branch : 'dev-seller', credentialsId: 'gitlab_access_token', url: 'https://lab.ssafy.com/s10-final/S10P31C102.git'
             }
         }
-        stage('Add Env') {
-            steps {
-                dir('./product') {
-                    withCredentials([file(credentialsId: 'key', variable: 'key')]) {
-                        sh 'chmod -R a=rwx src/main/resources'
-                        sh 'cp ${key} src/main/resources/application-key.yml'
-                    }
-                }
-            }
-        }
         stage('Gradle Build') {
             steps {
                 echo 'Building..'
@@ -38,7 +28,7 @@ pipeline {
         }
         stage('Docker Build Image') {
             steps {
-                dir('./product') {
+                dir('./seller') {
                     script {
                         DOCKER_IMAGE = docker.build("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}", "-f Dockerfile .")
                     }

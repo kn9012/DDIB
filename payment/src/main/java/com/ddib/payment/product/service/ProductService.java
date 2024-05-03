@@ -18,42 +18,43 @@ import java.util.concurrent.TimeUnit;
 public class ProductService {
 
     private final ProductRepository productRepository;
-    private final RedissonClient redissonClient;
+//    private final RedissonClient redissonClient;
 
     public int checkStock(int productId) {
         Optional<Product> product = productRepository.findById(productId);
         return product.get().getStock();
     }
 
-    public int checkStockWithLock(int productId) {
-        // 특정 이름으로 Lock 정의
-        final String lockName = productId + ":lock";
-        final RLock lock = redissonClient.getLock(lockName);
-        final String worker = Thread.currentThread().getName();
-
-        try {
-            // 락 획득 시도 (20초 동안 시도하고 락을 획득할 경우 3초 후에 해제)
-            boolean available = lock.tryLock(20, 3, TimeUnit.SECONDS);
-            if(!available) {
-                log.info("===== Lock 획득 실패 =====");
-                return;
-            }
-
-            int stock = checkStock(productId);
-            return stock;
-
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
+//    public int checkStockWithLock(int productId) {
+//        // 특정 이름으로 Lock 정의
+//        final String lockName = productId + ":lock";
+//        final RLock lock = redissonClient.getLock(lockName);
+//        final String worker = Thread.currentThread().getName();
+//
+//        try {
+//            // 락 획득 시도 (20초 동안 시도하고 락을 획득할 경우 3초 후에 해제)
+//            boolean available = lock.tryLock(20, 3, TimeUnit.SECONDS);
+//            if(!available) {
+//                log.info("===== Lock 획득 실패 =====");
+//                return;
+//            }
+//
+//            int stock = checkStock(productId);
+//            return stock;
+//
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
+//
+//    }
 
     @Transactional
     public void updateStock(int productId, int quantity) {
+        log.info("===== " + Thread.currentThread().getName() + " 재고 " + quantity + "개 차감 시작 =====");
         Optional<Product> product = productRepository.findById(productId);
         int currentStock = product.get().getStock();
 
-        if(currentStock >= 1) {
+        if(currentStock - quantity >= 0) {
             product.get().updateStock(currentStock, quantity);
         }
     }

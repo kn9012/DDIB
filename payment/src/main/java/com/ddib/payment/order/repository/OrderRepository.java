@@ -12,7 +12,7 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 
     void deleteByOrderId(String orderId);
 
-    @Query("SELECT o FROM Order o WHERE o.user.userId = :userId")
+    @Query("SELECT o FROM Order o WHERE o.user.userId = :userId ORDER BY o.orderDate DESC")
     List<Order> findAllByUserId(int userId);
 
 }

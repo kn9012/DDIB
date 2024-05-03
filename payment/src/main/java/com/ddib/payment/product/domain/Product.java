@@ -69,8 +69,8 @@ public class Product {
     @Column(nullable = false)
     private String thumbnailImage;
 
-    public void updateStock(int currentStock) {
-        this.stock = currentStock - 1;
+    public void updateStock(int currentStock, int quantity) {
+        this.stock = currentStock - quantity;
     }
 
 }

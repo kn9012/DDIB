@@ -13,15 +13,20 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.Response;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.security.Principal;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @RestController
@@ -34,6 +39,7 @@ public class PaymentController {
     private final ProductService productService;
     private final OrderService orderService;
     private final OrderIdGenerator orderIdGenerator;
+    private final RedissonClient redissonClient;
 
 //    @Qualifier("taskExecutor")
 //    private final Executor executor;
@@ -64,7 +70,7 @@ public class PaymentController {
 
     // 2. 비동기 방식 (기본 ThreadPoolTaskExecutor)
 //    public CompletableFuture<KakaoReadyResponseDto> readyToKakaoPay(@RequestBody KakaoReadyRequestDto kakaoReadyRequestDto, Principal principal) {
-    public CompletableFuture<KakaoReadyResponseDto> readyToKakaoPay(@RequestBody KakaoReadyRequestDto kakaoReadyRequestDto) {
+    public CompletableFuture<?> readyToKakaoPay(@RequestBody KakaoReadyRequestDto kakaoReadyRequestDto) {
         log.info("================================");
         // 재고 조회
         int stock = productService.checkStock(kakaoReadyRequestDto.getProductId());
@@ -85,7 +91,7 @@ public class PaymentController {
 
             return CompletableFuture.supplyAsync(() -> kakaoReadyResponseDto).join();
         } else {
-            return null;
+            return CompletableFuture.supplyAsync(() -> new ResponseEntity<>(HttpStatus.BAD_REQUEST));
         }
     }
 
@@ -112,7 +118,7 @@ public class PaymentController {
 //
 //            return CompletableFuture.supplyAsync(() -> kakaoReadyResponseDto, executor).join();
 //        } else {
-//            return null;
+//            return CompletableFuture.supplyAsync(() -> new ResponseEntity<>(HttpStatus.BAD_REQUEST));
 //        }
 //    }
 
@@ -121,19 +127,62 @@ public class PaymentController {
      * 결제 성공 시 pgToken을 가지고 승인 요청을 보냄
      */
     @Operation(summary = "카카오페이 결제 성공시 승인 요청하는 API")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "성공"),
+            @ApiResponse(responseCode = "400", description = "재고없음 / 주문 수량이 현재 재고보다 많음"),
+//            @ApiResponse(responseCode = "423", description = "")
+    })
     @ApiResponse(responseCode = "200", description = "성공")
     @GetMapping("/success")
-    public ResponseEntity<KakaoApproveResponseDto> afterPayApproveRequest(@RequestParam("pg_token") String pgToken, @RequestParam("product_id") int productId, Principal principal) {
+    public ResponseEntity<?> afterPayApproveRequest(@RequestParam("pg_token") String pgToken, @RequestParam("product_id") int productId, @RequestParam("quantity") int quantity, Principal principal) {
         log.info("===== 결제 승인 API 시작 =====");
+
+        // 상품 데이터에 Lock 걸어서 재고 조회
+//        productService.checkStockWithLock(productId);
+
+
+
+        // 특정 이름으로 Lock 정의
+        final String lockName = productId + ":lock";
+        final RLock lock = redissonClient.getLock(lockName);
+        final String worker = Thread.currentThread().getName();
+
+        try {
+            // 락 획득 시도 (20초 동안 시도하고 락을 획득할 경우 3초 후에 해제)
+            boolean available = lock.tryLock(20, 3, TimeUnit.SECONDS);
+            if(!available) {
+                log.info("===== Lock 획득 실패 =====");
+                throw new RuntimeException("Lock을 획득하지 못했습니다.");
+            }
+
+            // 락 획득 성공한 경우
+            int stock = productService.checkStock(productId);
+            if(stock > 0 && stock - quantity >= 0) {
+                KakaoApproveResponseDto kakaoApproveResponseDto = kakaoPayAsyncService.kakaoPayApprove(pgToken, principal);
+                // 결제 데이터 insert (비동기)
+
+                // 재고 차감
+                productService.updateStock(productId, kakaoApproveResponseDto.getQuantity());
+            } else {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+
+
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+
+
 
         // 1. 동기 방식
 //        KakaoApproveResponseDto kakaoApproveResponseDto = kakaoPayService.kakaoPayApprove(pgToken, principal);
 
-        // 2. 비동기 방식 (스레드 풀x)
+        // 2. 비동기 방식 (기본 ThreadPoolTaskExecutor)
         KakaoApproveResponseDto kakaoApproveResponseDto = kakaoPayAsyncService.kakaoPayApprove(pgToken, principal);
 
         // 재고 차감
-        productService.updateStock(productId);
+        productService.updateStock(productId, kakaoApproveResponseDto.getQuantity());
 
         return new ResponseEntity<>(kakaoApproveResponseDto, HttpStatus.OK);
     }

@@ -72,7 +72,7 @@ public class KakaoPayAsyncService {
         params.put("quantity", kakaoReadyRequestDto.getQuantity()); // 상품 수량
         params.put("total_amount", kakaoReadyRequestDto.getTotalAmount()); // 상품 총액
         params.put("tax_free_amount", kakaoReadyRequestDto.getTaxFreeAmount()); // 상품 비과세 금액
-        params.put("approval_url", "http://localhost:8083/api/payment/success?product_id=" + kakaoReadyRequestDto.getProductId()); // 결제 성공 시 redirect url (인증이 완료되면 approval_url로 redirect)
+        params.put("approval_url", "http://localhost:8083/api/payment/success?product_id=" + kakaoReadyRequestDto.getProductId() + "&quantity=" + kakaoReadyRequestDto.getQuantity()); // 결제 성공 시 redirect url (인증이 완료되면 approval_url로 redirect)
         params.put("cancel_url", "http://localhost:8083/api/payment/cancel?partner_order_id=" + partnerOrderId); // 결제 취소 시 redirect url
         params.put("fail_url", "http://localhost:8083/api/payment/fail?partner_order_id=" + partnerOrderId); // 결제 실패 시 redirect url
 
@@ -156,7 +156,7 @@ public class KakaoPayAsyncService {
                 requestEntity,
                 KakaoApproveResponseDto.class);
 
-        // 배송 정보 등 필요한 데이터 추가 업데이트
+        // 배송 정보 등 필요한 응답 데이터 추가 업데이트
         Order order = orderRepository.findByOrderId(partnerOrderId);
         kakaoApproveResponseDto.updateKakaoApproveResponseDto(order);
 

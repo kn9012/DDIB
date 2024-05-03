@@ -1,7 +1,7 @@
 pipeline {
     agent any
     tools {
-        gradle 'Gradle 8.5'
+        gradle 'Gradle 8.7'
     }
     environment {
         DOCKER_IMAGE_NAME = 'kimyusan/ddib_product'

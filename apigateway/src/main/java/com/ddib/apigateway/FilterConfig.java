@@ -12,7 +12,7 @@ public class FilterConfig {
     public RouteLocator gatewayRoutes(RouteLocatorBuilder builder) {
         return builder.routes()
                 .route(r -> r.path("/api/user/**", "/api/oauth2/ddib/kakao")
-                        .uri("http://ddib-user-service.default.svc.cluster.local:8081"))
+                        .uri("http://localhost:8081"))
 //                .route(r -> r.path("/api/seller/**", "/api/oauth2/bidd/kakao")
 //package com.ddib.apigateway;
 //

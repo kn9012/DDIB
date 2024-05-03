@@ -130,20 +130,16 @@ public class PaymentController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "성공"),
             @ApiResponse(responseCode = "400", description = "재고없음 / 주문 수량이 현재 재고보다 많음"),
-//            @ApiResponse(responseCode = "423", description = "")
     })
     @ApiResponse(responseCode = "200", description = "성공")
     @GetMapping("/success")
-    public ResponseEntity<?> afterPayApproveRequest(@RequestParam("pg_token") String pgToken, @RequestParam("product_id") int productId, @RequestParam("quantity") int quantity, Principal principal) {
+    public ResponseEntity<?> afterPayApproveRequest(@RequestParam("pg_token") String pgToken, @RequestParam("product_id") int productId, @RequestParam("quantity") int quantity, @RequestParam("order_id") String orderId, Principal principal) {
         log.info("===== 결제 승인 API 시작 =====");
 
         // 상품 데이터에 Lock 걸어서 재고 조회
-//        productService.checkStockWithLock(productId);
-
-
 
         // 특정 이름으로 Lock 정의
-        final String lockName = productId + ":lock";
+        final String lockName = productId + ":lock"; // 생각해보니 productId가 다 같아서 이걸로 lockName 걸면 안될듯
         final RLock lock = redissonClient.getLock(lockName);
         final String worker = Thread.currentThread().getName();
 
@@ -151,27 +147,37 @@ public class PaymentController {
             // 락 획득 시도 (20초 동안 시도하고 락을 획득할 경우 3초 후에 해제)
             boolean available = lock.tryLock(20, 3, TimeUnit.SECONDS);
             if(!available) {
-                log.info("===== Lock 획득 실패 =====");
+                log.info("===== " + worker + " : Lock 획득 실패 =====");
                 throw new RuntimeException("Lock을 획득하지 못했습니다.");
             }
 
             // 락 획득 성공한 경우
-            int stock = productService.checkStock(productId);
+            log.info("===== " + worker + " : Lock 획득 성공 =====");
+            int stock = productService.checkStock(productId); // 재고 조회
             if(stock > 0 && stock - quantity >= 0) {
-                KakaoApproveResponseDto kakaoApproveResponseDto = kakaoPayAsyncService.kakaoPayApprove(pgToken, principal);
-                // 결제 데이터 insert (비동기)
+                // 카카오페이 서버로 승인 요청 전송
+                KakaoApproveResponseDto kakaoApproveResponseDto = kakaoPayAsyncService.kakaoPayApprove(pgToken);
 
+                // 결제 데이터 insert (비동기)
+                kakaoPayAsyncService.insertPaymentData(kakaoApproveResponseDto, principal);
                 // 재고 차감
                 productService.updateStock(productId, kakaoApproveResponseDto.getQuantity());
+                log.info("===== " + worker + " : 재고 차감 완료 =====");
+
+                return new ResponseEntity<>(kakaoApproveResponseDto, HttpStatus.OK);
+
             } else {
+                kakaoPayAsyncService.deleteOrder(orderId);
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
 
-
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
-        }
 
+        } finally {
+            lock.unlock();
+            log.info("===== Lock 해제 완료 =====");
+        }
 
 
 
@@ -179,12 +185,12 @@ public class PaymentController {
 //        KakaoApproveResponseDto kakaoApproveResponseDto = kakaoPayService.kakaoPayApprove(pgToken, principal);
 
         // 2. 비동기 방식 (기본 ThreadPoolTaskExecutor)
-        KakaoApproveResponseDto kakaoApproveResponseDto = kakaoPayAsyncService.kakaoPayApprove(pgToken, principal);
+//        KakaoApproveResponseDto kakaoApproveResponseDto = kakaoPayAsyncService.kakaoPayApprove(pgToken, principal);
 
         // 재고 차감
-        productService.updateStock(productId, kakaoApproveResponseDto.getQuantity());
+//        productService.updateStock(productId, kakaoApproveResponseDto.getQuantity());
 
-        return new ResponseEntity<>(kakaoApproveResponseDto, HttpStatus.OK);
+//        return new ResponseEntity<>(kakaoApproveResponseDto, HttpStatus.OK);
     }
 
     /**
@@ -200,7 +206,7 @@ public class PaymentController {
 //        kakaoPayService.cancel(orderId);
 
         // 2. 비동기 방식 (스레드 풀x)
-        kakaoPayAsyncService.cancel(orderId);
+        kakaoPayAsyncService.deleteOrder(orderId);
 
         return new ResponseEntity<>("사용자가 결제 진행 중 결제를 취소했습니다.", HttpStatus.OK);
     }
@@ -222,7 +228,7 @@ public class PaymentController {
 //        kakaoPayService.fail(orderId);
 
         // 2. 비동기 방식 (스레드 풀x)
-        kakaoPayAsyncService.fail(orderId);
+        kakaoPayAsyncService.deleteOrder(orderId);
 
         return new ResponseEntity<>("사용자가 결제에 실패했습니다.", HttpStatus.OK);
     }

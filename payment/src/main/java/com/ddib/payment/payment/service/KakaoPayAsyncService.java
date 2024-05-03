@@ -72,7 +72,7 @@ public class KakaoPayAsyncService {
         params.put("quantity", kakaoReadyRequestDto.getQuantity()); // 상품 수량
         params.put("total_amount", kakaoReadyRequestDto.getTotalAmount()); // 상품 총액
         params.put("tax_free_amount", kakaoReadyRequestDto.getTaxFreeAmount()); // 상품 비과세 금액
-        params.put("approval_url", "http://localhost:8083/api/payment/success?product_id=" + kakaoReadyRequestDto.getProductId() + "&quantity=" + kakaoReadyRequestDto.getQuantity()); // 결제 성공 시 redirect url (인증이 완료되면 approval_url로 redirect)
+        params.put("approval_url", "http://localhost:8083/api/payment/success?product_id=" + kakaoReadyRequestDto.getProductId() + "&quantity=" + kakaoReadyRequestDto.getQuantity() + "&order_id=" + orderId); // 결제 성공 시 redirect url (인증이 완료되면 approval_url로 redirect)
         params.put("cancel_url", "http://localhost:8083/api/payment/cancel?partner_order_id=" + partnerOrderId); // 결제 취소 시 redirect url
         params.put("fail_url", "http://localhost:8083/api/payment/fail?partner_order_id=" + partnerOrderId); // 결제 실패 시 redirect url
 
@@ -135,7 +135,7 @@ public class KakaoPayAsyncService {
      * 결제 승인 API를 호출하면 결제 준비 단계에서 시작된 결제건이 승인으로 완료 처리됨
      */
     @Transactional
-    public KakaoApproveResponseDto kakaoPayApprove(String pgToken, Principal principal) {
+    public KakaoApproveResponseDto kakaoPayApprove(String pgToken) {
 
         // 카카오페이 요청 양식
         Map<String, String> params = new HashMap<>();
@@ -160,8 +160,14 @@ public class KakaoPayAsyncService {
         Order order = orderRepository.findByOrderId(partnerOrderId);
         kakaoApproveResponseDto.updateKakaoApproveResponseDto(order);
 
+        return kakaoApproveResponseDto;
+    }
+
+    @Async
+    public void insertPaymentData(KakaoApproveResponseDto kakaoApproveResponseDto, Principal principal) {
+
         // 결제 테이블에 Data Insert
-        log.info("===== 결제 테이블에 Data Insert =====");
+        log.info("===== 결제 테이블에 Data Insert 시작 =====");
 
         Payment payment = Payment.builder()
                 .tid(kakaoApproveResponseDto.getTid())
@@ -175,32 +181,18 @@ public class KakaoPayAsyncService {
                 .status(PaymentStatus.PAYMENT_COMPLETED)
                 .build();
         paymentRepository.save(payment);
-
-        return kakaoApproveResponseDto;
+        log.info("===== 결제 테이블에 Data Insert 완료 =====");
     }
 
     /**
-     * 결제 진행 중 취소
-     * 결제 준비 요청에서 insert된 주문 데이터 삭제
+     * 1. 결제 진행 중 취소일 때
+     * 2. 결제 실패일 때
+     * 3. 결제 승인 중 재고가 없어서 주문 데이터 삭제할 때
      */
     @Async
     @Transactional
-    public void cancel(String orderId) {
-        log.info("===== Thread Name : " + Thread.currentThread().getName() + " 결제 진행 중 취소로 인한 주문데이터 삭제 시작 =====");
+    public void deleteOrder(String orderId) {
         orderRepository.deleteByOrderId(orderId);
-        log.info("===== Thread Name : " + Thread.currentThread().getName() + " 결제 진행 중 취소로 인한 주문데이터 삭제 완료 =====");
-    }
-
-    /**
-     * 결제 실패
-     * 결제 준비 요청에서 insert된 주문 데이터 삭제
-     */
-    @Async
-    @Transactional
-    public void fail(String orderId) {
-        log.info("===== Thread Name : " + Thread.currentThread().getName() + " 결제 실패로 인한 주문데이터 삭제 시작 =====");
-        orderRepository.deleteByOrderId(orderId);
-        log.info("===== Thread Name : " + Thread.currentThread().getName() + " 결제 실패로 인한 주문데이터 삭제 완료 =====");
     }
 
     /**

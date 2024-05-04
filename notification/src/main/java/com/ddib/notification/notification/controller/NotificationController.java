@@ -13,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -33,36 +32,19 @@ public class NotificationController {
 
     @Operation(summary = "구독 알림 신청 API")
     @ApiResponse(responseCode = "200", description = "성공")
-    @PostMapping("/notification/subscribe")
-    public ResponseEntity<Void> applyNotification(@RequestBody List<SubscriptionCategoryRequestDto> categories, Principal principal) {
-        userService.findByEmail(principal).updateSubscribed();
-        subscriptionCategoryService.createSubscriptionCategory(categories, principal);
+    @PostMapping("/notification/subscribe/{email}")
+    public ResponseEntity<Void> applyNotification(@RequestBody List<SubscriptionCategoryRequestDto> categories, @PathVariable String email) {
+        userService.findByEmail(email).updateSubscribed();
+        subscriptionCategoryService.createSubscriptionCategory(categories, email);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Operation(summary = "구독 알림 취소 API")
     @ApiResponse(responseCode = "200", description = "성공")
-    @PutMapping("/notification/subscribe/cancel")
-    public ResponseEntity<Void> cancelNotification(Principal principal) {
-        userService.findByEmail(principal).updateNotSubscribed();
-        subscriptionCategoryService.deleteSubscriptionCategory(principal);
+    @PutMapping("/notification/subscribe/cancel/{email}")
+    public ResponseEntity<Void> cancelNotification(@PathVariable String email) {
+        userService.findByEmail(email).updateNotSubscribed();
+        subscriptionCategoryService.deleteSubscriptionCategory(email);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-//    @Operation(summary = "구독 알림 신청 API")
-//    @ApiResponse(responseCode = "200", description = "성공")
-//    @PutMapping("/subscribe")
-//    public ResponseEntity<Void> applyNotification(@RequestBody List<SubscriptionCategoryRequestDto> categories) {
-//        subscriptionCategoryService.createSubscriptionCategory(categories);
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
-//
-//    @Operation(summary = "구독 알림 취소 API")
-//    @ApiResponse(responseCode = "200", description = "성공")
-//    @PutMapping("/subscribe/cancel")
-//    public ResponseEntity<Void> cancelNotification() {
-//        String email = "kn9012@naver.com";
-//        subscriptionCategoryService.deleteSubscriptionCategory(email);
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
 }

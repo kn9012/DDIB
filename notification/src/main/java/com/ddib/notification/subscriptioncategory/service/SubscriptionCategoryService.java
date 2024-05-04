@@ -9,7 +9,6 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.security.Principal;
 import java.util.List;
 
 @Service
@@ -18,8 +17,8 @@ public class SubscriptionCategoryService {
     private final SubscriptionCategoryRepository subscriptionCategoryRepository;
     private final UserRepository userRepository;
 
-    public void createSubscriptionCategory(List<SubscriptionCategoryRequestDto> categories, Principal principal) {
-        User user = userRepository.findByEmail(principal.getName());
+    public void createSubscriptionCategory(List<SubscriptionCategoryRequestDto> categories, String email) {
+        User user = userRepository.findByEmail(email);
 
         for (SubscriptionCategoryRequestDto category : categories) {
             SubscriptionCategory subscriptionCategory = SubscriptionCategory.builder()
@@ -32,7 +31,7 @@ public class SubscriptionCategoryService {
     }
 
     @Transactional
-    public void deleteSubscriptionCategory(Principal principal) {
-        subscriptionCategoryRepository.deleteSubscriptionCategoriesByUserEmail(principal.getName());
+    public void deleteSubscriptionCategory(String email) {
+        subscriptionCategoryRepository.deleteSubscriptionCategoriesByUserEmail(email);
     }
 }

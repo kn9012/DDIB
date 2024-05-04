@@ -1,4 +1,4 @@
-package com.ddib.seller.seller.setting.config;
+package com.ddib.seller.common.config;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;

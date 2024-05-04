@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage('GitLab Clone') {
             steps {
-                git branch : 'dev-apigateway', credentialsId: 'gitlab_access_token', url: 'https://lab.ssafy.com/s10-final/S10P31C102.git'
+                git branch : 'dev-apigateway', credentialsId: 'jenkins', url: 'https://lab.ssafy.com/s10-final/S10P31C102.git'
             }
         }
 

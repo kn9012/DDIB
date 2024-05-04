@@ -1,11 +1,9 @@
 pipeline {
     agent any
-    tools {
-        gradle 'Gradle 8.5'
-    }
+
     environment {
         DOCKER_IMAGE_NAME = 'kimyusan/ddib_apigateway'
-        DOCKERFILE_PATH = './seller/Dockerfile'
+        DOCKERFILE_PATH = './apigateway/Dockerfile'
         CONTAINER_NAME = 'ddib_apigateway'
         REGISTRY_CREDENTIAL = 'dockerhub_IdPwd'
         DOCKER_IMAGE = ''
@@ -17,16 +15,7 @@ pipeline {
                 git branch : 'dev-apigateway', credentialsId: 'gitlab_access_token', url: 'https://lab.ssafy.com/s10-final/S10P31C102.git'
             }
         }
-        stage('Add Env') {
-            steps {
-                dir('./apigateway') {
-                    withCredentials([file(credentialsId: 'key', variable: 'key')]) {
-                        sh 'chmod -R a=rwx src/main/resources'
-                        sh 'cp ${key} src/main/resources/application-key.yml'
-                    }
-                }
-            }
-        }
+
         stage('Gradle Build') {
             steps {
                 echo 'Building..'

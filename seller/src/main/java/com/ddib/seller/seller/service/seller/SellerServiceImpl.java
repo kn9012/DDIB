@@ -10,8 +10,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.security.Principal;
-
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -20,13 +18,13 @@ public class SellerServiceImpl implements SellerService {
 
     @Transactional
     @Override
-    public void applySeller(SellerRequestDto requestDto, Principal principal) {
-        sellerRepository.findBySellerEmail(principal.getName()).applySeller(requestDto);
+    public void applySeller(SellerRequestDto requestDto, String email) {
+        sellerRepository.findBySellerEmail(email).applySeller(requestDto);
     }
 
     @Override
-    public SellerInfoDto findSeller(Principal principal) {
-        Seller seller = sellerRepository.findBySellerEmail("kn9012@naver.com");
+    public SellerInfoDto findSeller(String email) {
+        Seller seller = sellerRepository.findBySellerEmail(email);
         return SellerInfoDto.builder()
                 .sellerId(seller.getSellerId())
                 .companyName(seller.getCompanyName())
@@ -39,14 +37,13 @@ public class SellerServiceImpl implements SellerService {
 
     @Transactional
     @Override
-    public void modifySeller(SellerModifyRequestDto requestDto, Principal principal) {
-        sellerRepository.findBySellerEmail(principal.getName()).updateSeller(requestDto);
+    public void modifySeller(SellerModifyRequestDto requestDto, String email) {
+        sellerRepository.findBySellerEmail(email).updateSeller(requestDto);
     }
 
     @Transactional
     @Override
-    public void deleteSeller(Principal principal) {
-        log.info("principal = {}", principal.getName());
-        sellerRepository.deleteBySellerEmail(principal.getName());
+    public void deleteSeller(String email) {
+        sellerRepository.deleteBySellerEmail(email);
     }
 }

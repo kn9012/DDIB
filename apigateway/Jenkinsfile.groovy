@@ -19,7 +19,7 @@ pipeline {
         stage('Gradle Build') {
             steps {
                 echo 'Building..'
-                dir('./seller') {
+                dir('./apigateway') {
                     sh 'chmod +x gradlew'
                     sh './gradlew clean bootjar'
                 }

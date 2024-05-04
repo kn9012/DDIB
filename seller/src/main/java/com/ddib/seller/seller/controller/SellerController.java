@@ -14,8 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
-
 @RestController
 @RequestMapping(value = "/api/seller", produces = "application/json")
 @RequiredArgsConstructor
@@ -24,15 +22,15 @@ public class SellerController {
 
     private final SellerService sellerService;
 
-    @PutMapping("/apply")
+    @PutMapping("/apply/{email}")
     @Operation(summary = "판매회원 신청 API")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "판매회원 신청 성공"),
             @ApiResponse(responseCode = "400", description = "판매회원 신청 실패")
     })
-    public ResponseEntity<?> sellerApply(@RequestBody SellerRequestDto requestDto, Principal principal) {
+    public ResponseEntity<?> sellerApply(@RequestBody SellerRequestDto requestDto, @PathVariable String email) {
         try {
-            sellerService.applySeller(requestDto, principal);
+            sellerService.applySeller(requestDto, email);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
@@ -40,30 +38,30 @@ public class SellerController {
         }
     }
 
-    @GetMapping
+    @GetMapping("/{email}")
     @Operation(summary = "판매회원 정보 조회 API")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "판매회원 정보 조회 성공"),
             @ApiResponse(responseCode = "400", description = "판매회원 정보 조회 실패")
     })
-    public ResponseEntity<?> sellerDetails(Principal principal) {
+    public ResponseEntity<?> sellerDetails(@PathVariable String email) {
         try {
-            return new ResponseEntity<>(sellerService.findSeller(principal), HttpStatus.OK);
+            return new ResponseEntity<>(sellerService.findSeller(email), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
         }
     }
 
-    @PutMapping
+    @PutMapping("/{email}")
     @Operation(summary = "판매회원 정보 수정 API")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "판매회원 정보 수정 성공"),
             @ApiResponse(responseCode = "400", description = "판매회원 정보 수정 실패")
     })
-    public ResponseEntity<?> sellerModify(@RequestBody SellerModifyRequestDto requestDto, Principal principal) {
+    public ResponseEntity<?> sellerModify(@RequestBody SellerModifyRequestDto requestDto, @PathVariable String email) {
         try {
-            sellerService.modifySeller(requestDto, principal);
+            sellerService.modifySeller(requestDto, email);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
@@ -71,15 +69,15 @@ public class SellerController {
         }
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{email}")
     @Operation(summary = "판매회원 탈퇴 API")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "판매회원 탈퇴 성공"),
             @ApiResponse(responseCode = "400", description = "판매회원 탈퇴 실패")
     })
-    public ResponseEntity<?> sellerDelete(Principal principal) {
+    public ResponseEntity<?> sellerDelete(@PathVariable String email) {
         try {
-            sellerService.deleteSeller(principal);
+            sellerService.deleteSeller(email);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

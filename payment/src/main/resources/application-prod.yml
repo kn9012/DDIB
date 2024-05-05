@@ -1,0 +1,41 @@
+server:
+  port: 8083
+
+# -- Default spring configuration
+spring:
+  application:
+    name: payment
+  jpa:
+    hibernate:
+      ddl-auto: update
+#    show-sql: true
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://k10c102.p.ssafy.io:3306/ddib?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: ssafy
+    password: ssafy
+
+
+-- Eureka client
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URL:http://127.0.0.1:8761/eureka/}
+
+# -- KakaoPay
+pay:
+  kakao:
+    cid: TC0ONETIME
+    secret-key: DEVAE9FEAE218AFEA4E18CD6B53A4589DD8E8F3F
+
+# Swagger
+springdoc:
+  swagger-ui:
+    path: /swagger.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /api-docs
+  default-consumes-media-type: application/json;charset=UTF-8
+  default-produces-media-type: application/json;charset=UTF-8

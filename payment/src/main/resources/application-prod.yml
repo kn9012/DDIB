@@ -8,7 +8,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-#    show-sql: true
+  #    show-sql: true
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -16,8 +16,7 @@ spring:
     username: ssafy
     password: ssafy
 
-
--- Eureka client
+# -- Eureka client
 eureka:
   client:
     serviceUrl:

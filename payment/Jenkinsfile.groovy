@@ -2,9 +2,9 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE_NAME = 'kimyusan/ddib_user'
-        DOCKERFILE_PATH = './user/Dockerfile'
-        CONTAINER_NAME = 'ddib_user'
+        DOCKER_IMAGE_NAME = 'kimyusan/ddib_payment'
+        DOCKERFILE_PATH = './payment/Dockerfile'
+        CONTAINER_NAME = 'ddib_payment'
         REGISTRY_CREDENTIAL = 'dockerhub_IdPwd'
         DOCKER_IMAGE = ''
         DOCKER_IMAGE_TAG = 'latest'
@@ -12,14 +12,14 @@ pipeline {
     stages {
         stage('GitLab Clone') {
             steps {
-                git branch : 'dev-user', credentialsId: 'jenkins', url: 'https://lab.ssafy.com/s10-final/S10P31C102.git'
+                git branch : 'dev-payment', credentialsId: 'jenkins', url: 'https://lab.ssafy.com/s10-final/S10P31C102.git'
             }
         }
 
         stage('Gradle Build') {
             steps {
                 echo 'Building..'
-                dir('./user') {
+                dir('./payment') {
                     sh 'chmod +x gradlew'
                     sh './gradlew clean bootjar'
                 }
@@ -27,7 +27,7 @@ pipeline {
         }
         stage('Docker Build Image') {
             steps {
-                dir('./user') {
+                dir('./payment') {
                     script {
                         DOCKER_IMAGE = docker.build("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}", "-f Dockerfile .")
                     }
@@ -80,7 +80,7 @@ pipeline {
         stage('Run Docker Container') {
             steps {
                 script {
-                    sh 'docker run -d --name ${CONTAINER_NAME} -p 8081:8081 ${DOCKER_IMAGE_NAME}'
+                    sh 'docker run -d --name ${CONTAINER_NAME} -p 8083:8083 ${DOCKER_IMAGE_NAME}'
                 }
             }
         }

@@ -14,19 +14,10 @@ pipeline {
     stages {
         stage('GitLab Clone') {
             steps {
-                git branch : 'dev-notification', credentialsId: 'gitlab_access_token', url: 'https://lab.ssafy.com/s10-final/S10P31C102.git'
+                git branch : 'dev-notification', credentialsId: 'jenkins', url: 'https://lab.ssafy.com/s10-final/S10P31C102.git'
             }
         }
-        stage('Add Env') {
-            steps {
-                dir('./notification') {
-                    withCredentials([file(credentialsId: 'key', variable: 'key')]) {
-                        sh 'chmod -R a=rwx src/main/resources'
-                        sh 'cp ${key} src/main/resources/application-key.yml'
-                    }
-                }
-            }
-        }
+
         stage('Gradle Build') {
             steps {
                 echo 'Building..'

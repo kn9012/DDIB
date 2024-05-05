@@ -21,7 +21,7 @@ pipeline {
         stage('Gradle Build') {
             steps {
                 echo 'Building..'
-                dir('./product') {
+                dir('./notification') {
                     sh 'chmod +x gradlew'
                     sh './gradlew clean bootjar'
                 }

@@ -1,8 +1,6 @@
 pipeline {
     agent any
-    tools {
-        gradle 'Gradle 8.5'
-    }
+
     environment {
         DOCKER_IMAGE_NAME = 'kimyusan/ddib_notification'
         DOCKERFILE_PATH = './notification/Dockerfile'

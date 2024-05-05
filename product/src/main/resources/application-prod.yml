@@ -29,7 +29,7 @@ spring:
 #  zipkin:
 #    tracing:
 #      endpoint: "http://k10c102.p.ssafy.io:9411/api/v2/spans"
-
+# 
 #  pattern:
 #    level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
 # -- Eureka client

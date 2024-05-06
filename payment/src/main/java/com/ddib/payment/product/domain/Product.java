@@ -6,9 +6,11 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.sql.Timestamp;
 
+@Slf4j
 @Entity
 @Getter
 @NoArgsConstructor
@@ -71,6 +73,7 @@ public class Product {
 
     public void updateStock(int currentStock, int quantity) {
         this.stock = currentStock - quantity;
+        log.info("stock : " + this.stock);
     }
 
 }

@@ -50,7 +50,8 @@ public class ProductService {
 
     @Transactional
     public void updateStock(int productId, int quantity) {
-        log.info("===== " + Thread.currentThread().getName() + " 재고 " + quantity + "개 차감 시작 =====");
+//        log.info("===== " + Thread.currentThread().getName() + " 재고 " + quantity + "개 차감 시작 =====");
+        log.info("===== " + Thread.currentThread().getName() + " minus " + quantity + " stock start =====");
         Optional<Product> product = productRepository.findById(productId);
         int currentStock = product.get().getStock();
 

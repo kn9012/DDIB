@@ -145,4 +145,4 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     serviceUrl:
-      defaultZone: http://k10c102.p.ssafy.io:8761/eureka
+      defaultZone: https://k10c102.p.ssafy.io:8761/eureka

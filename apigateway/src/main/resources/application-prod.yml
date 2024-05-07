@@ -60,33 +60,33 @@ spring:
           filters:
             - AuthorizationHeaderFilter
 
-      default-filters:
-        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
-      globals:
-        corsConfigurations:
-          '[/**]':
-            allowedOrigins:
-              - "http://k10c102.p.ssafy.io/"
-              - "https://k10c102.p.ssafy.io/"
-              - "http://localhost:3000/"
-              - "https://localhost:3000/"
-              - "http://localhost/"
-              - "https://localhost/"
-            allow-credentials: true
-            allowedHeaders:
-              - x-requested-with
-              - authorization
-              - content-type
-              - credential
-              - X-AUTH-TOKEN
-              - X-CSRF-TOKEN
-            allowedMethods:
-              - POST
-              - GET
-              - PUT
-              - PATCH
-              - OPTIONS
-              - DELETE
+#      default-filters:
+#        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
+#      globals:
+#        corsConfigurations:
+#          '[/**]':
+#            allowedOrigins:
+#              - "http://k10c102.p.ssafy.io/"
+#              - "https://k10c102.p.ssafy.io/"
+#              - "http://localhost:3000/"
+#              - "https://localhost:3000/"
+#              - "http://localhost/"
+#              - "https://localhost/"
+#            allow-credentials: true
+#            allowedHeaders:
+#              - x-requested-with
+#              - authorization
+#              - content-type
+#              - credential
+#              - X-AUTH-TOKEN
+#              - X-CSRF-TOKEN
+#            allowedMethods:
+#              - POST
+#              - GET
+#              - PUT
+#              - PATCH
+#              - OPTIONS
+#              - DELETE
 
 springdoc:
   enable-native-support: true
@@ -115,5 +115,5 @@ jwt:
 
 eureka:
   client:
-    serviceUrl:
+    service-url:
       defaultZone: ${EUREKA_URL:http://k10c102.p.ssafy.io:8761/eureka/}

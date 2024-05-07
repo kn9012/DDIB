@@ -18,7 +18,7 @@ spring:
         - id: user
           uri: lb://USER
           predicates:
-            - Path=/api/oauth2/ddib/**
+            - Path=/api/oauth2/ddib/kakao
 
         - id: seller
           uri: lb://SELLER
@@ -60,33 +60,33 @@ spring:
           filters:
             - AuthorizationHeaderFilter
 
-#      default-filters:
-#        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
-#      globals:
-#        corsConfigurations:
-#          '[/**]':
-#            allowedOrigins:
-#              - "http://k10c102.p.ssafy.io/"
-#              - "https://k10c102.p.ssafy.io/"
-#              - "http://localhost:3000/"
-#              - "https://localhost:3000/"
-#              - "http://localhost/"
-#              - "https://localhost/"
-#            allow-credentials: true
-#            allowedHeaders:
-#              - x-requested-with
-#              - authorization
-#              - content-type
-#              - credential
-#              - X-AUTH-TOKEN
-#              - X-CSRF-TOKEN
-#            allowedMethods:
-#              - POST
-#              - GET
-#              - PUT
-#              - PATCH
-#              - OPTIONS
-#              - DELETE
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins:
+              - "http://k10c102.p.ssafy.io/"
+              - "https://k10c102.p.ssafy.io/"
+              - "http://localhost:3000/"
+              - "https://localhost:3000/"
+              - "http://localhost/"
+              - "https://localhost/"
+            allow-credentials: true
+            allowedHeaders:
+              - x-requested-with
+              - authorization
+              - content-type
+              - credential
+              - X-AUTH-TOKEN
+              - X-CSRF-TOKEN
+            allowedMethods:
+              - POST
+              - GET
+              - PUT
+              - PATCH
+              - OPTIONS
+              - DELETE
 
 #springdoc:
 #  enable-native-support: true

@@ -1,68 +1,114 @@
 server:
   port: 8000
 
-# -- Default spring configuration
 spring:
   application:
-  0i name: apigateway
+    name: apigateway
+
   cloud:
     gateway:
-      mvc:
-        routes:
-          - id: user
-            uri: http://k10c102.p.ssafy.io:8081
-            predicates:
-              - Path=/api/user/**
-          #          filters:
-          #            - name: PreGatewayAuthorizationFilterFactory
-          #              args:
-          #                headerName: Authorization
-          #                granted: Bearer
+      routes:
+        - id: user
+          uri: lb://USER
+          predicates:
+            - Path=/api/user/**
+          filters:
+            - AuthorizationHeaderFilter
 
-          - id: user
-            uri: http://k10c102.p.ssafy.io:8081
-            predicates:
-              - Path=/api/oauth2/ddib/**
-#          filters:
-#            - RemoveRequestHeader=Cookie
-#            - RewritePath=/user/(?<segment>.*), /$\{segment}
-#            - AuthorizationHeaderFilter
-#        - id: seller
-#          uri: http://localhost:8085
-#          predicates:
-#            - Path=/api/seller/**, /api/oauth2/bidd/**
-#          filters:
-#            - name: PreGatewayAuthorizationFilterFactory
-#              args:
-#                headerName: Authorization
-##                granted: Bearer
-#        - id: notification
-#          uri: http://localhost:8084
-#          predicates:
-#            - Path=/api/notification/**
-##          filters:
-##            - name: PreGatewayAuthorizationFilterFactory
-##              args:
-##                headerName: Authorization
-##                granted: Bearer
-#        - id: product
-#          uri: http://localhost:8082
-#          predicates:
-#            - Path=/api/product/**
-##          filters:
-##            - name: PreGatewayAuthorizationFilterFactory
-##              args:
-##                headerName: Authorization
-##                granted: Bearer
-#        - id: payment
-#          uri: http://localhost:8083
-#          predicates:
-#            - Path=/api/payment/**
-##          filters:
-##            - name: PreGatewayAuthorizationFilterFactory
-##              args:
-##                headerName: Authorization
-##                granted: Bearer
+        - id: user
+          uri: lb://USER
+          predicates:
+            - Path=/api/oauth2/ddib/**
+
+        - id: seller
+          uri: lb://SELLER
+          predicates:
+            - Path=/api/seller/**
+          filters:
+            - AuthorizationHeaderFilter
+
+        - id: seller
+          uri: lb://SELLER
+          predicates:
+            - Path=/api/oauth2/bidd/**
+
+        - id: notification
+          uri: lb://NOTIFICATION
+          predicates:
+            - Path=/api/notification/**
+          filters:
+            - AuthorizationHeaderFilter
+
+        - id: product
+          uri: lb://PRODUCT
+          predicates:
+            - Path=/api/product/**
+          filters:
+            - AuthorizationHeaderFilter
+
+        - id: payment
+          uri: lb://PAYMENT
+          predicates:
+            - Path=/api/payment/**, /api/order/**
+          filters:
+            - AuthorizationHeaderFilter
+
+        - id: waiting
+          uri: lb://WAITING
+          predicates:
+            - Path=/api/v1/queue/**
+          filters:
+            - AuthorizationHeaderFilter
+
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "http://k10c102.p.ssafy.io/"
+              - "https://k10c102.p.ssafy.io/"
+              - "http://localhost:3000/"
+              - "https://localhost:3000/"
+              - "http://localhost/"
+              - "https://localhost/"
+            allow-credentials: true
+            allowedHeaders:
+              - x-requested-with
+              - authorization
+              - content-type
+              - credential
+              - X-AUTH-TOKEN
+              - X-CSRF-TOKEN
+            allowedMethods:
+              - POST
+              - GET
+              - PUT
+              - PATCH
+              - OPTIONS
+              - DELETE
+
+springdoc:
+  enable-native-support: true
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+    urls:
+      - url: /user/swagger-ui/index.html
+        name: User
+      - url: /seller/swagger-ui/index.html
+        name: Seller
+      - url: /notification/swagger-ui/index.html
+        name: Notification
+      - url: /product/swagger-ui/index.html
+        name: Product
+      - url: /payment/swagger-ui/index.html
+        name: Payment
+      - url: /waiting/swagger-ui/index.html
+        name: Waiting
+    use-root-path: true
 
 jwt:
   secret: ***REMOVED***

@@ -15,7 +15,7 @@ spring:
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/user-service/(?<segment>.*), /$\{segment}
-            - AuthorizationHeaderFilter
+#            - AuthorizationHeaderFilter
 
         - id: user
           uri: lb://USER
@@ -29,8 +29,8 @@ spring:
           uri: lb://SELLER
           predicates:
             - Path=/api/seller/**
-          filters:
-            - AuthorizationHeaderFilter
+#          filters:
+#            - AuthorizationHeaderFilter
 
         - id: seller
           uri: lb://SELLER
@@ -41,8 +41,8 @@ spring:
           uri: lb://NOTIFICATION
           predicates:
             - Path=/api/notification/**
-          filters:
-            - AuthorizationHeaderFilter
+#          filters:
+#            - AuthorizationHeaderFilter
 
         - id: product
           uri: lb://PRODUCT
@@ -56,15 +56,15 @@ spring:
           uri: lb://PAYMENT
           predicates:
             - Path=/api/payment/**, /api/order/**
-          filters:
-            - AuthorizationHeaderFilter
+#          filters:
+#            - AuthorizationHeaderFilter
 
         - id: waiting
           uri: lb://WAITING
           predicates:
             - Path=/api/v1/queue/**
-          filters:
-            - AuthorizationHeaderFilter
+#          filters:
+#            - AuthorizationHeaderFilter
 
 #      default-filters:
 #        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials

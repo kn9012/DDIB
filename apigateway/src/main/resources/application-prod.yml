@@ -22,8 +22,8 @@ spring:
           predicates:
             - Path=/api/oauth2/ddib/kakao
           filters:
-            - RemoveRequestHeader=Cookie
-            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+#            - RemoveRequestHeader=Cookie
+#            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
 
         - id: seller
           uri: lb://SELLER
@@ -120,8 +120,10 @@ spring:
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
       globalcors:
-        corsConfigurations:
+        cors-configurations:
           '[/**]':
+            allowedOrigins:
+              - 'http://k10c102.p.ssafy.io'
             allowedOriginPatterns: "*"
             allowedMethods:
               - GET
@@ -131,8 +133,8 @@ spring:
               - PATCH
               - OPTIONS
             allowedHeaders: "*"
-            allowCredentials: true
-            maxAge: 3600
+#            allowCredentials: true
+#            maxAge: 3600 
 
 
 jwt:

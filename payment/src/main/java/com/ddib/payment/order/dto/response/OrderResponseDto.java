@@ -19,7 +19,7 @@ public class OrderResponseDto {
 
     @Schema(description = "주문 상태")
     @NotNull
-    private String status;
+    private int status;
 
     @Schema(description = "기업명")
     @NotNull

@@ -83,9 +83,6 @@ public class PaymentController {
 //            kakaoPayAsyncService.insertOrderData(kakaoReadyRequestDto, orderId, principal);
             kakaoPayAsyncService.insertOrderData(kakaoReadyRequestDto, orderId);
 
-            // redis에 tid 저장하기
-//            redissonClient.createTransaction();
-
             log.info("============= 끝 ===================");
 
 //            return CompletableFuture.supplyAsync(() -> {
@@ -210,10 +207,10 @@ public class PaymentController {
     })
     @GetMapping("/success")
 //    public ResponseEntity<?> afterPayApproveRequest(@RequestParam("pg_token") String pgToken, @RequestParam("product_id") int productId, @RequestParam("quantity") int quantity, @RequestParam("order_id") String orderId, Principal principal) {
-    public CompletableFuture<?> afterPayApproveRequest(@RequestParam("pg_token") String pgToken, @RequestParam("product_id") int productId, @RequestParam("quantity") int quantity, @RequestParam("order_id") String orderId, @RequestParam("tid") String tid, Principal principal) {
+    public CompletableFuture<?> afterPayApproveRequest(@RequestParam("pg_token") String pgToken, @RequestParam("product_id") int productId, @RequestParam("quantity") int quantity, @RequestParam("order_id") String orderId, Principal principal) {
         log.info("===== 결제 승인 API 시작 =====");
 //        KakaoApproveResponseDto kakaoApproveResponseDto = kakaoPayAsyncService.afterPayApproveRequest(pgToken, productId, quantity, orderId);
-        CompletableFuture<KakaoApproveResponseDto> kakaoApproveResponseDto = kakaoPayAsyncService.afterPayApproveRequest(pgToken, productId, quantity, orderId, tid);
+        CompletableFuture<KakaoApproveResponseDto> kakaoApproveResponseDto = kakaoPayAsyncService.afterPayApproveRequest(pgToken, productId, quantity, orderId);
 
         if(kakaoApproveResponseDto != null) {
 //            return new ResponseEntity<>(kakaoApproveResponseDto, HttpStatus.OK);

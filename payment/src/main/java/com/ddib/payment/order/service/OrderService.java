@@ -34,7 +34,7 @@ public class OrderService {
             OrderResponseDto orderResponseDto = OrderResponseDto.builder()
                     .orderId(order.getOrderId())
                     .orderDate(sdf.format(order.getOrderDate()))
-                    .status(order.getStatus().name())
+                    .status(order.getStatus().getStatus())
                     .companyName(order.getProduct().getSeller().getCompanyName())
                     .thumbnailImage(order.getProduct().getThumbnailImage())
                     .productName(order.getProduct().getName())
@@ -54,14 +54,14 @@ public class OrderService {
         return orderResponseDtoList;
     }
 
-    public OrderResponseDto viewOrderDetail(String orderId, Principal principal) {
+    public OrderResponseDto viewOrderDetail(String orderId) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         Order order = orderRepository.findByOrderId(orderId);
         OrderResponseDto orderResponseDto = OrderResponseDto.builder()
                 .orderId(orderId)
                 .orderDate(sdf.format(order.getOrderDate()))
-                .status(order.getStatus().name())
+                .status(order.getStatus().getStatus())
                 .companyName(order.getProduct().getSeller().getCompanyName())
                 .thumbnailImage(order.getProduct().getThumbnailImage())
                 .productName(order.getProduct().getName())

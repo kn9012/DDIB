@@ -39,7 +39,7 @@ spring:
 eureka:
   instance:
 #    instance-id: product
-    hostname: k10c102.p.ssafy.io
+    hostname: localhost
   client:
     register-with-eureka: true
     fetch-registry: true

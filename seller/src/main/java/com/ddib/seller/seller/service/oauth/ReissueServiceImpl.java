@@ -1,5 +1,7 @@
 package com.ddib.seller.seller.service.oauth;
 
+import com.ddib.seller.seller.dto.response.UserResponseDto;
+import com.ddib.seller.seller.repository.SellerRepository;
 import com.ddib.seller.seller.setting.jwt.JWTUtil;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.http.Cookie;
@@ -22,10 +24,12 @@ public class ReissueServiceImpl implements ReissueService {
 
     private final JWTUtil jwtUtil;
     private final RedisService redisService;
+    private final SellerRepository sellerRepository;
 
-    public ReissueServiceImpl(JWTUtil jwtUtil, RedisService redisService) {
+    public ReissueServiceImpl(JWTUtil jwtUtil, RedisService redisService, SellerRepository sellerRepository) {
         this.jwtUtil = jwtUtil;
         this.redisService = redisService;
+        this.sellerRepository = sellerRepository;
     }
 
     @Override
@@ -73,8 +77,8 @@ public class ReissueServiceImpl implements ReissueService {
             return new ResponseEntity<>("invalid refresh token", HttpStatus.BAD_REQUEST);
         }
 
-
         String email = jwtUtil.getEmail(refresh);
+        Integer sellerId = sellerRepository.findSellerIdBySellerEmail(email);
 
         //make new JWT
         String newAccess = jwtUtil.createJwt("access", email, accessExpireMs);
@@ -87,6 +91,7 @@ public class ReissueServiceImpl implements ReissueService {
         //response
         response.setHeader("Authorization", "Bearer " + newAccess);
         response.addCookie(createCookie("refresh", newRefresh));
+        response.addCookie(createCookie("num", String.valueOf(sellerId)));
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

@@ -95,12 +95,15 @@ public class SellerController {
         try {
             Cookie refresh = new Cookie("refresh", null);
             Cookie access = new Cookie("Authorization", null);
+            Cookie num = new Cookie("num", null);
 
             refresh.setMaxAge(0);
             access.setMaxAge(0);
+            num.setMaxAge(0);
 
             response.addCookie(refresh);
             response.addCookie(access);
+            response.addCookie(num);
 
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {

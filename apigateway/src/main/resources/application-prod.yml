@@ -9,7 +9,7 @@ spring:
     gateway:
       routes:
         - id: user
-          uri: lb://USER
+          uri: http://k10c102.p.ssafy.io
           predicates:
             - Path=/api/user/**, /login/oauth2/code/ddib
           filters:

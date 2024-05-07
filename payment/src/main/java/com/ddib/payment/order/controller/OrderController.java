@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/order")
+@RequestMapping("/api/order/{userId}")
 public class OrderController {
 
     private final OrderService orderService;
@@ -34,7 +34,7 @@ public class OrderController {
     @ApiResponse(responseCode = "200", description = "성공")
     @GetMapping("/{orderId}")
     public ResponseEntity<OrderResponseDto> viewOrderDetail(@PathVariable String orderId, Principal principal) {
-        OrderResponseDto orderResponseDto = orderService.viewOrderDetail(orderId, principal);
+        OrderResponseDto orderResponseDto = orderService.viewOrderDetail(orderId);
         return new ResponseEntity<>(orderResponseDto, HttpStatus.OK);
     }
 

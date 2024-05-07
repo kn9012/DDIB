@@ -5,11 +5,13 @@ import com.ddib.payment.order.domain.OrderStatus;
 import com.ddib.payment.order.repository.OrderRepository;
 import com.ddib.payment.payment.domain.Payment;
 import com.ddib.payment.payment.domain.PaymentStatus;
+import com.ddib.payment.payment.domain.Tid;
 import com.ddib.payment.payment.dto.request.KakaoReadyRequestDto;
 import com.ddib.payment.payment.dto.response.KakaoApproveResponseDto;
 import com.ddib.payment.payment.dto.response.KakaoReadyResponseDto;
 import com.ddib.payment.payment.dto.response.KakaoRefundResponseDto;
 import com.ddib.payment.payment.repository.PaymentRepository;
+import com.ddib.payment.payment.repository.TidRepository;
 import com.ddib.payment.product.repository.ProductRepository;
 import com.ddib.payment.product.service.ProductService;
 import com.ddib.payment.user.repository.UserRepository;
@@ -44,6 +46,7 @@ import java.util.concurrent.TimeUnit;
 public class KakaoPayAsyncService {
 
     private final ProductService productService;
+    private final TidRepository tidRepository;
     @Value("${pay.kakao.cid}")
     private String cid;
     @Value("${pay.kakao.secret-key}")
@@ -55,8 +58,8 @@ public class KakaoPayAsyncService {
     private final OrderRepository orderRepository;
     private final RedissonClient redissonClient;
 
-    private KakaoReadyResponseDto kakaoReadyResponseDto;
-    private String partnerOrderId;
+//    private KakaoReadyResponseDto kakaoReadyResponseDto;
+//    private String partnerOrderId;
 
     /**
      * 1. Ready (결제 준비)
@@ -69,8 +72,6 @@ public class KakaoPayAsyncService {
 
         log.info("===== Thread Name : " + Thread.currentThread().getName() + " =====");
 
-        partnerOrderId = orderId;
-
         // 카카오페이 요청 양식
         Map<String, Object> params = new HashMap<>();
         params.put("cid", cid); // 가맹점 코드
@@ -81,8 +82,8 @@ public class KakaoPayAsyncService {
         params.put("total_amount", kakaoReadyRequestDto.getTotalAmount()); // 상품 총액
         params.put("tax_free_amount", kakaoReadyRequestDto.getTaxFreeAmount()); // 상품 비과세 금액
         params.put("approval_url", "http://localhost:8083/api/payment/success?product_id=" + kakaoReadyRequestDto.getProductId() + "&quantity=" + kakaoReadyRequestDto.getQuantity() + "&order_id=" + orderId); // 결제 성공 시 redirect url (인증이 완료되면 approval_url로 redirect)
-        params.put("cancel_url", "http://localhost:8083/api/payment/cancel?partner_order_id=" + partnerOrderId); // 결제 취소 시 redirect url
-        params.put("fail_url", "http://localhost:8083/api/payment/fail?partner_order_id=" + partnerOrderId); // 결제 실패 시 redirect url
+        params.put("cancel_url", "http://localhost:8083/api/payment/cancel?partner_order_id=" + orderId); // 결제 취소 시 redirect url
+        params.put("fail_url", "http://localhost:8083/api/payment/fail?partner_order_id=" + orderId); // 결제 실패 시 redirect url
 
         // 파라미터, 헤더 담기
         HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(params, this.getHeaders());
@@ -97,12 +98,19 @@ public class KakaoPayAsyncService {
 
 
 //        log.info("===== 카카오페이 서버로 post 요청 전송 =====");
-        kakaoReadyResponseDto = restTemplate.postForObject(
+        KakaoReadyResponseDto kakaoReadyResponseDto = restTemplate.postForObject(
                 "https://open-api.kakaopay.com/online/v1/payment/ready",
                 requestEntity,
                 KakaoReadyResponseDto.class);
         log.info("kakaoReadyResponseDto: {}", kakaoReadyResponseDto);
         log.info("===== Thread Name : " + Thread.currentThread().getName() + " 카카오페이 서버에서 데이터 응답 완료 =====");
+
+        // redis에 tid 저장
+        Tid tid = Tid.builder()
+                .orderId(orderId)
+                .tid(kakaoReadyResponseDto.getTid())
+                .build();
+        tidRepository.save(tid);
 
         return CompletableFuture.completedFuture(kakaoReadyResponseDto);
     }
@@ -140,7 +148,7 @@ public class KakaoPayAsyncService {
     @Transactional
     @Async
 //    public KakaoApproveResponseDto afterPayApproveRequest(String pgToken, int productId, int quantity, String orderId) {
-    public CompletableFuture<KakaoApproveResponseDto> afterPayApproveRequest(String pgToken, int productId, int quantity, String orderId, String tid) {
+    public CompletableFuture<KakaoApproveResponseDto> afterPayApproveRequest(String pgToken, int productId, int quantity, String orderId) {
 
         final String worker = Thread.currentThread().getName();
         log.info(worker + " : afterPayApproveRequest 메서드 진입");
@@ -167,7 +175,7 @@ public class KakaoPayAsyncService {
             if(stock > 0 && stock - quantity >= 0) {
                 log.info("===== " + worker + " : 카카오페이 서버로 승인 요청 전송 =====");
                 // 카카오페이 서버로 승인 요청 전송
-                KakaoApproveResponseDto kakaoApproveResponseDto = kakaoPayApprove(pgToken, tid);
+                KakaoApproveResponseDto kakaoApproveResponseDto = kakaoPayApprove(pgToken, orderId);
                 // 배송 정보 등 필요한 응답 데이터 추가 업데이트
                 Order order = orderRepository.findByOrderId(orderId);
                 kakaoApproveResponseDto.updateKakaoApproveResponseDto(order);
@@ -206,14 +214,14 @@ public class KakaoPayAsyncService {
      * 결제 승인 API를 호출하면 결제 준비 단계에서 시작된 결제건이 승인으로 완료 처리됨
      */
 //    @Transactional
-    public KakaoApproveResponseDto kakaoPayApprove(String pgToken, String tid) {
+    public KakaoApproveResponseDto kakaoPayApprove(String pgToken, String orderId) {
 
         // 카카오페이 요청 양식
         Map<String, String> params = new HashMap<>();
         params.put("cid", cid);
-        log.info("tid : " + kakaoReadyResponseDto.getTid());
-        params.put("tid", kakaoReadyResponseDto.getTid());
-        params.put("partner_order_id", partnerOrderId);
+        log.info("tid : " + tidRepository.findById(orderId).get().getTid());
+        params.put("tid", tidRepository.findById(orderId).get().getTid());
+        params.put("partner_order_id", orderId);
         params.put("partner_user_id", "DDIB");
         log.info("pgToken : " + pgToken);
         params.put("pg_token", pgToken);
@@ -346,7 +354,7 @@ public class KakaoPayAsyncService {
                 .paymentDate(kakaoApproveResponseDto.getApproved_at())
 //                .user(userRepository.findByEmail(principal.getName()))
                 .user(userRepository.findByEmail("tpwls101@naver.com"))
-                .order(orderRepository.findByOrderId(partnerOrderId))
+                .order(orderRepository.findByOrderId(kakaoApproveResponseDto.getPartner_order_id()))
                 .status(PaymentStatus.PAYMENT_COMPLETED)
                 .build();
         paymentRepository.save(payment);

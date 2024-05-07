@@ -11,7 +11,7 @@ spring:
         - id: user
           uri: lb://USER
           predicates:
-            - Path=/api/user/**
+            - Path=/api/user/**, /login/oauth2/code/ddib
           filters:
             - AuthorizationHeaderFilter
 
@@ -88,27 +88,27 @@ spring:
 #              - OPTIONS
 #              - DELETE
 
-springdoc:
-  enable-native-support: true
-  api-docs:
-    enabled: true
-  swagger-ui:
-    enabled: true
-    path: /swagger-ui.html
-    urls:
-      - url: /user/swagger-ui/index.html
-        name: User
-      - url: /seller/swagger-ui/index.html
-        name: Seller
-      - url: /notification/swagger-ui/index.html
-        name: Notification
-      - url: /product/swagger-ui/index.html
-        name: Product
-      - url: /payment/swagger-ui/index.html
-        name: Payment
-      - url: /waiting/swagger-ui/index.html
-        name: Waiting
-    use-root-path: true
+#springdoc:
+#  enable-native-support: true
+#  api-docs:
+#    enabled: true
+#  swagger-ui:
+#    enabled: true
+#    path: /swagger-ui.html
+#    urls:
+#      - url: /user/swagger-ui/index.html
+#        name: User
+#      - url: /seller/swagger-ui/index.html
+#        name: Seller
+#      - url: /notification/swagger-ui/index.html
+#        name: Notification
+#      - url: /product/swagger-ui/index.html
+#        name: Product
+#      - url: /payment/swagger-ui/index.html
+#        name: Payment
+#      - url: /waiting/swagger-ui/index.html
+#        name: Waiting
+#    use-root-path: true
 
 jwt:
   secret: ***REMOVED***

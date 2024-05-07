@@ -37,9 +37,9 @@ spring:
 #    level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
 # -- Eureka client
 eureka:
-#  instance:
+  instance:
 #    instance-id: product
-#    hostname: localhost
+    hostname: k10c102.p.ssafy.io
   client:
     register-with-eureka: true
     fetch-registry: true

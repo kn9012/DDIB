@@ -63,23 +63,24 @@ spring:
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
       globalcors:
-        cors-configurations:
+        corsConfigurations:
           '[/**]':
-            allowedOrigins:
-              - "http://k10c102.p.ssafy.io/"
-              - "https://k10c102.p.ssafy.io/"
-              - "http://localhost:3000/"
-              - "https://localhost:3000/"
-              - "http://localhost/"
-              - "https://localhost/"
+            allowed-origin-patterns: "*"
+#            allowedOrigins:
+#              - "http://k10c102.p.ssafy.io/"
+#              - "https://k10c102.p.ssafy.io/"
+#              - "http://localhost:3000/"
+#              - "https://localhost:3000/"
+#              - "http://localhost/"
+#              - "https://localhost/"
             allow-credentials: true
-            allowedHeaders:
-              - x-requested-with
-              - authorization
-              - content-type
-              - credential
-              - X-AUTH-TOKEN
-              - X-CSRF-TOKEN
+            allowedHeaders: "*"
+#              - x-requested-with
+#              - authorization
+#              - content-type
+#              - credential
+#              - X-AUTH-TOKEN
+#              - X-CSRF-TOKEN
             allowedMethods:
               - POST
               - GET

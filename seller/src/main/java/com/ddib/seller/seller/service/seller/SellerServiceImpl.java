@@ -18,13 +18,13 @@ public class SellerServiceImpl implements SellerService {
 
     @Transactional
     @Override
-    public void applySeller(SellerRequestDto requestDto, Integer userId) {
-        sellerRepository.findBySellerId(userId).applySeller(requestDto);
+    public void applySeller(SellerRequestDto requestDto, Integer sellerId) {
+        sellerRepository.findBySellerId(sellerId).applySeller(requestDto);
     }
 
     @Override
-    public SellerInfoDto findSeller(Integer userId) {
-        Seller seller = sellerRepository.findBySellerId(userId);
+    public SellerInfoDto findSeller(Integer sellerId) {
+        Seller seller = sellerRepository.findBySellerId(sellerId);
         return SellerInfoDto.builder()
                 .sellerId(seller.getSellerId())
                 .companyName(seller.getCompanyName())
@@ -37,13 +37,13 @@ public class SellerServiceImpl implements SellerService {
 
     @Transactional
     @Override
-    public void modifySeller(SellerModifyRequestDto requestDto, Integer userId) {
-        sellerRepository.findBySellerId(userId).updateSeller(requestDto);
+    public void modifySeller(SellerModifyRequestDto requestDto, Integer sellerId) {
+        sellerRepository.findBySellerId(sellerId).updateSeller(requestDto);
     }
 
     @Transactional
     @Override
-    public void deleteSeller(Integer userId) {
-        sellerRepository.deleteBySellerId(userId);
+    public void deleteSeller(Integer sellerId) {
+        sellerRepository.deleteBySellerId(sellerId);
     }
 }

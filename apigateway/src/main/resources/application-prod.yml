@@ -140,5 +140,7 @@ jwt:
 
 eureka:
   client:
-    service-url:
+    register-with-eureka: true
+    fetch-registry: true
+    serviceUrl:
       defaultZone: ${EUREKA_URL:http://k10c102.p.ssafy.io:8761/eureka/}

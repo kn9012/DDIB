@@ -9,16 +9,21 @@ spring:
     gateway:
       routes:
         - id: user
-          uri: http://k10c102.p.ssafy.io
+          uri: lb://USER
           predicates:
             - Path=/api/user/**, /login/oauth2/code/ddib
           filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
             - AuthorizationHeaderFilter
 
         - id: user
           uri: lb://USER
           predicates:
             - Path=/api/oauth2/ddib/kakao
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
 
         - id: seller
           uri: lb://SELLER
@@ -44,7 +49,10 @@ spring:
           predicates:
             - Path=/api/product/**
           filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
             - AuthorizationHeaderFilter
+
 
         - id: payment
           uri: lb://PAYMENT
@@ -60,12 +68,12 @@ spring:
           filters:
             - AuthorizationHeaderFilter
 
-      default-filters:
-        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
-      globalcors:
-        corsConfigurations:
-          '[/**]':
-            allowed-origin-patterns: "*"
+#      default-filters:
+#        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
+#      globalcors:
+#        corsConfigurations:
+#          '[/**]':
+#            allowed-origin-patterns: "*"
 #            allowedOrigins:
 #              - "http://k10c102.p.ssafy.io/"
 #              - "https://k10c102.p.ssafy.io/"
@@ -73,21 +81,21 @@ spring:
 #              - "https://localhost:3000/"
 #              - "http://localhost/"
 #              - "https://localhost/"
-            allow-credentials: true
-            allowedHeaders: "*"
+#            allow-credentials: true
+#            allowedHeaders: "*"
 #              - x-requested-with
 #              - authorization
 #              - content-type
 #              - credential
 #              - X-AUTH-TOKEN
 #              - X-CSRF-TOKEN
-            allowedMethods:
-              - POST
-              - GET
-              - PUT
-              - PATCH
-              - OPTIONS
-              - DELETE
+#            allowedMethods:
+#              - POST
+#              - GET
+#              - PUT
+#              - PATCH
+#              - OPTIONS
+#              - DELETE
 
 #springdoc:
 #  enable-native-support: true
@@ -110,6 +118,24 @@ spring:
 #      - url: /waiting/swagger-ui/index.html
 #        name: Waiting
 #    use-root-path: true
+
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOriginPatterns: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - PATCH
+              - OPTIONS
+            allowedHeaders: "*"
+            allowCredentials: true
+            maxAge: 3600
+
 
 jwt:
   secret: ***REMOVED***

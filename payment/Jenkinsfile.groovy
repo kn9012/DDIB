@@ -1,6 +1,8 @@
 pipeline {
     agent any
-
+    tools {
+        gradle 'Gradle 8.5'
+    }
     environment {
         DOCKER_IMAGE_NAME = 'kimyusan/ddib_payment'
         DOCKERFILE_PATH = './payment/Dockerfile'
@@ -12,7 +14,7 @@ pipeline {
     stages {
         stage('GitLab Clone') {
             steps {
-                git branch : 'dev-payment', credentialsId: 'jenkins', url: 'https://lab.ssafy.com/s10-final/S10P31C102.git'
+                git branch: 'dev-payment', credentialsId: 'jenkins', url: 'https://lab.ssafy.com/s10-final/S10P31C102.git'
             }
         }
 
@@ -43,23 +45,23 @@ pipeline {
                 }
             }
         }
-        stage('Delete Previous back Docker Container'){
+        stage('Delete Previous back Docker Container') {
             steps {
                 script {
                     // 컨테이너가 실행중이 아니거나 중지되어 있는 경우 아무런 동작하지 않고 넘어가도록
                     sh "docker stop ${CONTAINER_NAME} || true"
 
-                   def exitedContainers = sh(script: "docker ps --filter status=exited -q", returnStdout: true).trim()
-                   if (exitedContainers) {
-                       sh "docker rm ${exitedContainers}"
-                   } else {
-                       echo "No exited containers to remove."
-                   }
+                    def exitedContainers = sh(script: "docker ps --filter status=exited -q", returnStdout: true).trim()
+                    if (exitedContainers) {
+                        sh "docker rm ${exitedContainers}"
+                    } else {
+                        echo "No exited containers to remove."
+                    }
                 }
             }
         }
 
-        stage('Prune Docker Object'){
+        stage('Prune Docker Object') {
             steps {
                 echo '##### delete stopped containers, networks, volumes, images, cache... #####'
                 script {
@@ -85,4 +87,6 @@ pipeline {
             }
         }
     }
+
 }
+

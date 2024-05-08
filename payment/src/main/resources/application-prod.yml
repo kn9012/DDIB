@@ -8,11 +8,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-<<<<<<< HEAD
-    show-sql: true
-=======
-  #    show-sql: true
->>>>>>> eba0b6e5e0fc2b98fc2cc7e80a0acc14cbb497f0
+      show-sql: true
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -20,23 +16,16 @@ spring:
     username: ssafy
     password: ssafy
 
-<<<<<<< HEAD
   data:
     redis:
       host: localhost
       port: 6379
 
-=======
->>>>>>> eba0b6e5e0fc2b98fc2cc7e80a0acc14cbb497f0
 # -- Eureka client
 eureka:
   client:
     serviceUrl:
-<<<<<<< HEAD
-      defaultZone: ${EUREKA_URL:http://127.0.0.1:8761/eureka/}
-=======
       defaultZone: ${EUREKA_URL:http://k10c102.p.ssafy.io:8761/eureka/}
->>>>>>> eba0b6e5e0fc2b98fc2cc7e80a0acc14cbb497f0
 
 # -- KakaoPay
 pay:

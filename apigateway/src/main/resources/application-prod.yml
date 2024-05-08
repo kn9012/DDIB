@@ -132,7 +132,7 @@ spring:
         cors-configurations:
           '[/**]':
             allowedOrigins:
-              - 'https://k10c102.p.ssafy.io'
+              - 'http://k10c102.p.ssafy.io'
             allowedOriginPatterns: "*"
             allowedMethods:
               - GET

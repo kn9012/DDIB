@@ -68,7 +68,7 @@ spring:
 #            - AuthorizationHeaderFilter
 
         - id: waiting
-          uri: lb://WAITING
+          uri: lb://waiting
           predicates:
             - Path=/api/v1/queue/**
 #          filters:

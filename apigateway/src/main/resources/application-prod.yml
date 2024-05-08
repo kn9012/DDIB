@@ -11,7 +11,7 @@ spring:
         - id: user
           uri: lb://USER
           predicates:
-            - Path=/api/user/**, /**
+            - Path=/api/user/**
 #          filters:
 #            - RemoveRequestHeader=Cookie
 #            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
@@ -20,7 +20,8 @@ spring:
         - id: user
           uri: lb://USER
           predicates:
-            - Path=/api/oauth2/ddib/kakao
+#            - Path=/api/oauth2/ddib/kakao
+            - Path=/oauth2/authoriztion/kakao
 #          filters:
 #            - RemoveRequestHeader=Cookie
 #            - RewritePath=/user-service/(?<segment>.*), /$\{segment}

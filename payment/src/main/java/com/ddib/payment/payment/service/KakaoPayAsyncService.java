@@ -116,7 +116,7 @@ public class KakaoPayAsyncService {
     }
 
     @Async
-//    public void insertOrderData(KakaoReadyRequestDto kakaoReadyRequestDto, String orderId, Principal principal) {
+//    public void insertOrderData(KakaoReadyRequestDto kakaoReadyRequestDto, String orderId, int userId) {
     public void insertOrderData(KakaoReadyRequestDto kakaoReadyRequestDto, String orderId) {
 
         log.info("===== Thread Name : " + Thread.currentThread().getName() + " =====");
@@ -126,8 +126,8 @@ public class KakaoPayAsyncService {
         log.info("===== Thread Name : " + Thread.currentThread().getName() + " 주문 데이터 insert 시작 =====");
         Order order = Order.builder()
                 .orderId(orderId)
-//                .user(userRepository.findByEmail(principal.getName()))
-                .user(userRepository.findByEmail("tpwls101@naver.com"))
+//                .user(userRepository.findById(userId))
+                .user(userRepository.findById(1).get())
                 .product(productRepository.findById(kakaoReadyRequestDto.getProductId()).get())
                 .orderDate(new Timestamp(System.currentTimeMillis()))
                 .productCount(kakaoReadyRequestDto.getQuantity())
@@ -150,14 +150,14 @@ public class KakaoPayAsyncService {
 //    public KakaoApproveResponseDto afterPayApproveRequest(String pgToken, int productId, int quantity, String orderId) {
     public CompletableFuture<KakaoApproveResponseDto> afterPayApproveRequest(String pgToken, int productId, int quantity, String orderId) {
 
-        final String worker = Thread.currentThread().getName();
-        log.info(worker + " : afterPayApproveRequest 메서드 진입");
+        log.info(Thread.currentThread().getName() + " : afterPayApproveRequest 메서드 진입 (주문수량 : " + quantity + ")");
 
         // 상품 데이터에 Lock 걸어서 재고 조회
 
         // 특정 이름으로 Lock 정의
         final String lockName = "product" + productId;
         final RLock lock = redissonClient.getLock(lockName);
+        final String worker = Thread.currentThread().getName();
         log.info(worker + " : lock 정의 완료");
 
         try {
@@ -185,6 +185,7 @@ public class KakaoPayAsyncService {
                 insertPaymentData(kakaoApproveResponseDto);
                 // 재고 차감
                 productService.updateStock(productId, quantity);
+
                 log.info("===== " + worker + " : stock update completed =====");
 
 //                return kakaoApproveResponseDto;
@@ -340,7 +341,7 @@ public class KakaoPayAsyncService {
     }
 
     @Async
-//    public void insertPaymentData(KakaoApproveResponseDto kakaoApproveResponseDto, Principal principal) {
+//    public void insertPaymentData(KakaoApproveResponseDto kakaoApproveResponseDto, int userId) {
     public void insertPaymentData(KakaoApproveResponseDto kakaoApproveResponseDto) {
 
         // 결제 테이블에 Data Insert
@@ -352,8 +353,8 @@ public class KakaoPayAsyncService {
                 .taxFree(kakaoApproveResponseDto.getAmount().getTax_free())
                 .paymentMethodType(kakaoApproveResponseDto.getPayment_method_type())
                 .paymentDate(kakaoApproveResponseDto.getApproved_at())
-//                .user(userRepository.findByEmail(principal.getName()))
-                .user(userRepository.findByEmail("tpwls101@naver.com"))
+//                .user(userRepository.findById(userId))
+                .user(userRepository.findById(1).get())
                 .order(orderRepository.findByOrderId(kakaoApproveResponseDto.getPartner_order_id()))
                 .status(PaymentStatus.PAYMENT_COMPLETED)
                 .build();

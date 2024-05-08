@@ -73,6 +73,7 @@ public class Product {
 
     public void updateStock(int currentStock, int quantity) {
         this.stock = currentStock - quantity;
+//        this.stock -= quantity;
         log.info("stock : " + this.stock);
     }
 

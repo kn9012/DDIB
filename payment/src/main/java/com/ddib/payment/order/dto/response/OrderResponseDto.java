@@ -29,6 +29,10 @@ public class OrderResponseDto {
     @NotNull
     private String thumbnailImage;
 
+    @Schema(description = "상품 식별키")
+    @NotNull
+    private int productId;
+
     @Schema(description = "상품명")
     @NotNull
     private String productName;

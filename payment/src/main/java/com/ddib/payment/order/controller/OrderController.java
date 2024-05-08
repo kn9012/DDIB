@@ -17,23 +17,23 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/order/{userId}")
+@RequestMapping("/api/order")
 public class OrderController {
 
     private final OrderService orderService;
 
     @Operation(summary = "주문내역 목록 조회 API")
     @ApiResponse(responseCode = "200", description = "성공")
-    @GetMapping
-    public ResponseEntity<List<OrderResponseDto>> viewOrderList(Principal principal) {
-        List<OrderResponseDto> orderResponseDtoList = orderService.viewOrderList(principal);
+    @GetMapping("/{userId}")
+    public ResponseEntity<List<OrderResponseDto>> viewOrderList(@PathVariable int userId) {
+        List<OrderResponseDto> orderResponseDtoList = orderService.viewOrderList(userId);
         return new ResponseEntity<>(orderResponseDtoList, HttpStatus.OK);
     }
 
     @Operation(summary = "주문내역 상세 조회 API")
     @ApiResponse(responseCode = "200", description = "성공")
-    @GetMapping("/{orderId}")
-    public ResponseEntity<OrderResponseDto> viewOrderDetail(@PathVariable String orderId, Principal principal) {
+    @GetMapping("/detail/{orderId}")
+    public ResponseEntity<OrderResponseDto> viewOrderDetail(@PathVariable String orderId) {
         OrderResponseDto orderResponseDto = orderService.viewOrderDetail(orderId);
         return new ResponseEntity<>(orderResponseDto, HttpStatus.OK);
     }

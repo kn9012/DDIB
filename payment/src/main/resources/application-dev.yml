@@ -8,7 +8,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-#    show-sql: true
+    show-sql: true
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -16,12 +16,16 @@ spring:
     username: root
     password: 1234
 
+  data:
+    redis:
+      host: localhost
+      port: 6379
 
 # -- Eureka client
-#eureka:
-#  client:
-#    serviceUrl:
-#      defaultZone: ${EUREKA_URL:http://127.0.0.1:8761/eureka/}
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URL:http://127.0.0.1:8761/eureka/}
 
 # -- KakaoPay
 pay:
@@ -30,12 +34,12 @@ pay:
     secret-key: DEVAE9FEAE218AFEA4E18CD6B53A4589DD8E8F3F
 
 # Swagger
-springdoc:
-  swagger-ui:
-    path: /swagger.html
-    tags-sorter: alpha
-    operations-sorter: alpha
-  api-docs:
-    path: /api-docs
-  default-consumes-media-type: application/json;charset=UTF-8
-  default-produces-media-type: application/json;charset=UTF-8
+#springdoc:
+#  swagger-ui:
+#    path: /swagger.html
+#    tags-sorter: alpha
+#    operations-sorter: alpha
+#  api-docs:
+#    path: /api-docs
+#  default-consumes-media-type: application/json;charset=UTF-8
+#  default-produces-media-type: application/json;charset=UTF-8

@@ -13,6 +13,7 @@ import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -22,21 +23,20 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final PaymentRepository paymentRepository;
 
-    public List<OrderResponseDto> viewOrderList(Principal principal) {
+    public List<OrderResponseDto> viewOrderList(int userId) {
         List<OrderResponseDto> orderResponseDtoList = new ArrayList<>();
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-//        User user = userRepository.findByEmail(principal.getName());
-        User user = userRepository.findByEmail("tpwls101@naver.com");
-        List<Order> orderList = orderRepository.findAllByUserId(user.getUserId());
+        List<Order> orderList = orderRepository.findAllByUserId(userId);
         for(Order order : orderList) {
             OrderResponseDto orderResponseDto = OrderResponseDto.builder()
                     .orderId(order.getOrderId())
                     .orderDate(sdf.format(order.getOrderDate()))
-                    .status(order.getStatus().name())
+                    .status(order.getStatus().getStatus())
                     .companyName(order.getProduct().getSeller().getCompanyName())
                     .thumbnailImage(order.getProduct().getThumbnailImage())
+                    .productId(order.getProduct().getProductId())
                     .productName(order.getProduct().getName())
                     .quantity(order.getProductCount())
                     .price(order.getProduct().getPrice())
@@ -54,16 +54,17 @@ public class OrderService {
         return orderResponseDtoList;
     }
 
-    public OrderResponseDto viewOrderDetail(String orderId, Principal principal) {
+    public OrderResponseDto viewOrderDetail(String orderId) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         Order order = orderRepository.findByOrderId(orderId);
         OrderResponseDto orderResponseDto = OrderResponseDto.builder()
                 .orderId(orderId)
                 .orderDate(sdf.format(order.getOrderDate()))
-                .status(order.getStatus().name())
+                .status(order.getStatus().getStatus())
                 .companyName(order.getProduct().getSeller().getCompanyName())
                 .thumbnailImage(order.getProduct().getThumbnailImage())
+                .productId(order.getProduct().getProductId())
                 .productName(order.getProduct().getName())
                 .quantity(order.getProductCount())
                 .price(order.getProduct().getPrice())

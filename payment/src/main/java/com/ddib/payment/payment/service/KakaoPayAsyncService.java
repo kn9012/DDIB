@@ -5,19 +5,26 @@ import com.ddib.payment.order.domain.OrderStatus;
 import com.ddib.payment.order.repository.OrderRepository;
 import com.ddib.payment.payment.domain.Payment;
 import com.ddib.payment.payment.domain.PaymentStatus;
+import com.ddib.payment.payment.domain.Tid;
 import com.ddib.payment.payment.dto.request.KakaoReadyRequestDto;
 import com.ddib.payment.payment.dto.response.KakaoApproveResponseDto;
 import com.ddib.payment.payment.dto.response.KakaoReadyResponseDto;
 import com.ddib.payment.payment.dto.response.KakaoRefundResponseDto;
 import com.ddib.payment.payment.repository.PaymentRepository;
+import com.ddib.payment.payment.repository.TidRepository;
 import com.ddib.payment.product.repository.ProductRepository;
+import com.ddib.payment.product.service.ProductService;
 import com.ddib.payment.user.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -30,6 +37,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Service
@@ -37,6 +45,8 @@ import java.util.concurrent.CompletableFuture;
 //@Transactional
 public class KakaoPayAsyncService {
 
+    private final ProductService productService;
+    private final TidRepository tidRepository;
     @Value("${pay.kakao.cid}")
     private String cid;
     @Value("${pay.kakao.secret-key}")
@@ -46,9 +56,10 @@ public class KakaoPayAsyncService {
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
     private final OrderRepository orderRepository;
+    private final RedissonClient redissonClient;
 
-    private KakaoReadyResponseDto kakaoReadyResponseDto;
-    private String partnerOrderId;
+//    private KakaoReadyResponseDto kakaoReadyResponseDto;
+//    private String partnerOrderId;
 
     /**
      * 1. Ready (결제 준비)
@@ -61,8 +72,6 @@ public class KakaoPayAsyncService {
 
         log.info("===== Thread Name : " + Thread.currentThread().getName() + " =====");
 
-        partnerOrderId = orderId;
-
         // 카카오페이 요청 양식
         Map<String, Object> params = new HashMap<>();
         params.put("cid", cid); // 가맹점 코드
@@ -72,9 +81,9 @@ public class KakaoPayAsyncService {
         params.put("quantity", kakaoReadyRequestDto.getQuantity()); // 상품 수량
         params.put("total_amount", kakaoReadyRequestDto.getTotalAmount()); // 상품 총액
         params.put("tax_free_amount", kakaoReadyRequestDto.getTaxFreeAmount()); // 상품 비과세 금액
-        params.put("approval_url", "http://localhost:8083/api/payment/success?product_id=" + kakaoReadyRequestDto.getProductId()); // 결제 성공 시 redirect url (인증이 완료되면 approval_url로 redirect)
-        params.put("cancel_url", "http://localhost:8083/api/payment/cancel?partner_order_id=" + partnerOrderId); // 결제 취소 시 redirect url
-        params.put("fail_url", "http://localhost:8083/api/payment/fail?partner_order_id=" + partnerOrderId); // 결제 실패 시 redirect url
+        params.put("approval_url", "http://localhost:8083/api/payment/success?product_id=" + kakaoReadyRequestDto.getProductId() + "&quantity=" + kakaoReadyRequestDto.getQuantity() + "&order_id=" + orderId); // 결제 성공 시 redirect url (인증이 완료되면 approval_url로 redirect)
+        params.put("cancel_url", "http://localhost:8083/api/payment/cancel?partner_order_id=" + orderId); // 결제 취소 시 redirect url
+        params.put("fail_url", "http://localhost:8083/api/payment/fail?partner_order_id=" + orderId); // 결제 실패 시 redirect url
 
         // 파라미터, 헤더 담기
         HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(params, this.getHeaders());
@@ -89,18 +98,25 @@ public class KakaoPayAsyncService {
 
 
 //        log.info("===== 카카오페이 서버로 post 요청 전송 =====");
-        kakaoReadyResponseDto = restTemplate.postForObject(
+        KakaoReadyResponseDto kakaoReadyResponseDto = restTemplate.postForObject(
                 "https://open-api.kakaopay.com/online/v1/payment/ready",
                 requestEntity,
                 KakaoReadyResponseDto.class);
         log.info("kakaoReadyResponseDto: {}", kakaoReadyResponseDto);
         log.info("===== Thread Name : " + Thread.currentThread().getName() + " 카카오페이 서버에서 데이터 응답 완료 =====");
 
+        // redis에 tid 저장
+        Tid tid = Tid.builder()
+                .orderId(orderId)
+                .tid(kakaoReadyResponseDto.getTid())
+                .build();
+        tidRepository.save(tid);
+
         return CompletableFuture.completedFuture(kakaoReadyResponseDto);
     }
 
     @Async
-//    public void insertOrderData(KakaoReadyRequestDto kakaoReadyRequestDto, String orderId, Principal principal) {
+//    public void insertOrderData(KakaoReadyRequestDto kakaoReadyRequestDto, String orderId, int userId) {
     public void insertOrderData(KakaoReadyRequestDto kakaoReadyRequestDto, String orderId) {
 
         log.info("===== Thread Name : " + Thread.currentThread().getName() + " =====");
@@ -110,8 +126,8 @@ public class KakaoPayAsyncService {
         log.info("===== Thread Name : " + Thread.currentThread().getName() + " 주문 데이터 insert 시작 =====");
         Order order = Order.builder()
                 .orderId(orderId)
-//                .user(userRepository.findByEmail(principal.getName()))
-                .user(userRepository.findByEmail("tpwls101@naver.com"))
+//                .user(userRepository.findById(userId))
+                .user(userRepository.findById(1).get())
                 .product(productRepository.findById(kakaoReadyRequestDto.getProductId()).get())
                 .orderDate(new Timestamp(System.currentTimeMillis()))
                 .productCount(kakaoReadyRequestDto.getQuantity())
@@ -127,6 +143,70 @@ public class KakaoPayAsyncService {
         log.info("===== Thread Name : " + Thread.currentThread().getName() + " 주문 데이터 insert 완료 =====");
     }
 
+
+
+    @Transactional
+    @Async
+//    public KakaoApproveResponseDto afterPayApproveRequest(String pgToken, int productId, int quantity, String orderId) {
+    public CompletableFuture<KakaoApproveResponseDto> afterPayApproveRequest(String pgToken, int productId, int quantity, String orderId) {
+
+        log.info(Thread.currentThread().getName() + " : afterPayApproveRequest 메서드 진입 (주문수량 : " + quantity + ")");
+
+        // 상품 데이터에 Lock 걸어서 재고 조회
+
+        // 특정 이름으로 Lock 정의
+        final String lockName = "product" + productId;
+        final RLock lock = redissonClient.getLock(lockName);
+        final String worker = Thread.currentThread().getName();
+        log.info(worker + " : lock 정의 완료");
+
+        try {
+            // 락 획득 시도 (20초 동안 시도하고 락을 획득할 경우 3초 후에 해제)
+            boolean available = lock.tryLock(20, 3, TimeUnit.SECONDS);
+            if(!available) {
+                log.info("===== " + worker + " : Lock Get Fail =====");
+                throw new RuntimeException("RuntimeException : Lock Get Fail");
+            }
+
+            // 락 획득 성공한 경우
+            log.info("===== " + worker + " : Lock Get Success =====");
+            int stock = productService.checkStock(productId); // 재고 조회
+            log.info("===== " + worker + " : 현재 재고 수 = " + stock);
+            if(stock > 0 && stock - quantity >= 0) {
+                log.info("===== " + worker + " : 카카오페이 서버로 승인 요청 전송 =====");
+                // 카카오페이 서버로 승인 요청 전송
+                KakaoApproveResponseDto kakaoApproveResponseDto = kakaoPayApprove(pgToken, orderId);
+                // 배송 정보 등 필요한 응답 데이터 추가 업데이트
+                Order order = orderRepository.findByOrderId(orderId);
+                kakaoApproveResponseDto.updateKakaoApproveResponseDto(order);
+
+                // 결제 데이터 insert (비동기)
+//                insertPaymentData(kakaoApproveResponseDto, principal);
+                insertPaymentData(kakaoApproveResponseDto);
+                // 재고 차감
+                productService.updateStock(productId, quantity);
+
+                log.info("===== " + worker + " : stock update completed =====");
+
+//                return kakaoApproveResponseDto;
+                return CompletableFuture.supplyAsync(() -> kakaoApproveResponseDto);
+
+            } else {
+                deleteOrder(orderId);
+                return null;
+            }
+
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+
+        } finally {
+            lock.unlock();
+            log.info("===== Unlock Completed =====");
+        }
+    }
+
+
+
     /**
      *
      * 2. Approve (결제 승인)
@@ -134,15 +214,17 @@ public class KakaoPayAsyncService {
      * 인증 완료시(테스트의 경우 비밀번호 입력 안하므로 결제하기 버튼 클릭시) 응답받은 pg_token과 tid로 최종 승인 요청함
      * 결제 승인 API를 호출하면 결제 준비 단계에서 시작된 결제건이 승인으로 완료 처리됨
      */
-    @Transactional
-    public KakaoApproveResponseDto kakaoPayApprove(String pgToken, Principal principal) {
+//    @Transactional
+    public KakaoApproveResponseDto kakaoPayApprove(String pgToken, String orderId) {
 
         // 카카오페이 요청 양식
         Map<String, String> params = new HashMap<>();
         params.put("cid", cid);
-        params.put("tid", kakaoReadyResponseDto.getTid());
-        params.put("partner_order_id", partnerOrderId);
+        log.info("tid : " + tidRepository.findById(orderId).get().getTid());
+        params.put("tid", tidRepository.findById(orderId).get().getTid());
+        params.put("partner_order_id", orderId);
         params.put("partner_user_id", "DDIB");
+        log.info("pgToken : " + pgToken);
         params.put("pg_token", pgToken);
 
         // 파라미터, 헤더 담기
@@ -156,12 +238,114 @@ public class KakaoPayAsyncService {
                 requestEntity,
                 KakaoApproveResponseDto.class);
 
-        // 배송 정보 등 필요한 데이터 추가 업데이트
-        Order order = orderRepository.findByOrderId(partnerOrderId);
-        kakaoApproveResponseDto.updateKakaoApproveResponseDto(order);
+        // 배송 정보 등 필요한 응답 데이터 추가 업데이트
+//        Order order = orderRepository.findByOrderId(partnerOrderId);
+//        kakaoApproveResponseDto.updateKakaoApproveResponseDto(order);
+
+        return kakaoApproveResponseDto;
+    }
+
+    /**
+     * 동시성 제어 테스트를 위한 비동기 메서드
+     * Redisson 적용 메서드
+     */
+    @Async
+    public void buyProduct(int i, int productId, int quantity) {
+
+        final String worker = Thread.currentThread().getName();
+//        log.info(worker + " : " + i + "번 사용자 상품 구매 시작");
+        log.info(worker + " : user" + i + " started to buy product");
+
+        // 특정 이름으로 Lock 정의
+        final String lockName = "product" + productId;
+        final RLock lock = redissonClient.getLock(lockName);
+//        log.info(worker + " : " + i + "번 사용자 lock 정의 완료");
+        log.info(worker + " : user " + i + " defined lock");
+
+        try {
+            // 락 획득 시도 (20초 동안 시도하고 락을 획득할 경우 3초 후에 해제)
+            boolean available = lock.tryLock(20, 3, TimeUnit.SECONDS);
+            if(!available) {
+//                log.info("===== " + worker + " : Lock 획득 실패 =====");
+                log.info("===== " + worker + " : Lock Get Fail =====");
+//                throw new RuntimeException("Lock을 획득하지 못했습니다.");
+                throw new RuntimeException("RuntimeException : Lock Get Fail");
+            }
+
+            // 락 획득 성공한 경우
+//            log.info("===== " + worker + " : Lock 획득 성공 =====");
+            log.info("===== " + worker + " : Lock Get Success =====");
+            int stock = productService.checkStock(productId); // 재고 조회
+            log.info("===== " + worker + " : 현재 재고 수 = " + stock);
+            if(stock > 0 && stock - quantity >= 0) {
+                // 카카오페이 서버로 승인 요청 전송
+//                KakaoApproveResponseDto kakaoApproveResponseDto = kakaoPayAsyncService.kakaoPayApprove(pgToken);
+
+                // 결제 데이터 insert (비동기)
+//                kakaoPayAsyncService.insertPaymentData(kakaoApproveResponseDto, principal);
+                // 재고 차감
+                productService.updateStock(productId, quantity);
+//                log.info("===== " + worker + " : 재고 차감 완료 =====");
+                log.info("===== " + worker + " : stock update completed =====");
+
+//                return new ResponseEntity<>(kakaoApproveResponseDto, HttpStatus.OK);
+
+            }
+//            else {
+//                kakaoPayAsyncService.deleteOrder(orderId);
+//                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//            }
+
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+
+        } finally {
+            lock.unlock();
+//            log.info("===== Lock 해제 완료 =====");
+            log.info("===== Unlock Completed =====");
+        }
+
+    }
+
+    /**
+     * 동시성 제어 테스트를 위한 비동기 메서드
+     * Redisson 적용 안한 메서드
+     */
+    @Async
+    public void buyProductWithNoRedisson(int i, int productId, int quantity) {
+
+        final String worker = Thread.currentThread().getName();
+//        log.info(worker + " : " + i + "번 사용자 상품 구매 시작");
+        log.info(worker + " : user" + i + " started to buy product");
+
+        int stock = productService.checkStock(productId); // 재고 조회
+        if(stock > 0 && stock - quantity >= 0) {
+            // 카카오페이 서버로 승인 요청 전송
+//                KakaoApproveResponseDto kakaoApproveResponseDto = kakaoPayAsyncService.kakaoPayApprove(pgToken);
+
+            // 결제 데이터 insert (비동기)
+//                kakaoPayAsyncService.insertPaymentData(kakaoApproveResponseDto, principal);
+            // 재고 차감
+            productService.updateStock(productId, quantity);
+//                log.info("===== " + worker + " : 재고 차감 완료 =====");
+            log.info("===== " + worker + " : stock update completed =====");
+
+//                return new ResponseEntity<>(kakaoApproveResponseDto, HttpStatus.OK);
+
+        }
+//            else {
+//                kakaoPayAsyncService.deleteOrder(orderId);
+//                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//            }
+
+    }
+
+    @Async
+//    public void insertPaymentData(KakaoApproveResponseDto kakaoApproveResponseDto, int userId) {
+    public void insertPaymentData(KakaoApproveResponseDto kakaoApproveResponseDto) {
 
         // 결제 테이블에 Data Insert
-        log.info("===== 결제 테이블에 Data Insert =====");
+        log.info("===== 결제 테이블에 Data Insert 시작 =====");
 
         Payment payment = Payment.builder()
                 .tid(kakaoApproveResponseDto.getTid())
@@ -169,38 +353,24 @@ public class KakaoPayAsyncService {
                 .taxFree(kakaoApproveResponseDto.getAmount().getTax_free())
                 .paymentMethodType(kakaoApproveResponseDto.getPayment_method_type())
                 .paymentDate(kakaoApproveResponseDto.getApproved_at())
-//                .user(userRepository.findByEmail(principal.getName()))
-                .user(userRepository.findByEmail("tpwls101@naver.com"))
-                .order(orderRepository.findByOrderId(partnerOrderId))
+//                .user(userRepository.findById(userId))
+                .user(userRepository.findById(1).get())
+                .order(orderRepository.findByOrderId(kakaoApproveResponseDto.getPartner_order_id()))
                 .status(PaymentStatus.PAYMENT_COMPLETED)
                 .build();
         paymentRepository.save(payment);
-
-        return kakaoApproveResponseDto;
+        log.info("===== 결제 테이블에 Data Insert 완료 =====");
     }
 
     /**
-     * 결제 진행 중 취소
-     * 결제 준비 요청에서 insert된 주문 데이터 삭제
+     * 1. 결제 진행 중 취소일 때
+     * 2. 결제 실패일 때
+     * 3. 결제 승인 중 재고가 없어서 주문 데이터 삭제할 때
      */
     @Async
     @Transactional
-    public void cancel(String orderId) {
-        log.info("===== Thread Name : " + Thread.currentThread().getName() + " 결제 진행 중 취소로 인한 주문데이터 삭제 시작 =====");
+    public void deleteOrder(String orderId) {
         orderRepository.deleteByOrderId(orderId);
-        log.info("===== Thread Name : " + Thread.currentThread().getName() + " 결제 진행 중 취소로 인한 주문데이터 삭제 완료 =====");
-    }
-
-    /**
-     * 결제 실패
-     * 결제 준비 요청에서 insert된 주문 데이터 삭제
-     */
-    @Async
-    @Transactional
-    public void fail(String orderId) {
-        log.info("===== Thread Name : " + Thread.currentThread().getName() + " 결제 실패로 인한 주문데이터 삭제 시작 =====");
-        orderRepository.deleteByOrderId(orderId);
-        log.info("===== Thread Name : " + Thread.currentThread().getName() + " 결제 실패로 인한 주문데이터 삭제 완료 =====");
     }
 
     /**

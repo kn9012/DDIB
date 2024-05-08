@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class SwaggerConfig {
+
     @Bean
     public OpenAPI openAPI() {
         String key = "Access Token (Bearer)";
@@ -17,7 +18,7 @@ public class SwaggerConfig {
         Info info = new Info()
                 .title("DDIB API 명세서")
                 .version("v1")
-                .description("DDIB API 명세서입니다.");
+                .description("DDIB PAYMENT API 명세서입니다.");
 
         SecurityRequirement securityRequirement = new SecurityRequirement()
                 .addList(key);
@@ -35,4 +36,5 @@ public class SwaggerConfig {
                 .components(components)
                 .info(info);
     }
+
 }

@@ -1,8 +1,8 @@
 pipeline {
     agent any
-    tools {
-        gradle 'Gradle 8.5'
-    }
+//    tools {
+//        gradle 'Gradle 8.5'
+//    }
     environment {
         DOCKER_IMAGE_NAME = 'kimyusan/ddib_payment'
         DOCKERFILE_PATH = './payment/Dockerfile'

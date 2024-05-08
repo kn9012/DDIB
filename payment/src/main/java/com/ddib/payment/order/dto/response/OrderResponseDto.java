@@ -19,7 +19,7 @@ public class OrderResponseDto {
 
     @Schema(description = "주문 상태")
     @NotNull
-    private String status;
+    private int status;
 
     @Schema(description = "기업명")
     @NotNull
@@ -28,6 +28,10 @@ public class OrderResponseDto {
     @Schema(description = "상품 썸네일 이미지")
     @NotNull
     private String thumbnailImage;
+
+    @Schema(description = "상품 식별키")
+    @NotNull
+    private int productId;
 
     @Schema(description = "상품명")
     @NotNull

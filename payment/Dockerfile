@@ -9,6 +9,4 @@ VOLUME /tmp
 COPY build/libs/*.jar payment.jar
 
 # 실행할 명령어
-# ENTRYPOINT ["java", "-jar", "user.jar" ,"--spring.profiles.active=prod"]
-
-ENTRYPOINT ["java", "-jar", "payment.jar" , "--spring.profiles.active=prod"]
+ENTRYPOINT ["java", "-jar", "payment.jar", "--spring.profiles.active=prod"]

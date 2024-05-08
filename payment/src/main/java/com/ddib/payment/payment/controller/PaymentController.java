@@ -54,15 +54,15 @@ public class PaymentController {
             @ApiResponse(responseCode = "200", description = "성공"),
             @ApiResponse(responseCode = "400", description = "재고 없음")
     })
-    @PostMapping("/ready")
+    @PostMapping("/ready/{userId}")
     // 1. 동기 방식
-//    public ResponseEntity<?> readyToKakaoPay(@RequestBody KakaoReadyRequestDto kakaoReadyRequestDto, Principal principal) {
+//    public ResponseEntity<?> readyToKakaoPay(@RequestBody KakaoReadyRequestDto kakaoReadyRequestDto, @PathVariable int userId) {
 //    public ResponseEntity<?> readyToKakaoPay(@RequestBody KakaoReadyRequestDto kakaoReadyRequestDto) {
 //        // 재고 조회
 //        int stock = productService.checkStock(kakaoReadyRequestDto.getProductId());
 //
 //        if(stock > 0) {
-//            KakaoReadyResponseDto kakaoReadyResponseDto = kakaoPayService.kakaoPayReady(kakaoReadyRequestDto, principal);
+//            KakaoReadyResponseDto kakaoReadyResponseDto = kakaoPayService.kakaoPayReady(kakaoReadyRequestDto, userId);
 //            KakaoReadyResponseDto kakaoReadyResponseDto = kakaoPayService.kakaoPayReady(kakaoReadyRequestDto);
 //            return new ResponseEntity<>(kakaoReadyResponseDto, HttpStatus.OK);
 //        } else {
@@ -71,7 +71,7 @@ public class PaymentController {
 //    }
 
     // 2. 비동기 방식 (기본 ThreadPoolTaskExecutor)
-//    public CompletableFuture<KakaoReadyResponseDto> readyToKakaoPay(@RequestBody KakaoReadyRequestDto kakaoReadyRequestDto, Principal principal) {
+//    public CompletableFuture<KakaoReadyResponseDto> readyToKakaoPay(@RequestBody KakaoReadyRequestDto kakaoReadyRequestDto, int userId) {
     public CompletableFuture<?> readyToKakaoPay(@RequestBody KakaoReadyRequestDto kakaoReadyRequestDto) {
         log.info("================================");
         // 재고 조회
@@ -80,7 +80,7 @@ public class PaymentController {
         if(stock > 0) {
             String orderId = OrderIdGenerator.generateOrderId();
             CompletableFuture<KakaoReadyResponseDto> kakaoReadyResponseDto = kakaoPayAsyncService.kakaoPayReady(kakaoReadyRequestDto, orderId);
-//            kakaoPayAsyncService.insertOrderData(kakaoReadyRequestDto, orderId, principal);
+//            kakaoPayAsyncService.insertOrderData(kakaoReadyRequestDto, orderId, userId);
             kakaoPayAsyncService.insertOrderData(kakaoReadyRequestDto, orderId);
 
             log.info("============= 끝 ===================");
@@ -98,7 +98,7 @@ public class PaymentController {
     }
 
     // 3. 비동기 방식 (커스텀 ThreadPoolTaskExecutor)
-//    public CompletableFuture<KakaoReadyResponseDto> readyToKakaoPay(@RequestBody KakaoReadyRequestDto kakaoReadyRequestDto, Principal principal) {
+//    public CompletableFuture<KakaoReadyResponseDto> readyToKakaoPay(@RequestBody KakaoReadyRequestDto kakaoReadyRequestDto, int userId) {
 //    public CompletableFuture<KakaoReadyResponseDto> readyToKakaoPay(@RequestBody KakaoReadyRequestDto kakaoReadyRequestDto) {
 //        log.info("================================");
 //        // 재고 조회
@@ -107,7 +107,7 @@ public class PaymentController {
 //        if(stock > 0) {
 //            String orderId = OrderIdGenerator.generateOrderId();
 //            CompletableFuture<KakaoReadyResponseDto> kakaoReadyResponseDto = kakaoPayAsyncService.kakaoPayReady(kakaoReadyRequestDto, orderId);
-////            kakaoPayAsyncService.insertOrderData(kakaoReadyRequestDto, orderId, principal);
+////            kakaoPayAsyncService.insertOrderData(kakaoReadyRequestDto, orderId, userId);
 //            kakaoPayAsyncService.insertOrderData(kakaoReadyRequestDto, orderId);
 //
 //            log.info("============= 끝 ===================");
@@ -134,7 +134,7 @@ public class PaymentController {
 //            @ApiResponse(responseCode = "400", description = "재고없음 / 주문 수량이 현재 재고보다 많음"),
 //    })
 //    @GetMapping("/success")
-//    public ResponseEntity<?> afterPayApproveRequest(@RequestParam("pg_token") String pgToken, @RequestParam("product_id") int productId, @RequestParam("quantity") int quantity, @RequestParam("order_id") String orderId, Principal principal) {
+//    public ResponseEntity<?> afterPayApproveRequest(@RequestParam("pg_token") String pgToken, @RequestParam("product_id") int productId, @RequestParam("quantity") int quantity, @RequestParam("order_id") String orderId, int userId) {
 //        log.info("===== 결제 승인 API 시작 =====");
 //
 //        // 상품 데이터에 Lock 걸어서 재고 조회
@@ -160,7 +160,7 @@ public class PaymentController {
 //                KakaoApproveResponseDto kakaoApproveResponseDto = kakaoPayAsyncService.kakaoPayApprove(pgToken);
 //
 //                // 결제 데이터 insert (비동기)
-//                kakaoPayAsyncService.insertPaymentData(kakaoApproveResponseDto, principal);
+//                kakaoPayAsyncService.insertPaymentData(kakaoApproveResponseDto, userId);
 //                // 재고 차감
 //                productService.updateStock(productId, quantity);
 //                log.info("===== " + worker + " : stock update completed =====");
@@ -183,10 +183,10 @@ public class PaymentController {
 //
 //
 //        // 1. 동기 방식
-////        KakaoApproveResponseDto kakaoApproveResponseDto = kakaoPayService.kakaoPayApprove(pgToken, principal);
+////        KakaoApproveResponseDto kakaoApproveResponseDto = kakaoPayService.kakaoPayApprove(pgToken, userId);
 //
 //        // 2. 비동기 방식 (기본 ThreadPoolTaskExecutor)
-////        KakaoApproveResponseDto kakaoApproveResponseDto = kakaoPayAsyncService.kakaoPayApprove(pgToken, principal);
+////        KakaoApproveResponseDto kakaoApproveResponseDto = kakaoPayAsyncService.kakaoPayApprove(pgToken, userId);
 //
 //        // 재고 차감
 ////        productService.updateStock(productId, kakaoApproveResponseDto.getQuantity());
@@ -206,18 +206,29 @@ public class PaymentController {
             @ApiResponse(responseCode = "400", description = "재고없음 / 주문 수량이 현재 재고보다 많음"),
     })
     @GetMapping("/success")
-//    public ResponseEntity<?> afterPayApproveRequest(@RequestParam("pg_token") String pgToken, @RequestParam("product_id") int productId, @RequestParam("quantity") int quantity, @RequestParam("order_id") String orderId, Principal principal) {
-    public CompletableFuture<?> afterPayApproveRequest(@RequestParam("pg_token") String pgToken, @RequestParam("product_id") int productId, @RequestParam("quantity") int quantity, @RequestParam("order_id") String orderId, Principal principal) {
-        log.info("===== 결제 승인 API 시작 =====");
+//    public ResponseEntity<?> afterPayApproveRequest(@RequestParam("pg_token") String pgToken, @RequestParam("product_id") int productId, @RequestParam("quantity") int quantity, @RequestParam("order_id") String orderId) {
+    @Async
+    public CompletableFuture<?> afterPayApproveRequest(@RequestParam("pg_token") String pgToken, @RequestParam("product_id") int productId, @RequestParam("quantity") int quantity, @RequestParam("order_id") String orderId) {
+        log.info("===== 결제 승인 API 시작 : 주문 수량은 " + quantity +  "개 =====");
 //        KakaoApproveResponseDto kakaoApproveResponseDto = kakaoPayAsyncService.afterPayApproveRequest(pgToken, productId, quantity, orderId);
         CompletableFuture<KakaoApproveResponseDto> kakaoApproveResponseDto = kakaoPayAsyncService.afterPayApproveRequest(pgToken, productId, quantity, orderId);
 
+//        try {
+//            Thread.sleep(5L);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
+        log.info(Thread.currentThread().getName() + "카카오 승인 후 재고 차감까지 완료한 후 현재 contoller단");
+
         if(kakaoApproveResponseDto != null) {
 //            return new ResponseEntity<>(kakaoApproveResponseDto, HttpStatus.OK);
-            return CompletableFuture.supplyAsync(() -> kakaoApproveResponseDto).join();
+            log.info(Thread.currentThread().getName() + "응답 완료 직전");
+//            return CompletableFuture.supplyAsync(() -> kakaoApproveResponseDto).join();
+            return CompletableFuture.supplyAsync(() -> "redirect:/order/complete/" + orderId);
         } else {
 //            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            return CompletableFuture.supplyAsync(() -> new ResponseEntity<>(HttpStatus.BAD_REQUEST));
+//            return CompletableFuture.supplyAsync(() -> new ResponseEntity<>(HttpStatus.BAD_REQUEST));
+            return CompletableFuture.supplyAsync(() -> "redirect:/order/fail");
         }
     }
 

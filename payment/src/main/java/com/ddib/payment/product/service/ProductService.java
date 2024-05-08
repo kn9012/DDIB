@@ -57,6 +57,7 @@ public class ProductService {
 
         if(currentStock - quantity >= 0) {
             product.get().updateStock(currentStock, quantity);
+            productRepository.flush();
         }
     }
 

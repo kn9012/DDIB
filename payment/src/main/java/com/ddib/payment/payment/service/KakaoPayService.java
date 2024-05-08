@@ -52,7 +52,7 @@ public class KakaoPayService {
      * Secret Key를 헤더에 담아 파라미터 값들과 함께 POST로 요청
      * 결제 고유번호(TID)와 redirect URL을 응답받음
      */
-//    public KakaoReadyResponseDto kakaoPayReady(KakaoReadyRequestDto kakaoReadyRequestDto, Principal principal) {
+//    public KakaoReadyResponseDto kakaoPayReady(KakaoReadyRequestDto kakaoReadyRequestDto, int userId) {
     public KakaoReadyResponseDto kakaoPayReady(KakaoReadyRequestDto kakaoReadyRequestDto) {
 
 //        log.info("===== Thread Name : " + Thread.currentThread().getName() + " =====");
@@ -97,8 +97,8 @@ public class KakaoPayService {
 //        log.info("===== Thread Name : " + Thread.currentThread().getName() + " 주문 테이블에 Data Insert 시작 =====");
         Order order = Order.builder()
                 .orderId(partnerOrderId)
-//                .user(userRepository.findByEmail(principal.getName()))
-                .user(userRepository.findByEmail("tpwls101@naver.com"))
+//                .user(userRepository.findById(userId))
+                .user(userRepository.findById(1).get())
                 .product(productRepository.findById(kakaoReadyRequestDto.getProductId()).get())
                 .orderDate(new Timestamp(System.currentTimeMillis()))
                 .productCount(kakaoReadyRequestDto.getQuantity())
@@ -122,7 +122,7 @@ public class KakaoPayService {
      * 인증 완료시(테스트의 경우 비밀번호 입력 안하므로 결제하기 버튼 클릭시) 응답받은 pg_token과 tid로 최종 승인 요청함
      * 결제 승인 API를 호출하면 결제 준비 단계에서 시작된 결제건이 승인으로 완료 처리됨
      */
-//    public KakaoApproveResponseDto kakaoPayApprove(String pgToken, Principal principal) {
+//    public KakaoApproveResponseDto kakaoPayApprove(String pgToken, int userId) {
     public KakaoApproveResponseDto kakaoPayApprove(String pgToken) {
 
         // 카카오페이 요청 양식
@@ -154,8 +154,8 @@ public class KakaoPayService {
                 .taxFree(kakaoApproveResponseDto.getAmount().getTax_free())
                 .paymentMethodType(kakaoApproveResponseDto.getPayment_method_type())
                 .paymentDate(kakaoApproveResponseDto.getApproved_at())
-//                .user(userRepository.findByEmail(principal.getName()))
-                .user(userRepository.findByEmail("tpwls101@naver.com"))
+//                .user(userRepository.findById(userId))
+                .user(userRepository.findById(1).get())
                 .order(orderRepository.findByOrderId(partnerOrderId))
                 .status(PaymentStatus.PAYMENT_COMPLETED)
                 .build();

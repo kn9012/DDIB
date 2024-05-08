@@ -35,7 +35,7 @@ public class ConcurrencyTest {
         int productId = 1;
         int quantity = 1;
 
-        // 동시 사용자 2명으로 가정
+        // 동시 사용자 100명으로 가정
         for(int i=1; i<=100; i++) {
             kakaoPayAsyncService.buyProduct(i, productId, quantity);
 //            kakaoPayAsyncService.buyProductWithNoRedisson(i, productId, quantity);

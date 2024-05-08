@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 server:
   port: 8083
 
@@ -43,3 +44,8 @@ pay:
 #    path: /api-docs
 #  default-consumes-media-type: application/json;charset=UTF-8
 #  default-produces-media-type: application/json;charset=UTF-8
+=======
+spring:
+  profiles:
+    active: dev
+>>>>>>> eba0b6e5e0fc2b98fc2cc7e80a0acc14cbb497f0

@@ -213,7 +213,7 @@ public class PaymentController {
         CompletableFuture<KakaoApproveResponseDto> kakaoApproveResponseDto = kakaoPayAsyncService.afterPayApproveRequest(pgToken, productId, quantity, orderId);
 
 //        try {
-//            Thread.sleep(5L);
+//            Thread.sleep(1000L);
 //        } catch (InterruptedException e) {
 //            throw new RuntimeException(e);
 //        }

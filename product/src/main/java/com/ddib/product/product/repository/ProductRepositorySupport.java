@@ -24,20 +24,19 @@ public class ProductRepositorySupport {
 
     QProduct qProduct = QProduct.product;
 
-//    @Deprecated
-//    public List<Product> getTodayList() {
-//        LocalDate today = LocalDate.now();
-//        LocalDate tomorrow = today.plusDays(1);
-//
-//        return jpaQueryFactory
-//                .selectFrom(qProduct)
-//                .where(
-//                        qProduct.eventDate.goe(Timestamp.valueOf(today.atStartOfDay())),
-//                        qProduct.eventDate.lt(Timestamp.valueOf(tomorrow.atStartOfDay()))
-//                )
-//                .orderBy(qProduct.isOver.asc(), qProduct.eventDate.asc(), qProduct.eventStartTime.asc())
-//                .fetch();
-//    }
+    public List<Product> getTodayListAll() {
+        LocalDate today = LocalDate.now();
+        LocalDate tomorrow = today.plusDays(1);
+
+        return jpaQueryFactory
+                .selectFrom(qProduct)
+                .where(
+                        qProduct.eventStartDate.goe(Timestamp.valueOf(today.atStartOfDay())),
+                        qProduct.eventStartDate.lt(Timestamp.valueOf(tomorrow.atStartOfDay()))
+                )
+                .orderBy(qProduct.eventStartTime.asc())
+                .fetch();
+    }
 
     public List<Product> getTodayListOver() {
         LocalDate today = LocalDate.now();

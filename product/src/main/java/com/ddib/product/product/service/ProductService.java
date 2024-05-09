@@ -77,14 +77,19 @@ public class ProductService {
                 .toList();
 
         // 하루 데이터
-        List<ProductResponseDto> todayOverProducts = productRepositorySupport.getTodayListOver()
+//        List<ProductResponseDto> todayOverProducts = productRepositorySupport.getTodayListOver()
+//                .stream()
+//                .map(ProductResponseDto::of)
+//                .toList();
+
+        List<ProductResponseDto> todayAllProducts = productRepositorySupport.getTodayListAll()
                 .stream()
                 .map(ProductResponseDto::of)
                 .toList();
 
         return ProductMainResponseDto.builder()
                 .todayNotOverProducts(todayNotOverProducts)
-                .todayOverProducts(todayOverProducts)
+                .todayProducts(todayAllProducts)
                 .build();
     }
 

@@ -60,7 +60,7 @@ class ProductControllerTest {
         productResponseDtos.add(productResponseDto);
 
         productMainResponseDto = ProductMainResponseDto.builder()
-                .todayOverProducts(productResponseDtos)
+                .todayProducts(productResponseDtos)
                 .todayNotOverProducts(productResponseDtos)
                 .build();
     }

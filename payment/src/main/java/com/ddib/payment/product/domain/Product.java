@@ -27,9 +27,9 @@ public class Product {
     @ManyToOne
     private Seller seller;
 
-    @Schema(description = "카테고리")
-    @Column(nullable = false)
-    private boolean category;
+//    @Schema(description = "카테고리")
+//    @Column(nullable = false)
+//    private boolean category;
 
     @Schema(description = "상품명")
     @Column(nullable = false)
@@ -43,9 +43,13 @@ public class Product {
     @Column(nullable = false)
     private int stock;
 
-    @Schema(description = "이벤트일")
+    @Schema(description = "이벤트 시작일")
     @Column(nullable = false)
-    private Timestamp eventDate;
+    private Timestamp eventStartDate;
+
+    @Schema(description = "이벤트 종료일")
+    @Column(nullable = false)
+    private Timestamp eventEndDate;
 
     @Schema(description = "이벤트 시작시간")
     @Column(nullable = false)

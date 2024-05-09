@@ -340,6 +340,7 @@ public class KakaoPayAsyncService {
 
         // 결제 테이블에 Data Insert
         log.info("===== 결제 테이블에 Data Insert 시작 =====");
+        log.info("insertPaymentData()에서의 결제 승인 시각 : " + kakaoApproveResponseDto.getApproved_at());
 
         Payment payment = Payment.builder()
                 .tid(kakaoApproveResponseDto.getTid())

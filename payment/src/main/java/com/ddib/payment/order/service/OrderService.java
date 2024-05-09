@@ -23,12 +23,17 @@ public class OrderService {
     private final PaymentRepository paymentRepository;
 
     public List<OrderResponseDto> viewOrderList(int userId) {
+        log.info("===== 주문내역 목록 조회 service단 진입 =====");
         List<OrderResponseDto> orderResponseDtoList = new ArrayList<>();
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         List<Order> orderList = orderRepository.findAllByUserId(userId);
         for(Order order : orderList) {
+            log.info("order : " + order);
+            log.info("orderId : " + order.getOrderId());
+            log.info("productId : " + order.getProduct().getProductId());
+            log.info("totalAmount : " + order.getTotalPrice());
             OrderResponseDto orderResponseDto = OrderResponseDto.builder()
                     .orderId(order.getOrderId())
                     .orderDate(sdf.format(order.getOrderDate()))
@@ -48,6 +53,7 @@ public class OrderService {
                     .paymentMethod(paymentRepository.findByOrderId(order.getOrderId()).getPaymentMethodType())
                     .build();
             orderResponseDtoList.add(orderResponseDto);
+            log.info("===== orderResponseDtolist에 add 완료 =====");
         }
 
         return orderResponseDtoList;

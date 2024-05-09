@@ -65,6 +65,20 @@ dependencies {
 
 	// Filebeat
 	implementation group: 'net.logstash.logback', name: 'logstash-logback-encoder', version: '6.3'
+
+	// fluentd
+
+	// Additional Logback appenders
+	implementation 'com.sndyuk:logback-more-appenders:1.8.3'
+
+	// Fluentd appender
+	implementation 'org.fluentd:fluent-logger:0.3.4'
+
+	// Fluency core (optional)
+	implementation 'org.komamitsu:fluency-core:2.4.1'
+
+	// Fluency for Fluentd (optional)
+	implementation 'org.komamitsu:fluency-fluentd:2.4.1'
 }
 
 dependencyManagement {

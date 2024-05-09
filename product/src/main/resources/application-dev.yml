@@ -22,18 +22,28 @@ spring:
     jdbc:
       initialize-schema: always
 
-#management:
-#  tracing:
-#    sampling:
-#      probability: 1.0
-#    propagation:
-#      consume: b3
-#      produce: b3_multi
-#  zipkin:
-#    tracing:
-#      endpoint: "http://127.0.0.1:9411/api/v2/spans"
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+    propagation:
+      consume: b3
+      produce: b3_multi
+  zipkin:
+    tracing:
+      endpoint: "http://127.0.0.1:9411/api/v2/spans"
 
 eureka:
+  instance:
+    hostname: 127.0.0.1
   client:
     serviceUrl:
       defaultZone: ${EUREKA_URL:http://127.0.0.1:8761/eureka/}
+
+
+logging:
+  level:
+    com:
+      ddib:
+        product: info
+  config: classpath:logback-dev.xml

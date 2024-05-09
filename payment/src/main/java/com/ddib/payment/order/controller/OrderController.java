@@ -29,7 +29,6 @@ public class OrderController {
     public ResponseEntity<List<OrderResponseDto>> viewOrderList(@PathVariable int userId) {
         log.info("===== 주문내역 목록 조회 API 시작 =====");
         List<OrderResponseDto> orderResponseDtoList = orderService.viewOrderList(userId);
-        log.info("===== 응답 데이터 returng하자 =====");
         return new ResponseEntity<>(orderResponseDtoList, HttpStatus.OK);
     }
 
@@ -37,6 +36,7 @@ public class OrderController {
     @ApiResponse(responseCode = "200", description = "성공")
     @GetMapping("/detail/{orderId}")
     public ResponseEntity<OrderResponseDto> viewOrderDetail(@PathVariable String orderId) {
+        log.info("===== 주문내역 상세 조회 API 시작 =====");
         OrderResponseDto orderResponseDto = orderService.viewOrderDetail(orderId);
         return new ResponseEntity<>(orderResponseDto, HttpStatus.OK);
     }

@@ -23,6 +23,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.security.Principal;
 import java.util.concurrent.CompletableFuture;
@@ -218,15 +219,17 @@ public class PaymentController {
 //        }
         log.info(Thread.currentThread().getName() + "카카오 승인 후 재고 차감까지 완료한 후 현재 contoller단");
 
+        RedirectView redirectView = new RedirectView();
         if(kakaoApproveResponseDto != null) {
-//            return new ResponseEntity<>(kakaoApproveResponseDto, HttpStatus.OK);
             log.info(Thread.currentThread().getName() + "응답 완료 직전");
 //            return CompletableFuture.supplyAsync(() -> kakaoApproveResponseDto).join();
-            return CompletableFuture.supplyAsync(() -> "redirect:/order/complete/" + orderId);
+            redirectView.setUrl("http://k10c102.p.ssafy.io:3000/order/complete/" + orderId);
+            return CompletableFuture.supplyAsync(() -> redirectView);
         } else {
 //            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 //            return CompletableFuture.supplyAsync(() -> new ResponseEntity<>(HttpStatus.BAD_REQUEST));
-            return CompletableFuture.supplyAsync(() -> "redirect:/order/fail");
+            redirectView.setUrl("http://k10c102.p.ssafy.io:3000/order/fail");
+            return CompletableFuture.supplyAsync(() -> redirectView);
         }
     }
 

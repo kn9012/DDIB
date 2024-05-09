@@ -22,10 +22,18 @@ spring:
       port: 6379
 
 # -- Eureka client
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: ${EUREKA_URL:http://k10c102.p.ssafy.io:8761/eureka/}
 eureka:
+  instance:
+    hostname: k10c102.p.ssafy.io
   client:
-    serviceUrl:
-      defaultZone: ${EUREKA_URL:http://k10c102.p.ssafy.io:8761/eureka/}
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://k10c102.p.ssafy.io:8761/eureka/
 
 # -- KakaoPay
 pay:

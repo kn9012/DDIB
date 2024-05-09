@@ -81,4 +81,9 @@ public class Product {
         log.info("stock : " + this.stock);
     }
 
+    public void updateStockByRefund(int quantity) {
+        this.stock += quantity;
+        log.info("stock : " + this.stock);
+    }
+
 }

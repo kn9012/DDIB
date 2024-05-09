@@ -212,11 +212,6 @@ public class PaymentController {
 
         CompletableFuture<KakaoApproveResponseDto> kakaoApproveResponseDto = kakaoPayAsyncService.afterPayApproveRequest(pgToken, productId, quantity, orderId);
 
-//        try {
-//            Thread.sleep(5L);
-//        } catch (InterruptedException e) {
-//            throw new RuntimeException(e);
-//        }
         log.info(Thread.currentThread().getName() + "카카오 승인 후 재고 차감까지 완료한 후 현재 contoller단");
 
         RedirectView redirectView = new RedirectView();

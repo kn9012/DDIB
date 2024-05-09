@@ -116,18 +116,15 @@ public class KakaoPayAsyncService {
     }
 
     @Async
-//    public void insertOrderData(KakaoReadyRequestDto kakaoReadyRequestDto, String orderId, int userId) {
-    public void insertOrderData(KakaoReadyRequestDto kakaoReadyRequestDto, String orderId) {
+    public void insertOrderData(KakaoReadyRequestDto kakaoReadyRequestDto, String orderId, int userId) {
 
         log.info("===== Thread Name : " + Thread.currentThread().getName() + " =====");
-//        log.info("===== Thread Name : " + Thread.currentThread().getName() + " insertOrderData 메서드 진입 =====");
 
         // 주문 테이블에 Data Insert
         log.info("===== Thread Name : " + Thread.currentThread().getName() + " 주문 데이터 insert 시작 =====");
         Order order = Order.builder()
                 .orderId(orderId)
-//                .user(userRepository.findById(userId))
-                .user(userRepository.findById(1).get())
+                .user(userRepository.findById(userId).get())
                 .product(productRepository.findById(kakaoReadyRequestDto.getProductId()).get())
                 .orderDate(new Timestamp(System.currentTimeMillis()))
                 .productCount(kakaoReadyRequestDto.getQuantity())
@@ -147,7 +144,6 @@ public class KakaoPayAsyncService {
 
     @Transactional
     @Async
-//    public KakaoApproveResponseDto afterPayApproveRequest(String pgToken, int productId, int quantity, String orderId) {
     public CompletableFuture<KakaoApproveResponseDto> afterPayApproveRequest(String pgToken, int productId, int quantity, String orderId) {
 
         log.info(Thread.currentThread().getName() + " : afterPayApproveRequest 메서드 진입 (주문수량 : " + quantity + ")");
@@ -181,8 +177,7 @@ public class KakaoPayAsyncService {
                 kakaoApproveResponseDto.updateKakaoApproveResponseDto(order);
 
                 // 결제 데이터 insert (비동기)
-//                insertPaymentData(kakaoApproveResponseDto, principal);
-                insertPaymentData(kakaoApproveResponseDto);
+                insertPaymentData(kakaoApproveResponseDto, order.getUser().getUserId());
                 // 재고 차감
                 productService.updateStock(productId, quantity);
 
@@ -341,8 +336,7 @@ public class KakaoPayAsyncService {
     }
 
     @Async
-//    public void insertPaymentData(KakaoApproveResponseDto kakaoApproveResponseDto, int userId) {
-    public void insertPaymentData(KakaoApproveResponseDto kakaoApproveResponseDto) {
+    public void insertPaymentData(KakaoApproveResponseDto kakaoApproveResponseDto, int userId) {
 
         // 결제 테이블에 Data Insert
         log.info("===== 결제 테이블에 Data Insert 시작 =====");
@@ -353,8 +347,7 @@ public class KakaoPayAsyncService {
                 .taxFree(kakaoApproveResponseDto.getAmount().getTax_free())
                 .paymentMethodType(kakaoApproveResponseDto.getPayment_method_type())
                 .paymentDate(kakaoApproveResponseDto.getApproved_at())
-//                .user(userRepository.findById(userId))
-                .user(userRepository.findById(1).get())
+                .user(userRepository.findById(userId).get())
                 .order(orderRepository.findByOrderId(kakaoApproveResponseDto.getPartner_order_id()))
                 .status(PaymentStatus.PAYMENT_COMPLETED)
                 .build();

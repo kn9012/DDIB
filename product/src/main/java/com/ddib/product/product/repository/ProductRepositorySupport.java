@@ -24,22 +24,21 @@ public class ProductRepositorySupport {
 
     QProduct qProduct = QProduct.product;
 
-//    @Deprecated
-//    public List<Product> getTodayList() {
-//        LocalDate today = LocalDate.now();
-//        LocalDate tomorrow = today.plusDays(1);
-//
-//        return jpaQueryFactory
-//                .selectFrom(qProduct)
-//                .where(
-//                        qProduct.eventDate.goe(Timestamp.valueOf(today.atStartOfDay())),
-//                        qProduct.eventDate.lt(Timestamp.valueOf(tomorrow.atStartOfDay()))
-//                )
-//                .orderBy(qProduct.isOver.asc(), qProduct.eventDate.asc(), qProduct.eventStartTime.asc())
-//                .fetch();
-//    }
+    public List<Product> getTodayListAll() {
+        LocalDate today = LocalDate.now();
+        LocalDate tomorrow = today.plusDays(1);
 
-    public List<Product> getTodayList() {
+        return jpaQueryFactory
+                .selectFrom(qProduct)
+                .where(
+                        qProduct.eventStartDate.goe(Timestamp.valueOf(today.atStartOfDay())),
+                        qProduct.eventStartDate.lt(Timestamp.valueOf(tomorrow.atStartOfDay()))
+                )
+                .orderBy(qProduct.eventStartTime.asc())
+                .fetch();
+    }
+
+    public List<Product> getTodayListOver() {
         LocalDate today = LocalDate.now();
         LocalDate tomorrow = today.plusDays(ONE_DAY);
 
@@ -48,7 +47,7 @@ public class ProductRepositorySupport {
                 .where(
                         qProduct.eventStartDate.goe(Timestamp.valueOf(today.atStartOfDay())),
                         qProduct.eventStartDate.lt(Timestamp.valueOf(tomorrow.atStartOfDay())),
-                        qProduct.isOver.eq(false)
+                        qProduct.isOver.eq(true)
                 )
                 .orderBy(qProduct.eventStartTime.asc())
                 .fetch();
@@ -82,7 +81,7 @@ public class ProductRepositorySupport {
                 .fetch();
     }
 
-    public List<Product> findByConditions(String keyword, String category) {
+    public List<Product> findByConditions(String keyword, String category, boolean isOver) {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
 
         if (keyword != null && !keyword.isEmpty()) {
@@ -94,6 +93,7 @@ public class ProductRepositorySupport {
         if (category != null && !category.isEmpty()) {
             booleanBuilder.or(qProduct.category.eq(ProductCategory.valueOf(category.toUpperCase())));
         }
+        booleanBuilder.and(qProduct.isOver.eq(isOver)); // 종료되지 않은 것에 대한 추가
 
         return jpaQueryFactory
                 .selectFrom(qProduct)

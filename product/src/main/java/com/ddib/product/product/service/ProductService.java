@@ -77,20 +77,25 @@ public class ProductService {
                 .toList();
 
         // 하루 데이터
-        List<ProductResponseDto> todayProducts = productRepositorySupport.getTodayList()
+//        List<ProductResponseDto> todayOverProducts = productRepositorySupport.getTodayListOver()
+//                .stream()
+//                .map(ProductResponseDto::of)
+//                .toList();
+
+        List<ProductResponseDto> todayAllProducts = productRepositorySupport.getTodayListAll()
                 .stream()
                 .map(ProductResponseDto::of)
                 .toList();
 
         return ProductMainResponseDto.builder()
                 .todayNotOverProducts(todayNotOverProducts)
-                .todayProducts(todayProducts)
+                .todayProducts(todayAllProducts)
                 .build();
     }
 
-    public List<ProductResponseDto> findProductsByConditions(String keyword, String category) {
-        log.info("PRODUCT SERVICE : SEARCH BY CONDITIONS : {} , {}", keyword, category);
-        return productRepositorySupport.findByConditions(keyword, category)
+    public List<ProductResponseDto> findProductsByConditions(String keyword, String category, boolean isOver) {
+        log.info("PRODUCT SERVICE : SEARCH BY CONDITIONS : {} , {}, {}", keyword, category, isOver);
+        return productRepositorySupport.findByConditions(keyword, category, isOver)
                 .stream()
                 .map(ProductResponseDto::of)
                 .toList();

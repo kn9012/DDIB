@@ -100,14 +100,14 @@ class ProductControllerTest {
 
     @Test
     void findProductsByConditions() throws Exception {
-        given(productService.findProductsByConditions("keyword","CATEGORY")).willReturn(productResponseDtos);
+        given(productService.findProductsByConditions("keyword","CATEGORY", true)).willReturn(productResponseDtos);
 
         mockMvc.perform(get("/api/product/search?keyword=keyword&category=CATEGORY"))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[*].productId").exists())
                 .andDo(print());
 
-        verify(productService, times(1)).findProductsByConditions("keyword", "CATEGORY");
+        verify(productService, times(1)).findProductsByConditions("keyword", "CATEGORY", true);
     }
 
     @Test

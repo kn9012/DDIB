@@ -61,4 +61,11 @@ public class ProductService {
         }
     }
 
+    @Transactional
+    public void updateStockByRefund(int productId, int quantity) {
+        Optional<Product> product = productRepository.findById(productId);
+        product.get().updateStockByRefund(quantity);
+        productRepository.flush();
+    }
+
 }

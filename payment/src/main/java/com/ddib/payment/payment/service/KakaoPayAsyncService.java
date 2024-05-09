@@ -373,6 +373,50 @@ public class KakaoPayAsyncService {
      * 결제 고유번호(tid)에 해당하는 결제건에 대해 지정한 금액만큼 결제 취소를 요청
      * 취소 요청시 비과세(tax_free_amount)와 부가세(vat_amount)를 맞게 요청해야 함
      */
+//    @Async
+//    @Transactional
+//    public void refund(String orderId) {
+//
+//        log.info("===== Thread Name : " + Thread.currentThread().getName() + " 카카오페이 환불 시작 =====");
+//
+//        Payment payment = paymentRepository.findByOrderId(orderId);
+//        Order order = orderRepository.findByOrderId(orderId);
+//        log.info("===== Thread Name : " + Thread.currentThread().getName() + " 환불 해당 주문건 조회 완료 =====");
+//
+//        // 카카오 요청 양식
+//        Map<String, Object> params = new HashMap<>();
+//        params.put("cid", cid); // 가맹점 코드
+//        params.put("tid", payment.getTid()); // 결제 고유번호
+//        params.put("cancel_amount", payment.getTotalAmount()); // 취소 금액
+//        params.put("cancel_tax_free_amount", payment.getTaxFree()); // 취소 비과세 금액
+//
+//        HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(params, this.getHeaders());
+//        log.info("===== Thread Name : " + Thread.currentThread().getName() + " httpEntity 생성 완료 =====");
+////        try {
+////            Thread.sleep(3000L);
+////        } catch (Exception e) {
+////            e.printStackTrace();
+////        }
+//
+//        RestTemplate restTemplate = new RestTemplate();
+//
+//        KakaoRefundResponseDto kakaoRefundResponseDto = restTemplate.postForObject(
+//                "https://open-api.kakaopay.com/online/v1/payment/cancel",
+//                requestEntity,
+//                KakaoRefundResponseDto.class);
+//        log.info("===== Thread Name : " + Thread.currentThread().getName() + " 카카오페이 서버에서 데이터 응답 완료 =====");
+//
+//        // 주문 및 결제 상태 바꾸기
+//        payment.updateStatus(PaymentStatus.REFUND_COMPLETED);
+//        order.updateStatus(OrderStatus.CANCELED);
+//        log.info("===== Thread Name : " + Thread.currentThread().getName() + " 주문 및 결제 상태 변경 완료 =====");
+//
+//        // 환불 시간 기록
+//        payment.updateRefundedAt(kakaoRefundResponseDto.getCanceled_at());
+//        log.info("===== Thread Name : " + Thread.currentThread().getName() + " 환불 시간 기록 완료 =====");
+//    }
+
+
     @Async
     @Transactional
     public void refund(String orderId) {
@@ -383,38 +427,70 @@ public class KakaoPayAsyncService {
         Order order = orderRepository.findByOrderId(orderId);
         log.info("===== Thread Name : " + Thread.currentThread().getName() + " 환불 해당 주문건 조회 완료 =====");
 
-        // 카카오 요청 양식
-        Map<String, Object> params = new HashMap<>();
-        params.put("cid", cid); // 가맹점 코드
-        params.put("tid", payment.getTid()); // 결제 고유번호
-        params.put("cancel_amount", payment.getTotalAmount()); // 취소 금액
-        params.put("cancel_tax_free_amount", payment.getTaxFree()); // 취소 비과세 금액
+        // 특정 이름으로 Lock 정의
+        int productId = order.getProduct().getProductId();
+        final String lockName = "product" + productId;
+        final RLock lock = redissonClient.getLock(lockName);
+        final String worker = Thread.currentThread().getName();
+        log.info(worker + " : lock 정의 완료");
 
-        HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(params, this.getHeaders());
-        log.info("===== Thread Name : " + Thread.currentThread().getName() + " httpEntity 생성 완료 =====");
-//        try {
-//            Thread.sleep(3000L);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        try {
+            // 락 획득 시도 (20초 동안 시도하고 락을 획득할 경우 3초 후에 해제)
+            boolean available = lock.tryLock(20, 3, TimeUnit.SECONDS);
+            if(!available) {
+                log.info("===== " + worker + " : Lock Get Fail =====");
+                throw new RuntimeException("RuntimeException : Lock Get Fail");
+            }
 
-        RestTemplate restTemplate = new RestTemplate();
+            log.info("===== " + worker + " : Lock Get Success =====");
+            int stock = productService.checkStock(productId); // 재고 조회
+            int totalStock = productRepository.findById(productId).get().getTotalStock(); // 상품의 총 재고 수
 
-        KakaoRefundResponseDto kakaoRefundResponseDto = restTemplate.postForObject(
-                "https://open-api.kakaopay.com/online/v1/payment/cancel",
-                requestEntity,
-                KakaoRefundResponseDto.class);
-        log.info("===== Thread Name : " + Thread.currentThread().getName() + " 카카오페이 서버에서 데이터 응답 완료 =====");
+            if(stock + order.getProductCount() <= totalStock) {
 
-        // 주문 및 결제 상태 바꾸기
-        payment.updateStatus(PaymentStatus.REFUND_COMPLETED);
-        order.updateStatus(OrderStatus.CANCELED);
-        log.info("===== Thread Name : " + Thread.currentThread().getName() + " 주문 및 결제 상태 변경 완료 =====");
+                // 카카오 요청 양식
+                Map<String, Object> params = new HashMap<>();
+                params.put("cid", cid); // 가맹점 코드
+                params.put("tid", payment.getTid()); // 결제 고유번호
+                params.put("cancel_amount", payment.getTotalAmount()); // 취소 금액
+                params.put("cancel_tax_free_amount", payment.getTaxFree()); // 취소 비과세 금액
 
-        // 환불 시간 기록
-        payment.updateRefundedAt(kakaoRefundResponseDto.getCanceled_at());
-        log.info("===== Thread Name : " + Thread.currentThread().getName() + " 환불 시간 기록 완료 =====");
+                HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(params, this.getHeaders());
+                log.info("===== Thread Name : " + Thread.currentThread().getName() + " httpEntity 생성 완료 =====");
+
+                RestTemplate restTemplate = new RestTemplate();
+
+                KakaoRefundResponseDto kakaoRefundResponseDto = restTemplate.postForObject(
+                        "https://open-api.kakaopay.com/online/v1/payment/cancel",
+                        requestEntity,
+                        KakaoRefundResponseDto.class);
+                log.info("===== Thread Name : " + Thread.currentThread().getName() + " 카카오페이 서버에서 데이터 응답 완료 =====");
+
+                // 주문 및 결제 상태 바꾸기
+                payment.updateStatus(PaymentStatus.REFUND_COMPLETED);
+                order.updateStatus(OrderStatus.CANCELED);
+                log.info("===== Thread Name : " + Thread.currentThread().getName() + " 주문 및 결제 상태 변경 완료 =====");
+
+                // 환불 시간 기록
+                payment.updateRefundedAt(kakaoRefundResponseDto.getCanceled_at());
+                log.info("===== Thread Name : " + Thread.currentThread().getName() + " 환불 시간 기록 완료 =====");
+
+                productService.updateStockByRefund(productId, order.getProductCount()); // 재고 증가
+
+            } else {
+                return;
+            }
+
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+
+        } finally {
+            lock.unlock();
+            log.info("===== Unlock Completed =====");
+        }
     }
+
+
 
     /**
      * http 헤더에 카카오 요구 헤더값인 secret key 담기

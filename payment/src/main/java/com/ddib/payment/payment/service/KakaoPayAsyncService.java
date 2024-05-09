@@ -121,11 +121,9 @@ public class KakaoPayAsyncService {
         // 주문 테이블에 Data Insert
         log.info("===== Thread Name : " + Thread.currentThread().getName() + " 주문 데이터 insert 시작 =====");
         log.info("userId : " + userId);
-        Optional<User> user = userRepository.findById(userId);
         Order order = Order.builder()
                 .orderId(orderId)
-//                .user(userRepository.findById(userId).get())
-                .user(user.get())
+                .user(userRepository.findById(userId).get())
                 .product(productRepository.findById(kakaoReadyRequestDto.getProductId()).get())
                 .orderDate(new Timestamp(System.currentTimeMillis()))
                 .productCount(kakaoReadyRequestDto.getQuantity())
@@ -216,11 +214,9 @@ public class KakaoPayAsyncService {
         // 카카오페이 요청 양식
         Map<String, String> params = new HashMap<>();
         params.put("cid", cid);
-        log.info("tid : " + tidRepository.findById(orderId).get().getTid());
         params.put("tid", tidRepository.findById(orderId).get().getTid());
         params.put("partner_order_id", orderId);
         params.put("partner_user_id", "DDIB");
-        log.info("pgToken : " + pgToken);
         params.put("pg_token", pgToken);
 
         // 파라미터, 헤더 담기
@@ -233,6 +229,8 @@ public class KakaoPayAsyncService {
                 "https://open-api.kakaopay.com/online/v1/payment/approve",
                 requestEntity,
                 KakaoApproveResponseDto.class);
+
+        log.info("결제 승인 시각 : " + kakaoApproveResponseDto.getApproved_at());
 
         // 배송 정보 등 필요한 응답 데이터 추가 업데이트
 //        Order order = orderRepository.findByOrderId(partnerOrderId);

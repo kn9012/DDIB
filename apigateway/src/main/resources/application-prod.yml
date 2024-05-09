@@ -11,7 +11,7 @@ spring:
         - id: user
           uri: lb://USER
           predicates:
-            - Path=/api/user/**, /login/oauth2/code/ddib/**, /api/oauth2/ddib/kakao
+            - Path=/api/user/**, /login/oauth2/code/ddib/**, /**
 #          filters:
 #            - RemoveRequestHeader=Cookie
 #            - RewritePath=/user-service/(?<segment>.*), /$\{segment}

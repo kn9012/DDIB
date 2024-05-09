@@ -79,9 +79,9 @@ public class KakaoPayAsyncService {
         params.put("quantity", kakaoReadyRequestDto.getQuantity()); // 상품 수량
         params.put("total_amount", kakaoReadyRequestDto.getTotalAmount()); // 상품 총액
         params.put("tax_free_amount", kakaoReadyRequestDto.getTaxFreeAmount()); // 상품 비과세 금액
-        params.put("approval_url", "http://localhost:8083/api/payment/success?product_id=" + kakaoReadyRequestDto.getProductId() + "&quantity=" + kakaoReadyRequestDto.getQuantity() + "&order_id=" + orderId); // 결제 성공 시 redirect url (인증이 완료되면 approval_url로 redirect)
-        params.put("cancel_url", "http://localhost:8083/api/payment/cancel?partner_order_id=" + orderId); // 결제 취소 시 redirect url
-        params.put("fail_url", "http://localhost:8083/api/payment/fail?partner_order_id=" + orderId); // 결제 실패 시 redirect url
+        params.put("approval_url", "http://k10c102.p.ssafy.io:8083/api/payment/success?product_id=" + kakaoReadyRequestDto.getProductId() + "&quantity=" + kakaoReadyRequestDto.getQuantity() + "&order_id=" + orderId); // 결제 성공 시 redirect url (인증이 완료되면 approval_url로 redirect)
+        params.put("cancel_url", "http://k10c102.p.ssafy.io:8083/api/payment/cancel?partner_order_id=" + orderId); // 결제 취소 시 redirect url
+        params.put("fail_url", "http://k10c102.p.ssafy.io:8083/api/payment/fail?partner_order_id=" + orderId); // 결제 실패 시 redirect url
 
         // 파라미터, 헤더 담기
         HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(params, this.getHeaders());

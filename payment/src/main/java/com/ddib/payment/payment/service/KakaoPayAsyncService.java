@@ -174,6 +174,7 @@ public class KakaoPayAsyncService {
                 // 배송 정보 등 필요한 응답 데이터 추가 업데이트
                 Order order = orderRepository.findByOrderId(orderId);
                 kakaoApproveResponseDto.updateKakaoApproveResponseDto(order);
+                log.info("배송 정보 등 응답 데이터 업데이트 후 결제 승인 시각 : " + kakaoApproveResponseDto.getApproved_at());
 
                 // 결제 데이터 insert (비동기)
                 insertPaymentData(kakaoApproveResponseDto, order.getUser().getUserId());

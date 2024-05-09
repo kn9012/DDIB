@@ -206,7 +206,7 @@ public class PaymentController {
         kakaoPayAsyncService.deleteOrder(orderId);
 
         try {
-            URI redirectUri = new URI("https://k10c102.p.ssafy.io/order/fail");
+            URI redirectUri = new URI("https://k10c102.p.ssafy.io/order/fail"); 
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.setLocation(redirectUri);
             return new ResponseEntity<>(httpHeaders, HttpStatus.OK);

@@ -29,6 +29,7 @@ public class OrderController {
     public ResponseEntity<List<OrderResponseDto>> viewOrderList(@PathVariable int userId) {
         log.info("===== 주문내역 목록 조회 API 시작 =====");
         List<OrderResponseDto> orderResponseDtoList = orderService.viewOrderList(userId);
+        log.info("===== 응답 데이터 returng하자 =====");
         return new ResponseEntity<>(orderResponseDtoList, HttpStatus.OK);
     }
 

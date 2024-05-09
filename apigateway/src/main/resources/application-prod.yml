@@ -9,7 +9,7 @@ spring:
     gateway:
       routes:
         - id: user
-          uri: lb://USER
+          uri: lb://user
           predicates:
             - Path=/api/user/**, /api/oauth2/ddib/kakao
 #          filters:

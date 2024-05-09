@@ -71,17 +71,15 @@ public class PaymentController {
 //    }
 
     // 2. 비동기 방식 (기본 ThreadPoolTaskExecutor)
-//    public CompletableFuture<KakaoReadyResponseDto> readyToKakaoPay(@RequestBody KakaoReadyRequestDto kakaoReadyRequestDto, int userId) {
-    public CompletableFuture<?> readyToKakaoPay(@RequestBody KakaoReadyRequestDto kakaoReadyRequestDto) {
-        log.info("================================");
+    public CompletableFuture<?> readyToKakaoPay(@RequestBody KakaoReadyRequestDto kakaoReadyRequestDto, @PathVariable int userId) {
+        log.info("============ 결제 준비 요청 API 시작 ===============");
         // 재고 조회
         int stock = productService.checkStock(kakaoReadyRequestDto.getProductId());
 
         if(stock > 0) {
             String orderId = OrderIdGenerator.generateOrderId();
             CompletableFuture<KakaoReadyResponseDto> kakaoReadyResponseDto = kakaoPayAsyncService.kakaoPayReady(kakaoReadyRequestDto, orderId);
-//            kakaoPayAsyncService.insertOrderData(kakaoReadyRequestDto, orderId, userId);
-            kakaoPayAsyncService.insertOrderData(kakaoReadyRequestDto, orderId);
+            kakaoPayAsyncService.insertOrderData(kakaoReadyRequestDto, orderId, userId);
 
             log.info("============= 끝 ===================");
 
@@ -206,11 +204,11 @@ public class PaymentController {
             @ApiResponse(responseCode = "400", description = "재고없음 / 주문 수량이 현재 재고보다 많음"),
     })
     @GetMapping("/success")
-//    public ResponseEntity<?> afterPayApproveRequest(@RequestParam("pg_token") String pgToken, @RequestParam("product_id") int productId, @RequestParam("quantity") int quantity, @RequestParam("order_id") String orderId) {
     @Async
     public CompletableFuture<?> afterPayApproveRequest(@RequestParam("pg_token") String pgToken, @RequestParam("product_id") int productId, @RequestParam("quantity") int quantity, @RequestParam("order_id") String orderId) {
+
         log.info("===== 결제 승인 API 시작 : 주문 수량은 " + quantity +  "개 =====");
-//        KakaoApproveResponseDto kakaoApproveResponseDto = kakaoPayAsyncService.afterPayApproveRequest(pgToken, productId, quantity, orderId);
+
         CompletableFuture<KakaoApproveResponseDto> kakaoApproveResponseDto = kakaoPayAsyncService.afterPayApproveRequest(pgToken, productId, quantity, orderId);
 
 //        try {

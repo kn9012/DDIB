@@ -10,10 +10,10 @@ import java.util.List;
 @Builder
 public class ProductMainResponseDto {
 
-    @Schema(description = "당일 종료되지 않은 타임딜 상품")
+    @Schema(description = "당일 종료되지 않은 타임딜 상품 3개")
     private List<ProductResponseDto> todayNotOverProducts;
 
-    @Schema(description = "당일 모든 타임딜 상품")
-    private List<ProductResponseDto> todayProducts;
+    @Schema(description = "당일 종료된 모든 타임딜 상품 전체 리스트")
+    private List<ProductResponseDto> todayOverProducts;
 
 }

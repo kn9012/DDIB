@@ -14,6 +14,7 @@ import com.ddib.payment.payment.repository.PaymentRepository;
 import com.ddib.payment.payment.repository.TidRepository;
 import com.ddib.payment.product.repository.ProductRepository;
 import com.ddib.payment.product.service.ProductService;
+import com.ddib.payment.user.domain.User;
 import com.ddib.payment.user.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -32,10 +33,7 @@ import org.springframework.web.client.RestTemplate;
 import java.security.Principal;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
@@ -122,9 +120,12 @@ public class KakaoPayAsyncService {
 
         // 주문 테이블에 Data Insert
         log.info("===== Thread Name : " + Thread.currentThread().getName() + " 주문 데이터 insert 시작 =====");
+        log.info("userId : " + userId);
+        Optional<User> user = userRepository.findById(userId);
         Order order = Order.builder()
                 .orderId(orderId)
-                .user(userRepository.findById(userId).get())
+//                .user(userRepository.findById(userId).get())
+                .user(user.get())
                 .product(productRepository.findById(kakaoReadyRequestDto.getProductId()).get())
                 .orderDate(new Timestamp(System.currentTimeMillis()))
                 .productCount(kakaoReadyRequestDto.getQuantity())

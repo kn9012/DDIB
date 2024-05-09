@@ -59,7 +59,7 @@ spring:
 #            - AuthorizationHeaderFilter
 
         - id: payment
-          uri: lb://PAYMENT
+          uri: lb://payment
           predicates:
             - Path=/api/payment/**, /api/order/**
 #          filters:

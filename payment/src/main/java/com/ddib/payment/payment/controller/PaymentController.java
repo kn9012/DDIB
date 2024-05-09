@@ -18,6 +18,7 @@ import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
@@ -25,6 +26,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
@@ -163,7 +166,7 @@ public class PaymentController {
     @Operation(summary = "카카오페이 결제 진행 중 취소 API")
     @ApiResponse(responseCode = "200", description = "성공(결제 취소 시 결제하기 페이지로 다시 redirect 해주세요.)")
     @GetMapping("/cancel")
-    public ResponseEntity<RedirectView> cancel(@RequestParam("partner_order_id") String orderId) {
+    public ResponseEntity<Object> cancel(@RequestParam("partner_order_id") String orderId) {
         log.info("===== 결제 진행 중 취소 =====");
 
         // 1. 동기 방식
@@ -172,9 +175,14 @@ public class PaymentController {
         // 2. 비동기 방식 (기본 ThreadPoolTaskExecutor)
         kakaoPayAsyncService.deleteOrder(orderId);
 
-        RedirectView redirectView = new RedirectView();
-        redirectView.setUrl("https://k10c102.p.ssafy.io/order/cancel");
-        return new ResponseEntity<>(redirectView, HttpStatus.OK);
+        try {
+            URI redirectUri = new URI("https://k10c102.p.ssafy.io/order/cancel");
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.setLocation(redirectUri);
+            return new ResponseEntity<>(httpHeaders, HttpStatus.OK);
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
@@ -188,7 +196,7 @@ public class PaymentController {
     @Operation(summary = "카카오페이 결제 실패 API")
     @ApiResponse(responseCode = "200", description = "성공(결제 실패 시 결제하기 페이지로 다시 redirect 해주세요.)")
     @GetMapping("/fail")
-    public ResponseEntity<RedirectView> fail(@RequestParam("partner_order_id") String orderId) {
+    public ResponseEntity<Object> fail(@RequestParam("partner_order_id") String orderId) {
         log.info("===== 결제 실패 =====");
 
         // 1. 동기 방식
@@ -197,9 +205,14 @@ public class PaymentController {
         // 2. 비동기 방식 (스레드 풀x)
         kakaoPayAsyncService.deleteOrder(orderId);
 
-        RedirectView redirectView = new RedirectView();
-        redirectView.setUrl("https://k10c102.p.ssafy.io/order/fail");
-        return new ResponseEntity<>(redirectView, HttpStatus.OK);
+        try {
+            URI redirectUri = new URI("https://k10c102.p.ssafy.io/order/fail");
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.setLocation(redirectUri);
+            return new ResponseEntity<>(httpHeaders, HttpStatus.OK);
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 

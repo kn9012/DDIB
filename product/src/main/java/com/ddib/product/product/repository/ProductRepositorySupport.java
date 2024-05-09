@@ -39,7 +39,7 @@ public class ProductRepositorySupport {
 //                .fetch();
 //    }
 
-    public List<Product> getTodayList() {
+    public List<Product> getTodayListOver() {
         LocalDate today = LocalDate.now();
         LocalDate tomorrow = today.plusDays(ONE_DAY);
 
@@ -48,7 +48,7 @@ public class ProductRepositorySupport {
                 .where(
                         qProduct.eventStartDate.goe(Timestamp.valueOf(today.atStartOfDay())),
                         qProduct.eventStartDate.lt(Timestamp.valueOf(tomorrow.atStartOfDay())),
-                        qProduct.isOver.eq(false)
+                        qProduct.isOver.eq(true)
                 )
                 .orderBy(qProduct.eventStartTime.asc())
                 .fetch();
@@ -82,7 +82,7 @@ public class ProductRepositorySupport {
                 .fetch();
     }
 
-    public List<Product> findByConditions(String keyword, String category) {
+    public List<Product> findByConditions(String keyword, String category, boolean isOver) {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
 
         if (keyword != null && !keyword.isEmpty()) {
@@ -94,6 +94,7 @@ public class ProductRepositorySupport {
         if (category != null && !category.isEmpty()) {
             booleanBuilder.or(qProduct.category.eq(ProductCategory.valueOf(category.toUpperCase())));
         }
+        booleanBuilder.and(qProduct.isOver.eq(isOver)); // 종료되지 않은 것에 대한 추가
 
         return jpaQueryFactory
                 .selectFrom(qProduct)

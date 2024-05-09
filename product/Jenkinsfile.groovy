@@ -1,8 +1,8 @@
 pipeline {
     agent any
-    tools {
-        gradle 'Gradle 8.5'
-    }
+    // tools {
+    //     gradle 'Gradle 8.7'
+    // }
     environment {
         DOCKER_IMAGE_NAME = 'kimyusan/ddib_product'
         DOCKERFILE_PATH = './product/Dockerfile'
@@ -14,7 +14,7 @@ pipeline {
     stages {
         stage('GitLab Clone') {
             steps {
-                git branch : 'dev-product', credentialsId: 'gitlab_access_token', url: 'https://lab.ssafy.com/s10-final/S10P31C102.git'
+                git branch : 'dev-product', credentialsId: 'jenkins', url: 'https://lab.ssafy.com/s10-final/S10P31C102.git'
             }
         }
         stage('Add Env') {

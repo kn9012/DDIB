@@ -33,9 +33,6 @@ management:
     tracing:
       endpoint: "http://k10c102.p.ssafy.io:9411/api/v2/spans"
 
-#  pattern:
-#    level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
-# -- Eureka client
 eureka:
   instance:
     hostname: k10c102.p.ssafy.io
@@ -44,7 +41,6 @@ eureka:
     fetch-registry: true
     service-url:
       defaultZone: http://k10c102.p.ssafy.io:8761/eureka/
-
 
 logging:
   level:

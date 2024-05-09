@@ -4,17 +4,16 @@ import com.ddib.payment.order.domain.Order;
 import com.ddib.payment.order.dto.response.OrderResponseDto;
 import com.ddib.payment.order.repository.OrderRepository;
 import com.ddib.payment.payment.repository.PaymentRepository;
-import com.ddib.payment.user.domain.User;
 import com.ddib.payment.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class OrderService {

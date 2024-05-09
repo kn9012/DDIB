@@ -22,16 +22,16 @@ spring:
     jdbc:
       initialize-schema: always
 
-#management:
-#  tracing:
-#    sampling:
-#      probability: 1.0
-#    propagation:
-#      consume: b3
-#      produce: b3_multi
-#  zipkin:
-#    tracing:
-#      endpoint: "http://k10c102.p.ssafy.io:9411/api/v2/spans"
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+    propagation:
+      consume: b3
+      produce: b3_multi
+  zipkin:
+    tracing:
+      endpoint: "http://k10c102.p.ssafy.io:9411/api/v2/spans"
 
 #  pattern:
 #    level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
@@ -40,3 +40,11 @@ eureka:
   client:
     serviceUrl:
       defaultZone: ${EUREKA_URL:http://k10c102.p.ssafy.io:8761/eureka/}
+
+
+logging:
+  level:
+    com:
+      ddib:
+        product: info
+  config: classpath:logback-prod.xml

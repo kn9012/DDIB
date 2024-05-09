@@ -146,12 +146,12 @@ public class PaymentController {
         if(kakaoApproveResponseDto != null) {
             log.info(Thread.currentThread().getName() + "응답 완료 직전");
 //            return CompletableFuture.supplyAsync(() -> kakaoApproveResponseDto).join();
-            redirectView.setUrl("https://k10c102.p.ssafy.io:3000/order/complete/" + orderId);
+            redirectView.setUrl("http://k10c102.p.ssafy.io:3000/order/complete/" + orderId);
             return CompletableFuture.supplyAsync(() -> redirectView);
         } else {
 //            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 //            return CompletableFuture.supplyAsync(() -> new ResponseEntity<>(HttpStatus.BAD_REQUEST));
-            redirectView.setUrl("https://k10c102.p.ssafy.io:3000/order/fail");
+            redirectView.setUrl("http://k10c102.p.ssafy.io:3000/order/fail");
             return CompletableFuture.supplyAsync(() -> redirectView);
         }
     }
@@ -173,7 +173,7 @@ public class PaymentController {
         kakaoPayAsyncService.deleteOrder(orderId);
 
         RedirectView redirectView = new RedirectView();
-        redirectView.setUrl("https://k10c102.p.ssafy.io/api/order/cancel");
+        redirectView.setUrl("http://k10c102.p.ssafy.io/api/order/cancel");
         return new ResponseEntity<>(redirectView, HttpStatus.OK);
     }
 
@@ -198,7 +198,7 @@ public class PaymentController {
         kakaoPayAsyncService.deleteOrder(orderId);
 
         RedirectView redirectView = new RedirectView();
-        redirectView.setUrl("https://k10c102.p.ssafy.io/api/order/fail");
+        redirectView.setUrl("http://k10c102.p.ssafy.io/api/order/fail");
         return new ResponseEntity<>(redirectView, HttpStatus.OK);
     }
 

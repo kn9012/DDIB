@@ -53,8 +53,9 @@ public class ProductController {
     @ApiResponse(responseCode = "200", description = "성공")
     @GetMapping("/search")
     public ResponseEntity<List<ProductResponseDto>> findProductsByConditions(@RequestParam(required = false) String keyword,
-                                                                             @RequestParam(required = false) String category) {
-        List<ProductResponseDto> dtos = productService.findProductsByConditions(keyword, category);
+                                                                             @RequestParam(required = false) String category,
+                                                                             @RequestParam(required = false) boolean isOver) {
+        List<ProductResponseDto> dtos = productService.findProductsByConditions(keyword, category, isOver);
         return new ResponseEntity<>(dtos, HttpStatus.OK);
     }
 

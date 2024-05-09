@@ -173,7 +173,7 @@ public class PaymentController {
         kakaoPayAsyncService.deleteOrder(orderId);
 
         RedirectView redirectView = new RedirectView();
-        redirectView.setUrl("https://k10c102.p.ssafy.io/api/order/cancel");
+        redirectView.setUrl("http://k10c102.p.ssafy.io/api/order/cancel");
         return new ResponseEntity<>(redirectView, HttpStatus.OK);
     }
 
@@ -198,7 +198,7 @@ public class PaymentController {
         kakaoPayAsyncService.deleteOrder(orderId);
 
         RedirectView redirectView = new RedirectView();
-        redirectView.setUrl("https://k10c102.p.ssafy.io/api/order/fail");
+        redirectView.setUrl("http://k10c102.p.ssafy.io/api/order/fail");
         return new ResponseEntity<>(redirectView, HttpStatus.OK);
     }
 

@@ -9,6 +9,7 @@ import com.ddib.notification.user.service.UserServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -62,7 +63,7 @@ public class NotificationController {
 
     @Operation(summary = "알림 목록 조회 API")
     @ApiResponse(responseCode = "200", description = "성공")
-    @PostMapping("/{userId}")
+    @GetMapping("/{userId}")
     public ResponseEntity<?> notificationDetails(@PathVariable Integer userId) {
         try {
             return new ResponseEntity<>(notificationService.findNotificationList(userId), HttpStatus.OK);

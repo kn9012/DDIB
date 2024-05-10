@@ -6,6 +6,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
+import java.security.Timestamp;
+import java.time.LocalDateTime;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -27,9 +30,12 @@ public class Notification {
     private String content;
 
     @ColumnDefault(value = "false")
-    @Column(nullable = false)
     @Schema(description = "읽음 여부")
     private boolean isRead;
+
+    @ColumnDefault(value = "false")
+    @Schema(description = "알림 생성 시각")
+    private LocalDateTime generatedTime;
 
     @ColumnDefault(value = "false")
     @Schema(description = "일반회원")

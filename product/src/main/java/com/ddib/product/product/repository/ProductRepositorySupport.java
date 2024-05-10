@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -145,5 +146,25 @@ public class ProductRepositorySupport {
         }
 
         return times;
+    }
+
+    public void updateTimeOverProduct() {
+        LocalDate startOfDay = LocalDate.now().atStartOfDay().toLocalDate();
+        LocalDate endOfDay = startOfDay.plusDays(ONE_DAY);
+
+        int presentHour = LocalDateTime.now().getHour();
+
+        BooleanExpression isTodayAndOverEndTime = qProduct.eventStartDate.goe(Timestamp.valueOf(startOfDay.atStartOfDay()))
+                .and(qProduct.eventStartDate.lt(Timestamp.valueOf(endOfDay.atStartOfDay())))
+                .and(qProduct.eventEndTime.loe(presentHour));
+
+        List<Product> products = jpaQueryFactory
+                .selectFrom(qProduct)
+                .where(isTodayAndOverEndTime)
+                .fetch();
+
+        for (Product product : products) {
+            product.updateIsOver(true);
+        }
     }
 }

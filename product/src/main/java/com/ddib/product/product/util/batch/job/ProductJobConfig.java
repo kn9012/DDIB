@@ -24,11 +24,10 @@ public class ProductJobConfig {
     public static final Integer CHUNK_SIZE = 5;
 
     @Bean
-    public Job productJob(JobRepository jobRepository, Step productOverStep, Step productAlarmStep){
+    public Job productJob(JobRepository jobRepository, Step productAlarmStep){
         return new JobBuilder("productJob", jobRepository)
                 .incrementer(new RunIdIncrementer())
-                .start(productOverStep)
-                .next(productAlarmStep)
+                .start(productAlarmStep)
                 .build();
     }
 

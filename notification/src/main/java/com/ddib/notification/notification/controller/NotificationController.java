@@ -32,7 +32,7 @@ public class NotificationController {
 
     @Operation(summary = "구독 알림 신청 API")
     @ApiResponse(responseCode = "200", description = "성공")
-    @PutMapping("/notification/subscribe/{userId}")
+        @PutMapping("/notification/subscribe/{userId}")
     public ResponseEntity<Void> applyNotification(@RequestBody List<SubscriptionCategoryRequestDto> categories, @PathVariable Integer userId) {
         userService.findByUserId(userId).updateSubscribed();
         subscriptionCategoryService.createSubscriptionCategory(categories, userId);

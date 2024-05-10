@@ -22,15 +22,15 @@ public class SellerController {
 
     private final SellerService sellerService;
 
-    @PutMapping("/apply/{email}")
+    @PutMapping("/apply/{sellerId}")
     @Operation(summary = "판매회원 신청 API")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "판매회원 신청 성공"),
             @ApiResponse(responseCode = "400", description = "판매회원 신청 실패")
     })
-    public ResponseEntity<?> sellerApply(@RequestBody SellerRequestDto requestDto, @PathVariable String email) {
+    public ResponseEntity<?> sellerApply(@RequestBody SellerRequestDto requestDto, @PathVariable Integer sellerId) {
         try {
-            sellerService.applySeller(requestDto, email);
+            sellerService.applySeller(requestDto, sellerId);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
@@ -38,30 +38,30 @@ public class SellerController {
         }
     }
 
-    @GetMapping("/{email}")
+    @GetMapping("/{sellerId}")
     @Operation(summary = "판매회원 정보 조회 API")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "판매회원 정보 조회 성공"),
             @ApiResponse(responseCode = "400", description = "판매회원 정보 조회 실패")
     })
-    public ResponseEntity<?> sellerDetails(@PathVariable String email) {
+    public ResponseEntity<?> sellerDetails(@PathVariable Integer sellerId) {
         try {
-            return new ResponseEntity<>(sellerService.findSeller(email), HttpStatus.OK);
+            return new ResponseEntity<>(sellerService.findSeller(sellerId), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
         }
     }
 
-    @PutMapping("/{email}")
+    @PutMapping("/{sellerId}")
     @Operation(summary = "판매회원 정보 수정 API")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "판매회원 정보 수정 성공"),
             @ApiResponse(responseCode = "400", description = "판매회원 정보 수정 실패")
     })
-    public ResponseEntity<?> sellerModify(@RequestBody SellerModifyRequestDto requestDto, @PathVariable String email) {
+    public ResponseEntity<?> sellerModify(@RequestBody SellerModifyRequestDto requestDto, @PathVariable Integer sellerId) {
         try {
-            sellerService.modifySeller(requestDto, email);
+            sellerService.modifySeller(requestDto, sellerId);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
@@ -69,15 +69,15 @@ public class SellerController {
         }
     }
 
-    @DeleteMapping("/{email}")
+    @DeleteMapping("/{sellerId}")
     @Operation(summary = "판매회원 탈퇴 API")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "판매회원 탈퇴 성공"),
             @ApiResponse(responseCode = "400", description = "판매회원 탈퇴 실패")
     })
-    public ResponseEntity<?> sellerDelete(@PathVariable String email) {
+    public ResponseEntity<?> sellerDelete(@PathVariable Integer sellerId) {
         try {
-            sellerService.deleteSeller(email);
+            sellerService.deleteSeller(sellerId);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface SellerService {
-    void applySeller(SellerRequestDto requestDto, String email);
-    SellerInfoDto findSeller(String email);
-    void modifySeller(SellerModifyRequestDto requestDto, String email);
-    void deleteSeller(String email);
+    void applySeller(SellerRequestDto requestDto, Integer sellerId);
+    SellerInfoDto findSeller(Integer sellerId);
+    void modifySeller(SellerModifyRequestDto requestDto, Integer sellerId);
+    void deleteSeller(Integer sellerId);
 }

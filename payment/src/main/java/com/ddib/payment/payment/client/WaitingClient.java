@@ -2,7 +2,6 @@ package com.ddib.payment.payment.client;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
-import reactor.core.publisher.Mono;
 
 @FeignClient(name = "waitingClient", url = "http://k10c102.p.ssafy.io:9010/api/v1/queue")
 public interface WaitingClient {

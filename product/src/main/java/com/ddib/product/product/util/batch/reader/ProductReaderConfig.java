@@ -17,11 +17,12 @@ public class ProductReaderConfig {
 
     private final EntityManagerFactory emf;
 
-    @StepScope
     @Bean
-    public JpaPagingItemReader<FavoriteProduct> productAlarmReader(){
+    @StepScope
+    public JpaPagingItemReader<FavoriteProduct> productAlarmReader() {
         // TODO : 24시간, 1시간 각각에 따라 구분해주는 칼럼 추가 필요
         String query = ("select fp from FavoriteProduct fp where (day(fp.product.eventStartDate) - day(now()) = 1 and hour(fp.product.eventStartDate) = hour(now())) OR (day(fp.product.eventStartDate) - day(now()) = 0 and fp.product.eventStartTime - hour(now()) = 1 )");
+//        String query ="select fp from FavoriteProduct fp";
         return new JpaPagingItemReaderBuilder<FavoriteProduct>()
                 .entityManagerFactory(emf)
                 .queryString(query)

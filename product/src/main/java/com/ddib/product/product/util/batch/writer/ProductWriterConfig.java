@@ -1,6 +1,7 @@
 package com.ddib.product.product.util.batch.writer;
 
 import com.ddib.product.product.domain.FavoriteProduct;
+import com.ddib.product.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.configuration.annotation.StepScope;
@@ -13,12 +14,15 @@ import org.springframework.context.annotation.Configuration;
 @Slf4j
 public class ProductWriterConfig {
 
+    private final ProductService productService;
+
     @StepScope
     @Bean
     public ItemWriter<FavoriteProduct> productAlarmWriter() {
         return chunk -> {
             for (FavoriteProduct favoriteProduct : chunk.getItems()) {
                 try {
+                    log.info("[PRODUCT] FCM ALARM 호출");
 //                    alarmService.fcm알람전송호출(favoriteProduct);
                 } catch (Exception e) {
                     log.info("productAlarmWriter ERROR : {} ", e.getMessage());

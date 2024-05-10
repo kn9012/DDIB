@@ -54,7 +54,7 @@ public class ProductCreateRequestDto {
                 .eventEndTime(eventEndDate.getHour())
                 .isOver(false)
                 .seller(seller)
-                .category(ProductCategory.valueOf(category))
+                .category(ProductCategory.valueOf(category.toUpperCase()))
                 .build();
     }
 

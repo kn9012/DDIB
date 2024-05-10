@@ -23,8 +23,12 @@ spring:
 
 # -- Eureka client
 eureka:
+  instance:
+    hostname: k10c102.p.ssafy.io
   client:
-    serviceUrl:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
       defaultZone: ${EUREKA_URL:http://127.0.0.1:8761/eureka/}
 
 # -- KakaoPay
@@ -32,15 +36,4 @@ pay:
   kakao:
     cid: TC0ONETIME
     secret-key: DEVAE9FEAE218AFEA4E18CD6B53A4589DD8E8F3F
-
-# Swagger
-#springdoc:
-#  swagger-ui:
-#    path: /swagger.html
-#    tags-sorter: alpha
-#    operations-sorter: alpha
-#  api-docs:
-#    path: /api-docs
-#  default-consumes-media-type: application/json;charset=UTF-8
-#  default-produces-media-type: application/json;charset=UTF-8
 

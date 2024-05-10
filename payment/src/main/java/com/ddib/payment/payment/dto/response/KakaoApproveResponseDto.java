@@ -4,8 +4,6 @@ import com.ddib.payment.order.domain.Order;
 import com.ddib.payment.payment.dto.Amount;
 import com.ddib.payment.payment.dto.CardInfo;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.NotNull;
-import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;

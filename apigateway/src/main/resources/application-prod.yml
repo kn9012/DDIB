@@ -11,7 +11,7 @@ spring:
         - id: user
           uri: lb://user
           predicates:
-            - Path=/api/user/**, /api/oauth2/ddib/kakao
+            - Path=/api/user/**, /api/oauth2/ddib/kakao, /login/oauth2/code/ddib
 #          filters:
 #            - RemoveRequestHeader=Cookie
 #            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
@@ -29,16 +29,11 @@ spring:
         - id: seller
           uri: lb://SELLER
           predicates:
-            - Path=/api/seller/**
+            - Path=/api/seller/**, /api/oauth2/bidd/kakao, /login/oauth2/code/bidd
 #          filters:
 #            - RemoveRequestHeader=Cookie
 #            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
 #            - AuthorizationHeaderFilter
-
-        - id: seller
-          uri: lb://SELLER
-          predicates:
-            - Path=/api/oauth2/bidd/**
 
         - id: notification
           uri: lb://NOTIFICATION

@@ -129,8 +129,17 @@ public class ProductController {
     @Operation(summary = "해당 날짜에 어떤 시간대가 사용중인지에 대한 조회 API", description = "파라미터는 yyyy-mm-dd 로 입력합니다. 해당 날짜의 0~24시 시간대의 사용여부를 조회합니다.")
     @ApiResponse(responseCode = "200", description = "성공")
     @GetMapping("/time/{date}")
-    public ResponseEntity<boolean[]> getAvailableTime(@PathVariable("date") LocalDate date) {
+    public ResponseEntity<?> getAvailableTime(@PathVariable("date") LocalDate date) {
         boolean [] times = productService.getAvailableTime(date);
         return new ResponseEntity<>(times, HttpStatus.OK);
     }
+
+    @Operation(summary = "종료시간이 지난 상품들에 대해 상태 변경 API", description = "스케줄러로 작동 중인 타임딜 상품 종료에 따른 상태 변경에 대한 수동 호출 API 입니다.")
+    @ApiResponse(responseCode = "200", description = "성공")
+    @GetMapping("/checkTimeOver")
+    public ResponseEntity<?> updateProductTimeOver() {
+        productService.updateTimeOverProduct();
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

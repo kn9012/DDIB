@@ -207,4 +207,7 @@ public class ProductService {
         return productRepositorySupport.getAvailableTime(date);
     }
 
+    public void updateTimeOverProduct() {
+        productRepositorySupport.updateTimeOverProduct();
+    }
 }

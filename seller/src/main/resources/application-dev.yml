@@ -55,7 +55,7 @@ refresh:
     expiration:
       time: 864000000
 
-releaseHostName: localhost:3000
+releaseHostName: k10c102.p.ssafy.io
 
 eureka:
   client:

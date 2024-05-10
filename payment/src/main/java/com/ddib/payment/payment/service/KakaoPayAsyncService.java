@@ -142,7 +142,7 @@ public class KakaoPayAsyncService {
 
 
     @Transactional
-    @Async
+//    @Async
     public CompletableFuture<KakaoApproveResponseDto> afterPayApproveRequest(String pgToken, int productId, int quantity, String orderId) {
 
         log.info(Thread.currentThread().getName() + " : afterPayApproveRequest 메서드 진입 (주문수량 : " + quantity + ")");

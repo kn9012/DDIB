@@ -87,13 +87,13 @@ public class ProductRepositorySupport {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
 
         if (keyword != null && !keyword.isEmpty()) {
-            booleanBuilder.or(qProduct.name.contains(keyword));
+            booleanBuilder.and(qProduct.name.contains(keyword));
 
-            booleanBuilder.or(qProduct.category.eq(ProductCategory.searchCategoryByKeyword(keyword.toUpperCase())));
+//            booleanBuilder.or(qProduct.category.eq(ProductCategory.searchCategoryByKeyword(keyword.toUpperCase())));
         }
 
         if (category != null && !category.isEmpty()) {
-            booleanBuilder.or(qProduct.category.eq(ProductCategory.valueOf(category.toUpperCase())));
+            booleanBuilder.and(qProduct.category.eq(ProductCategory.valueOf(category.toUpperCase())));
         }
         booleanBuilder.and(qProduct.isOver.eq(isOver)); // 종료되지 않은 것에 대한 추가
 

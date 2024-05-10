@@ -18,18 +18,8 @@ public class Seller {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int sellerId;
 
-    @Schema(description = "기업 이메일")
-    @Column(nullable = false)
-    private String companyEmail;
-
     @Schema(description = "기업명")
     @NotNull
     private String companyName;
-
-    @Schema(description = "사업자 번호")
-    private int businessNumber;
-
-    @Schema(description = "대표 전화번호")
-    private int companyPhone;
 
 }

@@ -2,6 +2,7 @@ package com.ddib.payment.payment.controller;
 
 import com.ddib.payment.order.service.OrderService;
 import com.ddib.payment.order.util.OrderIdGenerator;
+import com.ddib.payment.payment.client.WaitingClient;
 import com.ddib.payment.payment.dto.request.KakaoReadyRequestDto;
 import com.ddib.payment.payment.dto.response.KakaoApproveResponseDto;
 import com.ddib.payment.payment.dto.response.KakaoReadyResponseDto;
@@ -47,6 +48,7 @@ public class PaymentController {
     private final OrderIdGenerator orderIdGenerator;
     private final RedissonClient redissonClient;
     private final RedissonClient redisson;
+    private final WaitingClient waitingClient;
 
 //    @Qualifier("taskExecutor")
 //    private final Executor executor;
@@ -146,6 +148,9 @@ public class PaymentController {
         CompletableFuture<KakaoApproveResponseDto> kakaoApproveResponseDto = kakaoPayAsyncService.afterPayApproveRequest(pgToken, productId, quantity, orderId);
 
         log.info(Thread.currentThread().getName() + "카카오 승인 후 재고 차감까지 완료한 후 현재 contoller단");
+
+        // 대기열 서버 호출
+        waitingClient.leave();
 
         RedirectView redirectView = new RedirectView();
         if(kakaoApproveResponseDto != null) {

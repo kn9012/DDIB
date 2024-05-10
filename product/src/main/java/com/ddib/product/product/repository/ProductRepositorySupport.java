@@ -83,19 +83,21 @@ public class ProductRepositorySupport {
                 .fetch();
     }
 
-    public List<Product> findByConditions(String keyword, String category, boolean isOver) {
+    public List<Product> findByConditions(String keyword, String category, Boolean isOver) {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
 
         if (keyword != null && !keyword.isEmpty()) {
             booleanBuilder.and(qProduct.name.contains(keyword));
-
 //            booleanBuilder.or(qProduct.category.eq(ProductCategory.searchCategoryByKeyword(keyword.toUpperCase())));
         }
 
         if (category != null && !category.isEmpty()) {
             booleanBuilder.and(qProduct.category.eq(ProductCategory.valueOf(category.toUpperCase())));
         }
-        booleanBuilder.and(qProduct.isOver.eq(isOver)); // 종료되지 않은 것에 대한 추가
+
+        if (isOver != null) {
+            booleanBuilder.and(qProduct.isOver.eq(isOver)); // 종료되지 않은 것에 대한 추가
+        }
 
         return jpaQueryFactory
                 .selectFrom(qProduct)

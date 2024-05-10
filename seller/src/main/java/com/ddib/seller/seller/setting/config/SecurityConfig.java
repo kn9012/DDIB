@@ -103,6 +103,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests((auth) -> auth
 //                        .requestMatchers( AUTH_WHITELIST).permitAll()
 //                        .requestMatchers("my").hasRole("USER")
+                        .requestMatchers("/**").permitAll()
                         .anyRequest().permitAll());
 
         //세션 설정 : STATELESS

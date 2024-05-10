@@ -11,6 +11,7 @@ import com.ddib.product.product.dto.request.ProductStockUpdateRequestDto;
 import com.ddib.product.product.dto.response.ProductMainResponseDto;
 import com.ddib.product.product.dto.response.ProductResponseDto;
 import com.ddib.product.product.dto.response.ProductViewResponseDto;
+import com.ddib.product.product.exception.ProductNotAvailableTimeException;
 import com.ddib.product.product.exception.ProductNotFoundException;
 import com.ddib.product.product.repository.ProductRepository;
 import com.ddib.product.product.repository.ProductRepositorySupport;
@@ -58,6 +59,10 @@ public class ProductService {
         log.info("PRODUCT SERVICE : SAVE PRODUCT : {}", dto.getName());
         Seller seller = sellerRepository.findBySellerId(dto.getSellerId())
                 .orElseThrow(SellerNotFoundException::new);
+
+        if (productRepositorySupport.isAvailableTime(dto.getEventStartDate().toLocalDate(), dto.getEventStartDate().getHour(), dto.getEventEndDate().getHour())) {
+            throw new ProductNotAvailableTimeException();
+        }
 
         List<String> detail = s3Uploader.storeImages(PRODUCT_DETAIL, details);
         List<String> thumbnail = s3Uploader.storeImages(PRODUCT_THUMBNAIL, thumbnails);
@@ -158,7 +163,7 @@ public class ProductService {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         LocalDate start = LocalDate.parse(LocalDate.now().toString().split("T")[0], formatter);
-        for(int day = 0 ; day < 7 ; day++){
+        for (int day = 0; day < 7; day++) {
             String key = formatter.format(start.plusDays(day));
             resultMap.computeIfAbsent(key, k -> new ArrayList<>());
         }
@@ -188,14 +193,18 @@ public class ProductService {
 
         Product product = productRepository.findByProductId(productId).orElseThrow(ProductNotFoundException::new);
 
-        List<FavoriteProduct> fps =  user.getLikedProducts();
-        for(FavoriteProduct fp : fps){
-            if(fp.getProduct().equals(product)){
+        List<FavoriteProduct> fps = user.getLikedProducts();
+        for (FavoriteProduct fp : fps) {
+            if (fp.getProduct().equals(product)) {
                 user.getLikedProducts().remove(fp);
                 product.getLikedUsers().remove(fp);
                 break;
             }
         }
+    }
+
+    public boolean[] getAvailableTime(LocalDate date){
+        return productRepositorySupport.getAvailableTime(date);
     }
 
 }

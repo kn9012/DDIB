@@ -1,5 +1,6 @@
 package com.ddib.product.product.util.batch.job;
 
+import com.ddib.product.product.domain.FavoriteProduct;
 import com.ddib.product.product.domain.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
@@ -36,7 +37,7 @@ public class ProductJobConfig {
     public Step productAlarmStep(JobRepository jobRepository, PlatformTransactionManager transactionManager,
                                 ItemReader productAlarmReader, ItemWriter productAlarmWriter, TaskExecutor taskExecutor){
         return new StepBuilder("productAlarmStep", jobRepository)
-                .<Product, Product>chunk(CHUNK_SIZE, transactionManager)
+                .<FavoriteProduct, FavoriteProduct>chunk(CHUNK_SIZE, transactionManager)
                 .reader(productAlarmReader)
                 .writer(productAlarmWriter)
                 .taskExecutor(taskExecutor)

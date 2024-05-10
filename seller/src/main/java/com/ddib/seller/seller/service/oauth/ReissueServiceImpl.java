@@ -78,7 +78,7 @@ public class ReissueServiceImpl implements ReissueService {
         }
 
         String email = jwtUtil.getEmail(refresh);
-        Integer sellerId = sellerRepository.findSellerIdBySellerEmail(email);
+        Integer sellerId = sellerRepository.findSellerIdBySellerEmail(email).getSellerId();
 
         //make new JWT
         String newAccess = jwtUtil.createJwt("access", email, accessExpireMs);

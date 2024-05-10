@@ -7,5 +7,5 @@ public interface SellerRepository extends JpaRepository<Seller, Integer> {
     Seller findBySellerId(Integer sellerId);
     Seller findBySellerEmail(String email);
     void deleteBySellerId(Integer sellerId);
-    Integer findSellerIdBySellerEmail(String email);
+    Seller findSellerIdBySellerEmail(String email);
 }

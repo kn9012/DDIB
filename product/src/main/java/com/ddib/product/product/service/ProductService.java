@@ -98,7 +98,7 @@ public class ProductService {
                 .build();
     }
 
-    public List<ProductResponseDto> findProductsByConditions(String keyword, String category, boolean isOver) {
+    public List<ProductResponseDto> findProductsByConditions(String keyword, String category, Boolean isOver) {
         log.info("PRODUCT SERVICE : SEARCH BY CONDITIONS : {} , {}, {}", keyword, category, isOver);
         return productRepositorySupport.findByConditions(keyword, category, isOver)
                 .stream()

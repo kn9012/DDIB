@@ -56,7 +56,7 @@ public class ProductController {
     @GetMapping("/search")
     public ResponseEntity<List<ProductResponseDto>> findProductsByConditions(@RequestParam(required = false) String keyword,
                                                                              @RequestParam(required = false) String category,
-                                                                             @RequestParam(required = false) boolean isOver) {
+                                                                             @RequestParam(required = false) Boolean isOver) {
         List<ProductResponseDto> dtos = productService.findProductsByConditions(keyword, category, isOver);
         return new ResponseEntity<>(dtos, HttpStatus.OK);
     }

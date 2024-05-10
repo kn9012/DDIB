@@ -27,10 +27,6 @@ public class Product {
     @ManyToOne
     private Seller seller;
 
-//    @Schema(description = "카테고리")
-//    @Column(nullable = false)
-//    private boolean category;
-
     @Schema(description = "상품명")
     @Column(nullable = false)
     private String name;

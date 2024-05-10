@@ -11,6 +11,7 @@ import com.ddib.product.product.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.ws.rs.Path;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDate;
 import java.util.*;
 
 @Tag(name = "Product Server API Docs", description = "상품 서버 Swagger 입니다 ㅎ_ㅎ")
@@ -124,4 +126,11 @@ public class ProductController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Operation(summary = "해당 날짜에 어떤 시간대가 사용중인지에 대한 조회 API", description = "해당 날짜의 0~24시 시간대의 사용여부를 조회합니다.")
+    @ApiResponse(responseCode = "200", description = "성공")
+    @GetMapping("/time/{date}")
+    public ResponseEntity<boolean[]> getAvailableTime(@PathVariable("date") LocalDate date) {
+        boolean [] times = productService.getAvailableTime(date);
+        return new ResponseEntity<>(times, HttpStatus.OK);
+    }
 }

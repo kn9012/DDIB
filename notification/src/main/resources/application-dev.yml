@@ -13,8 +13,8 @@ spring:
     password: ***REMOVED***
 
   jpa:
-    #    hibernate:
-    #      ddl-auto: update
+    hibernate:
+      ddl-auto: update
     generate-ddl: true
     show-sql: true
 

@@ -1,6 +1,5 @@
 package com.ddib.notification.user.domain;
 
-import com.ddib.notification.notification.domain.Notification;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -8,8 +7,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
-
-import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -48,10 +45,6 @@ public class User {
 
     @Schema(description = "FCM 토큰")
     private String fcmToken;
-
-    @Schema(description = "알림")
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<Notification> notifications;
 
     public void updateSubscribed() {
         this.isSubscribed = true;

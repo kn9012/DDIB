@@ -3,11 +3,8 @@ package com.ddib.notification.notification.domain;
 import com.ddib.notification.user.domain.User;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
-
-import javax.annotation.Nullable;
 
 @Entity
 @AllArgsConstructor
@@ -33,4 +30,10 @@ public class Notification {
     @Column(nullable = false)
     @Schema(description = "읽음 여부")
     private boolean isRead;
+
+    @ColumnDefault(value = "false")
+    @Schema(description = "일반회원")
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }

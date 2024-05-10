@@ -42,7 +42,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
         String email = customUserDetails.getEmail();
 
-        Integer sellerId = sellerRepository.findSellerIdBySellerEmail(email);
+        Integer sellerId = sellerRepository.findSellerIdBySellerEmail(email).getSellerId();
 
         log.info("success핸들러 " + email);
 

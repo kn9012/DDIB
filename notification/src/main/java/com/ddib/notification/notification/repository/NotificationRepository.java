@@ -10,5 +10,5 @@ import java.util.List;
 
 public interface NotificationRepository extends JpaRepository<Notification, Integer> {
     @Query("select n from Notification n where n.user.userId = :userId order by n.generatedTime desc")
-    List<NotificationDetailResponseDto> findAllByUserUserId(@Param("userId") Integer userId);
+    List<Notification> findAllByUserUserId(@Param("userId") Integer userId);
 }

@@ -25,6 +25,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     @Override
     @Transactional
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+        log.info("loadUser 호출!!!!!!!");
         OAuth2User oAuth2User = super.loadUser(userRequest);
 
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
@@ -39,16 +40,16 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         Seller existData = sellerRepository.findBySellerEmail(email);
 
         if (existData == null) {
-            Seller user = Seller.builder()
+            Seller seller = Seller.builder()
                     .ceoName(oAuth2Response.getNickName())
                     .sellerEmail(oAuth2Response.getEmail())
                     .build();
 
-            sellerRepository.save(user);
+            sellerRepository.save(seller);
 
             UserResponseDto responseDto = UserResponseDto.builder()
-                    .name(user.getCeoName())
-                    .email(user.getSellerEmail())
+                    .name(seller.getCeoName())
+                    .email(seller.getSellerEmail())
                     .build();
 
             return new CustomOAuth2User(responseDto);

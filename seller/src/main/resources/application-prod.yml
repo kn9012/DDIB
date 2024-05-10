@@ -13,7 +13,7 @@ spring:
           kakao:
             client-id: ***REMOVED***
             client-secret: ***REMOVED***
-            redirect-uri: http://k10c102.p.ssafy.io:8085/login/oauth2/code/bidd
+            redirect-uri: https://k10c102.p.ssafy.io/login/oauth2/code/bidd
             authorization-grant-type: authorization_code
             client-name: Kakao
             client-authentication-method: client_secret_post
@@ -55,9 +55,13 @@ refresh:
     expiration:
       time: 864000000
 
-releaseHostName: k10c102.p.ssafy.io:8081
+releaseHostName: k10c102.p.ssafy.io
 
 eureka:
+  instance:
+    hostname: k10c102.p.ssafy.io
   client:
-    serviceUrl:
-      defaultZone: ${EUREKA_URL:http://k10c102.p.ssafy.io:8761/eureka/}
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://k10c102.p.ssafy.io:8761/eureka

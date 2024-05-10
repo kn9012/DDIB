@@ -85,7 +85,7 @@ public class ProductRepositorySupport {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
 
         if (keyword != null && !keyword.isEmpty()) {
-            booleanBuilder.or(qProduct.name.like(keyword));
+            booleanBuilder.or(qProduct.name.contains(keyword));
 
             booleanBuilder.or(qProduct.category.eq(ProductCategory.searchCategoryByKeyword(keyword.toUpperCase())));
         }
@@ -102,4 +102,8 @@ public class ProductRepositorySupport {
                 .fetch();
     }
 
+//    public boolean isAvailableTime(int start, int end) {
+//        //해당날짜의 product 를 전부 조회하고, 해당 시간대들을 검색
+//
+//    }
 }

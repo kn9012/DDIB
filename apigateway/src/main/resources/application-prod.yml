@@ -27,7 +27,7 @@ spring:
 #            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
 
         - id: seller
-          uri: lb://seller
+          uri: lb://SELLER
           predicates:
             - Path=/api/seller/**, /api/oauth2/bidd/kakao, /login/oauth2/code/bidd
 #          filters:

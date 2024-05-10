@@ -23,7 +23,7 @@ public class SellerInfoDto {
 
     @NotNull
     @Schema(description = "사업자 등록 번호")
-    private int businessNumber;
+    private String businessNumber;
 
     @NotNull
     @Schema(description = "대표명")

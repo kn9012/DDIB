@@ -15,7 +15,7 @@ public class SellerModifyRequestDto {
     private String companyName;
 
     @Schema(description = "사업자 등록 번호")
-    private int businessNumber;
+    private String businessNumber;
 
     @Schema(description = "대표명")
     private String ceoName;

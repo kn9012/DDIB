@@ -24,6 +24,8 @@ public class SecurityConfig {
     private final CustomOAuth2UserService customOAuth2UserService;
     private final CustomSuccessHandler customSuccessHandler;
     private final JWTUtil jwtUtil;
+    
+    @Value("${releaseHostName}}")
     private final String releaseHostName;
 
     //swagger 설정

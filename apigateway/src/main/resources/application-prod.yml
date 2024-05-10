@@ -36,7 +36,7 @@ spring:
 #            - AuthorizationHeaderFilter
 
         - id: notification
-          uri: lb://notification
+          uri: lb://NOTIFICATION
           predicates:
             - Path=/api/notification/**
 #          filters:

@@ -3,10 +3,12 @@ package com.ddib.payment.payment.service;
 import com.ddib.payment.order.domain.Order;
 import com.ddib.payment.order.domain.OrderStatus;
 import com.ddib.payment.order.repository.OrderRepository;
+import com.ddib.payment.payment.client.ProductClient;
 import com.ddib.payment.payment.domain.Payment;
 import com.ddib.payment.payment.domain.PaymentStatus;
 import com.ddib.payment.payment.domain.Tid;
 import com.ddib.payment.payment.dto.request.KakaoReadyRequestDto;
+import com.ddib.payment.payment.dto.request.ProductStockDecreaseRequestDto;
 import com.ddib.payment.payment.dto.response.KakaoApproveResponseDto;
 import com.ddib.payment.payment.dto.response.KakaoReadyResponseDto;
 import com.ddib.payment.payment.dto.response.KakaoRefundResponseDto;
@@ -45,6 +47,7 @@ public class KakaoPayAsyncService {
 
     private final ProductService productService;
     private final TidRepository tidRepository;
+    private final ProductClient productClient;
     @Value("${pay.kakao.cid}")
     private String cid;
     @Value("${pay.kakao.secret-key}")
@@ -179,7 +182,13 @@ public class KakaoPayAsyncService {
                 // 결제 데이터 insert (비동기)
                 insertPaymentData(kakaoApproveResponseDto, order.getUser().getUserId());
                 // 재고 차감
-                productService.updateStock(productId, quantity);
+//                productService.updateStock(productId, quantity);
+                // Feign Client로 상품 서버 호출해서 재고 차감
+                ProductStockDecreaseRequestDto productStockDecreaseRequestDto = ProductStockDecreaseRequestDto.builder()
+                        .productId(productId)
+                        .amount(quantity)
+                        .build();
+                productClient.decreaseStock(productStockDecreaseRequestDto);
 
                 log.info("===== " + worker + " : stock update completed =====");
 

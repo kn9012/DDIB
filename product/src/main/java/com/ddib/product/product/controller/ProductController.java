@@ -126,7 +126,7 @@ public class ProductController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @Operation(summary = "해당 날짜에 어떤 시간대가 사용중인지에 대한 조회 API", description = "해당 날짜의 0~24시 시간대의 사용여부를 조회합니다.")
+    @Operation(summary = "해당 날짜에 어떤 시간대가 사용중인지에 대한 조회 API", description = "파라미터는 yyyy-mm-dd 로 입력합니다. 해당 날짜의 0~24시 시간대의 사용여부를 조회합니다.")
     @ApiResponse(responseCode = "200", description = "성공")
     @GetMapping("/time/{date}")
     public ResponseEntity<boolean[]> getAvailableTime(@PathVariable("date") LocalDate date) {

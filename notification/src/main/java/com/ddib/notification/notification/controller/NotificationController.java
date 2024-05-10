@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/notification")
 @RequiredArgsConstructor
 @Tag(name = "Notification Controller", description = "알림 API")
 public class NotificationController {
@@ -25,14 +25,14 @@ public class NotificationController {
     private final SubscriptionCategoryService subscriptionCategoryService;
 
     @Operation(summary = "FCM 알림 전송 API")
-    @PostMapping
+    @PostMapping("/send")
     public String sendNotificationByToken(@RequestBody FCMNotificationRequestDto requestDto) {
         return fcmNotificationService.sendNotificationByToken(requestDto);
     }
 
     @Operation(summary = "구독 알림 신청 API")
     @ApiResponse(responseCode = "200", description = "성공")
-        @PutMapping("/notification/subscribe/{userId}")
+        @PutMapping("/subscribe/{userId}")
     public ResponseEntity<Void> applyNotification(@RequestBody List<SubscriptionCategoryRequestDto> categories, @PathVariable Integer userId) {
         userService.findByUserId(userId).updateSubscribed();
         subscriptionCategoryService.createSubscriptionCategory(categories, userId);
@@ -41,7 +41,7 @@ public class NotificationController {
 
     @Operation(summary = "구독 알림 취소 API")
     @ApiResponse(responseCode = "200", description = "성공")
-    @PutMapping("/notification/subscribe/cancel/{userId}")
+    @PutMapping("/subscribe/cancel/{userId}")
     public ResponseEntity<Void> cancelNotification(@PathVariable Integer userId) {
         userService.findByUserId(userId).updateNotSubscribed();
         subscriptionCategoryService.deleteSubscriptionCategory(userId);

@@ -32,19 +32,19 @@ public class NotificationController {
 
     @Operation(summary = "구독 알림 신청 API")
     @ApiResponse(responseCode = "200", description = "성공")
-    @PostMapping("/notification/subscribe/{email}")
-    public ResponseEntity<Void> applyNotification(@RequestBody List<SubscriptionCategoryRequestDto> categories, @PathVariable String email) {
-        userService.findByEmail(email).updateSubscribed();
-        subscriptionCategoryService.createSubscriptionCategory(categories, email);
+    @PutMapping("/notification/subscribe/{userId}")
+    public ResponseEntity<Void> applyNotification(@RequestBody List<SubscriptionCategoryRequestDto> categories, @PathVariable Integer userId) {
+        userService.findByUserId(userId).updateSubscribed();
+        subscriptionCategoryService.createSubscriptionCategory(categories, userId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Operation(summary = "구독 알림 취소 API")
     @ApiResponse(responseCode = "200", description = "성공")
-    @PutMapping("/notification/subscribe/cancel/{email}")
-    public ResponseEntity<Void> cancelNotification(@PathVariable String email) {
-        userService.findByEmail(email).updateNotSubscribed();
-        subscriptionCategoryService.deleteSubscriptionCategory(email);
+    @PutMapping("/notification/subscribe/cancel/{userId}")
+    public ResponseEntity<Void> cancelNotification(@PathVariable Integer userId) {
+        userService.findByUserId(userId).updateNotSubscribed();
+        subscriptionCategoryService.deleteSubscriptionCategory(userId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

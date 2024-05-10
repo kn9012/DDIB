@@ -17,8 +17,8 @@ public class SubscriptionCategoryService {
     private final SubscriptionCategoryRepository subscriptionCategoryRepository;
     private final UserRepository userRepository;
 
-    public void createSubscriptionCategory(List<SubscriptionCategoryRequestDto> categories, String email) {
-        User user = userRepository.findByEmail(email);
+    public void createSubscriptionCategory(List<SubscriptionCategoryRequestDto> categories, Integer userId) {
+        User user = userRepository.findByUserId(userId);
 
         for (SubscriptionCategoryRequestDto category : categories) {
             SubscriptionCategory subscriptionCategory = SubscriptionCategory.builder()
@@ -31,7 +31,7 @@ public class SubscriptionCategoryService {
     }
 
     @Transactional
-    public void deleteSubscriptionCategory(String email) {
-        subscriptionCategoryRepository.deleteSubscriptionCategoriesByUserEmail(email);
+    public void deleteSubscriptionCategory(Integer userId) {
+        subscriptionCategoryRepository.deleteSubscriptionCategoriesByUserUserId(userId);
     }
 }

@@ -64,23 +64,29 @@ public class ProductViewResponseDto {
     @Schema(description = "판매자 ID", defaultValue = "1")
     private Integer sellerId;
 
+    @Schema(description = "판매회원 이메일")
+    private String sellerEmail;
+
     @Schema(description = "판매자 기업명")
     private String companyName;
 
     @Schema(description = "판매자 사업자 등록번호")
-    private long businessNumber;
+    private String businessNumber;
 
     @Schema(description = "판매자 회사번호")
     private long companyPhone;
 
-    @Schema(description = "판매자 이메일")
-    private String companyEmail;
+    @Schema(description = "대표명")
+    private String ceoName;
 
-    @Schema(description = "타임딜 종료 여부")
+    @Schema(description = "대표 이메일")
+    private String ceoEmail;
+
+    @Schema(description = "대표 전화번호")
+    private String ceoPhone;
+
+    @Schema(description = "종료 여부")
     private boolean isOver;
-
-    @Schema(description = "사용자가 해당 상품을 좋아요했는지에 대한 여부")
-    private boolean isLiked;
 
     public static ProductViewResponseDto of(Product product, boolean isLiked) {
         return ProductViewResponseDto.builder()
@@ -102,11 +108,12 @@ public class ProductViewResponseDto {
                         .toList()) // dto 변환 필요
                 .likeCount(product.getLikedUsers().size())
                 .sellerId(product.getSeller().getSellerId())
+                .sellerEmail(product.getSeller().getSellerEmail())
                 .companyName(product.getSeller().getCompanyName())
                 .businessNumber(product.getSeller().getBusinessNumber())
-                .companyPhone(product.getSeller().getCompanyPhone())
-                .companyEmail(product.getSeller().getCompanyEmail())
-                .isLiked(isLiked)
+                .ceoName(product.getSeller().getCeoName())
+                .ceoEmail(product.getSeller().getCeoEmail())
+                .ceoPhone(product.getSeller().getCeoPhone())
                 .isOver(product.isOver())
                 .build();
     }

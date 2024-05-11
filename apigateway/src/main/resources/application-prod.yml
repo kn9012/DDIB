@@ -128,7 +128,12 @@ spring:
         cors-configurations:
           '[/**]':
             allowedOrigins:
-              - 'https://k10c102.p.ssafy.io/'
+              - "http://k10c102.p.ssafy.io/"
+              - "https://k10c102.p.ssafy.io/"
+              - "http://localhost:3000/"
+              - "https://localhost:3000/"
+              - "http://localhost/"
+              - "https://localhost/"
             allowedOriginPatterns: "*"
             allowedMethods:
               - GET

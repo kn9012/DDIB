@@ -29,7 +29,7 @@ spring:
         - id: seller
           uri: lb://SELLER
           predicates:
-            - Path=/api/seller/**, /api/oauth2/bidd/kakao, /login/oauth2/code/bidd/**, /login/done
+            - Path=/api/seller/**, /api/oauth2/bidd/kakao, /login/oauth2/code/bidd/**, /login/done/bidd
 #          filters:
 #            - RemoveRequestHeader=Cookie
 #            - RewritePath=/user-service/(?<segment>.*), /$\{segment}

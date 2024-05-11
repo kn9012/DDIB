@@ -35,11 +35,30 @@ eureka:
     service-url:
       defaultZone: http://k10c102.p.ssafy.io:8761/eureka/
 
+host:
+  address: https://k10c102.p.ssafy.io
+
 # -- KakaoPay
 pay:
   kakao:
     cid: TC0ONETIME
     secret-key: ***REMOVED***
+
+# KakaoPay API Url
+api:
+  kakao:
+    approval-url: http://k10c102.p.ssafy.io:8083/api/payment/success
+    cancel-url: http://k10c102.p.ssafy.io:8083/api/payment/cancel
+    fail-url: http://k10c102.p.ssafy.io:8083/api/payment/fail
+
+# Redirect Url
+redirect:
+  order:
+    complete-url: ${host.address}/order/complete/
+    fail-url: ${host.address}/order/fail
+  pay:
+    cancel-url: ${host.address}/order/cancel
+    fail-url: ${host.address}/order/fail
 
 # Swagger
 springdoc:

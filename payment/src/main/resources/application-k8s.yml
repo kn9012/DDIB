@@ -36,7 +36,7 @@ eureka:
       defaultZone: http://k10c102.p.ssafy.io:8761/eureka/
 
 host:
-  address: https://k10c102.p.ssafy.io
+  address: https://ddib.kro.kr
 
 # -- KakaoPay
 pay:
@@ -47,9 +47,9 @@ pay:
 # KakaoPay API Url
 api:
   kakao:
-    approval-url: http://k10c102.p.ssafy.io:8083/api/payment/success
-    cancel-url: http://k10c102.p.ssafy.io:8083/api/payment/cancel
-    fail-url: http://k10c102.p.ssafy.io:8083/api/payment/fail
+    approval-url: http://ddib.kro.kr:8083/api/payment/success
+    cancel-url: http://ddib.kro.kr:8083/api/payment/cancel
+    fail-url: http://ddib.kro.kr:8083/api/payment/fail
 
 # Redirect Url
 redirect:

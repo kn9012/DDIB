@@ -7,6 +7,7 @@ import com.ddib.payment.payment.dto.response.KakaoApproveResponseDto;
 import com.ddib.payment.payment.dto.response.KakaoReadyResponseDto;
 import com.ddib.payment.payment.service.KakaoPayAsyncService;
 import com.ddib.payment.payment.service.KakaoPayService;
+import com.ddib.payment.payment.util.KakaoProperties;
 import com.ddib.payment.product.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -35,6 +36,7 @@ public class PaymentController {
     private final KakaoPayAsyncService kakaoPayAsyncService;
     private final ProductService productService;
     private final WaitingClient waitingClient;
+    private final KakaoProperties kakaoProperties;
 
 //    @Qualifier("taskExecutor")
 //    private final Executor executor;
@@ -134,10 +136,10 @@ public class PaymentController {
 
         RedirectView redirectView = new RedirectView();
         if(kakaoApproveResponseDto != null) {
-            redirectView.setUrl("https://k10c102.p.ssafy.io/order/complete/" + orderId);
+            redirectView.setUrl(kakaoProperties.orderCompleteUrl + orderId);
             return CompletableFuture.supplyAsync(() -> redirectView);
         } else {
-            redirectView.setUrl("https://k10c102.p.ssafy.io/order/fail");
+            redirectView.setUrl(kakaoProperties.orderFailUrl);
             return CompletableFuture.supplyAsync(() -> redirectView);
         }
     }
@@ -158,7 +160,7 @@ public class PaymentController {
         // 2. 비동기 방식 (기본 ThreadPoolTaskExecutor)
         kakaoPayAsyncService.deleteOrder(orderId);
 
-        response.sendRedirect("https://k10c102.p.ssafy.io/order/cancel");
+        response.sendRedirect(kakaoProperties.payCancelUrl);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -182,7 +184,7 @@ public class PaymentController {
         // 2. 비동기 방식 (기본 ThreadPoolTaskExecutor)
         kakaoPayAsyncService.deleteOrder(orderId);
 
-        response.sendRedirect("https://k10c102.p.ssafy.io/order/fail");
+        response.sendRedirect(kakaoProperties.payFailUrl);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

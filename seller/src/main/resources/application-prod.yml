@@ -25,16 +25,16 @@ spring:
             user-info-uri: https://kapi.kakao.com/v2/user/me
             user-name-attribute: id
 
-#  jpa:
-#    hibernate:
-#      ddl-auto: create
-#    generate-ddl: true
-#    show-sql: true
+  #  jpa:
+  #    hibernate:
+  #      ddl-auto: update
+  #    generate-ddl: true
+  #    show-sql: true
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://k10c102.p.ssafy.io:3306/ddib?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    username: ssafy
+    username: root
     password: ***REMOVED***
 
   data:

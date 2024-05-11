@@ -24,27 +24,26 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     private final JWTUtil jwtUtil;
     private final RedisService redisService;
 
-    @Value("${releaseHostName}")
-    private String releaseHostName;
-
     @Value("${access.token.expiration.time}")
     private Long accessExpireMs;
 
     @Value("${refresh.token.expiration.time}")
     private Long refreshExpireMs;
 
+    @Value("${releaseHostName}")
+    private String releaseHostName;
+
     private final SellerRepository sellerRepository;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+        log.info("Success 로그인!!!");
         //OAuth2User
         CustomOAuth2User customUserDetails = (CustomOAuth2User) authentication.getPrincipal();
 
         String email = customUserDetails.getEmail();
 
-        Integer sellerId = sellerRepository.findSellerIdBySellerEmail(email).getSellerId();
-
-        log.info("success핸들러 " + email);
+        Integer userId  = sellerRepository.findSellerIdBySellerEmail(email).getSellerId();
 
         // 권한을 찾아서 권한 설정해줌
         // authentication.getAuthorities()를 호출하여
@@ -62,7 +61,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
         response.addCookie(createCookie("refresh", refresh));
         response.addCookie(createCookie("Authorization", access));
-        response.addCookie(createCookie("num", String.valueOf(sellerId)));
+        response.addCookie(createCookie("num", String.valueOf(userId)));
 
         response.addHeader("Authorization", "Bearer " + access);
         log.info("response " + response.getHeader("Authorization"));

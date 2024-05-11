@@ -65,13 +65,12 @@ public class JWTFilter extends OncePerRequestFilter {
         String email = jwtUtil.getEmail(token);
 
         // User 엔티티 생성한 후 값 set
-        Seller user = Seller.builder()
+        Seller seller = Seller.builder()
                 .sellerEmail(email)
                 .build();
 
         // UserDetails에 회원 정보 객체 담기
-        CustomUserDetails customUserDetails = new CustomUserDetails(user);
-
+        CustomUserDetails customUserDetails = new CustomUserDetails(seller);
         // 스프링 시큐리티 인증 토큰 생성 (principal, credentials, authorities)
         Authentication authToken = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
 

@@ -5,7 +5,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(name = "productClient", url = "http://k10c102.p.ssafy.io:8082/api/product")
+@FeignClient(name = "productClient", url = "${feign-client.product}/api/product")
 public interface ProductClient {
 
     @PutMapping("/stock/decrease")

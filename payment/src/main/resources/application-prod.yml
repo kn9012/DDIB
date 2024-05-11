@@ -60,6 +60,11 @@ redirect:
     cancel-url: ${host.address}/order/cancel
     fail-url: ${host.address}/order/fail
 
+# Feign Client Url
+feign-client:
+  waiting: http://k10c102.p.ssafy.io:9010
+  product: http://k10c102.p.ssafy.io:8082
+
 # Swagger
 springdoc:
   swagger-ui:

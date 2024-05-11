@@ -29,6 +29,7 @@ public class Seller {
     @Schema(description = "사업자 등록 번호")
     private String businessNumber;
 
+    @Column(nullable = false)
     @Schema(description = "대표명")
     private String ceoName;
 

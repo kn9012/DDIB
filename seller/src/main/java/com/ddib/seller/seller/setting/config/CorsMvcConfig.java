@@ -1,5 +1,4 @@
 package com.ddib.seller.seller.setting.config;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -21,8 +20,8 @@ public class CorsMvcConfig implements WebMvcConfigurer {
         corsRegistry.addMapping("/**")
                 .exposedHeaders("Set-Cookie")
                 .exposedHeaders("Authorization")
-                .allowedOrigins("http://"+releaseHostName+":5173",
-                        "https://"+releaseHostName,  "https://"+releaseHostName+":5173" ,"http://192.168.100.134:3000" , "http://192.168.100.134:5173")
+                .allowedOrigins("http://"+ releaseHostName+":5173",
+                        "https://"+ releaseHostName, "https://" + releaseHostName + ":5173", "http://192.168.100.134:3000", "http://192.168.100.134:5173")
                 .allowCredentials(true);
 
     }

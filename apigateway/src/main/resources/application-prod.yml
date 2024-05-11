@@ -135,6 +135,7 @@ spring:
               - "http://localhost/"
               - "https://localhost/"
             allowedOriginPatterns: "*"
+            allow-credentials: true
             allowedMethods:
               - GET
               - POST

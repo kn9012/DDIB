@@ -29,7 +29,7 @@ spring:
         - id: seller
           uri: lb://seller
           predicates:
-            - Path=/api/seller/**, /api/oauth2/bidd/kakao, /login/oauth2/code/bidd/**, /login/done
+            - Path=/api/seller/**, /api/oauth2/bidd/kakao, /login/oauth2/code/bidd/**, /login/done/**
 #          filters:
 #            - RemoveRequestHeader=Cookie
 #            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
@@ -42,7 +42,7 @@ spring:
 #          filters:
 #            - RemoveRequestHeader=Cookie
 #            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
-#            - AuthorizationHeaderFilter
+#            - AuthorizationHeaderFilterx
 
         - id: product
           uri: lb://PRODUCT

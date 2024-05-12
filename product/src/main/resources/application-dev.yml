@@ -47,3 +47,6 @@ logging:
       ddib:
         product: info
   config: classpath:logback-dev.xml
+
+feign-client:
+  notification: http://localhost:8084

@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(name="notification-local", url="http://localhost:8084")
+@FeignClient(name="notification-local", url="${feign-client.notification}/api/notification")
 public interface NotificationClient {
 
-    @PostMapping("/api/notification/create")
+    @PostMapping("/create")
     public void createAlarm(@RequestBody NotificationCreateDto dto);
 
-    @GetMapping("/api/notification/{userId}")
+    @GetMapping("/{userId}")
     public ResponseEntity<?> notificationDetails(@PathVariable Integer userId);
 }

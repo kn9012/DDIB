@@ -15,7 +15,7 @@ public class OpenApiConfig {
 
         Info info = new Info()
                 .version("v1.0.0")
-                .title("DDIP API")
+                .title("DDIB API")
                 .description("API Description");
 
         // SecuritySecheme명

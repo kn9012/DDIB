@@ -36,11 +36,10 @@ public class SecurityConfig {
             "/v3/api-docs/**", "/api-docs/**", "/swagger-ui.html"
     };
 
-    public SecurityConfig(CustomOAuth2UserService customOAuth2UserService, CustomSuccessHandler customSuccessHandler, JWTUtil jwtUtil, @Value("${releaseHostName}") String releaseHostName) {
+    public SecurityConfig(CustomOAuth2UserService customOAuth2UserService, CustomSuccessHandler customSuccessHandler, JWTUtil jwtUtil) {
         this.customOAuth2UserService = customOAuth2UserService;
         this.customSuccessHandler = customSuccessHandler;
         this.jwtUtil = jwtUtil;
-        this.releaseHostName = releaseHostName;
     }
 
     @Bean
@@ -102,7 +101,7 @@ public class SecurityConfig {
         //경로별 인가 작업
         http
                 .authorizeHttpRequests((auth) -> auth
-//                        .requestMatchers("/**").permitAll()
+                        .requestMatchers("/**").permitAll()
                         .anyRequest().permitAll());
 
         //세션 설정 : STATELESS

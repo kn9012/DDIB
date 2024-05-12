@@ -71,9 +71,6 @@ public class ProductResponseDto {
     @Schema(description = "판매자 사업자 등록번호")
     private String businessNumber;
 
-    @Schema(description = "판매자 회사번호")
-    private long companyPhone;
-
     @Schema(description = "대표명")
     private String ceoName;
 

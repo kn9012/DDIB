@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Builder
-@Schema(description = "일반회원 알림 응답 DTO")
+@Schema(description = "일반회원 알림 조회 응답 DTO")
 public class NotificationDetailResponseDto {
     @Schema(description = "제목")
     @Column(nullable = false)

@@ -6,7 +6,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
-import java.security.Timestamp;
 import java.time.LocalDateTime;
 
 @Entity
@@ -20,6 +19,10 @@ public class Notification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Schema(description = "알림 식별키")
     private Integer notificationId;
+
+    @Schema(description = "알림 도메인")
+    @Column(nullable = false)
+    private String domain;
 
     @Schema(description = "제목")
     @Column(nullable = false)

@@ -1,7 +1,9 @@
 package com.ddib.payment.order.service;
 
 import com.ddib.payment.order.domain.Order;
+import com.ddib.payment.order.dto.SalesHistory;
 import com.ddib.payment.order.dto.response.OrderResponseDto;
+import com.ddib.payment.order.dto.response.SalesHistoryResponseDto;
 import com.ddib.payment.order.repository.OrderRepository;
 import com.ddib.payment.payment.repository.PaymentRepository;
 import lombok.RequiredArgsConstructor;
@@ -74,6 +76,25 @@ public class OrderService {
                 .paymentMethod(paymentRepository.findByOrderId(order.getOrderId()).getPaymentMethodType())
                 .build();
         return orderResponseDto;
+    }
+
+    public SalesHistoryResponseDto viewSalesHistory(int productId) {
+        List<Order> orderList = orderRepository.findAllByProductId(productId);
+        List<SalesHistory> salesHistoryList = new ArrayList<>();
+        for(Order order : orderList) {
+            SalesHistory salesHistory = SalesHistory.builder()
+                    .orderId(order.getOrderId())
+                    .name(order.getReceiverName())
+                    .phone(order.getReceiverPhone())
+                    .address(order.getOrderRoadAddress() + " " + order.getOrderDetailAddress())
+                    .build();
+            salesHistoryList.add(salesHistory);
+        }
+
+        return SalesHistoryResponseDto.builder()
+                .productId(productId)
+                .salesHistoryList(salesHistoryList)
+                .build();
     }
 
 }

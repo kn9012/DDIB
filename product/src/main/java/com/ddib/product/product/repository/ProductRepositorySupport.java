@@ -6,6 +6,8 @@ import com.ddib.product.product.domain.QProduct;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.util.ToStringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -15,6 +17,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
+@Slf4j
 public class ProductRepositorySupport {
 
     @Autowired
@@ -107,6 +110,7 @@ public class ProductRepositorySupport {
     }
 
     public boolean isAvailableTime(LocalDate date, int start, int end) {
+        log.info("PRODUCT create CHECK DATE : {}", date);
         LocalDate startOfDay = date.atStartOfDay().toLocalDate();
         LocalDate endOfDay = startOfDay.plusDays(ONE_DAY);
 

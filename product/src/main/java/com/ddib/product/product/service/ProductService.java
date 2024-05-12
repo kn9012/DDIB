@@ -1,6 +1,10 @@
 package com.ddib.product.product.service;
 
 import com.ddib.product.common.file.util.S3Uploader;
+import com.ddib.product.notification.client.NotificationClient;
+import com.ddib.product.notification.domain.SubscriptionCategory;
+import com.ddib.product.notification.dto.request.NotificationCreateDto;
+import com.ddib.product.notification.repository.SubscriptionCategoryRepository;
 import com.ddib.product.product.domain.FavoriteProduct;
 import com.ddib.product.product.domain.Product;
 import com.ddib.product.product.domain.ProductDetail;
@@ -53,16 +57,18 @@ public class ProductService {
 
     private final S3Uploader s3Uploader;
 
-//    private final AlarmClient alarmClient;
+    private final NotificationClient notificationClient;
+
+    private final SubscriptionCategoryRepository subscriptionCategoryRepository;
 
     public void createProduct(List<MultipartFile> thumbnails, List<MultipartFile> details, ProductCreateRequestDto dto) {
         log.info("PRODUCT SERVICE : SAVE PRODUCT : {}", dto.getName());
         Seller seller = sellerRepository.findBySellerId(dto.getSellerId())
                 .orElseThrow(SellerNotFoundException::new);
 
-        if (productRepositorySupport.isAvailableTime(dto.getEventStartDate().toLocalDate(), dto.getEventStartDate().getHour(), dto.getEventEndDate().getHour())) {
-            throw new ProductNotAvailableTimeException();
-        }
+//        if (productRepositorySupport.isAvailableTime(dto.getEventStartDate().toLocalDate(), dto.getEventStartDate().getHour(), dto.getEventEndDate().getHour())) {
+//            throw new ProductNotAvailableTimeException();
+//        }
 
         List<String> detail = s3Uploader.storeImages(PRODUCT_DETAIL, details);
         List<String> thumbnail = s3Uploader.storeImages(PRODUCT_THUMBNAIL, thumbnails);
@@ -70,7 +76,9 @@ public class ProductService {
         Product product = dto.toEntity(seller);
         product.updateThumbnail(thumbnail.get(0));
         product.insertProductDetails(ProductDetail.of(detail, product));
+
         productRepository.save(product);
+        callSubscriptionNotification(product);
     }
 
     public ProductMainResponseDto getMainPageData() {
@@ -203,11 +211,31 @@ public class ProductService {
         }
     }
 
-    public boolean[] getAvailableTime(LocalDate date){
+    public boolean[] getAvailableTime(LocalDate date) {
         return productRepositorySupport.getAvailableTime(date);
     }
 
     public void updateTimeOverProduct() {
         productRepositorySupport.updateTimeOverProduct();
+    }
+
+    public void createFavoriteAlarm(FavoriteProduct favoriteProduct) {
+        NotificationCreateDto dto = NotificationCreateDto.ofFavorite(favoriteProduct.getProduct(), favoriteProduct.getUser().getUserId());
+        notificationClient.createAlarm(dto);
+    }
+
+
+    public void notificationDetails(FavoriteProduct favoriteProduct) {
+        notificationClient.notificationDetails(favoriteProduct.getUser().getUserId());
+    }
+
+    //해당 카테고리를 좋아요한 유저를 찾은 다음 해당 유저들에게 알람 보내는 메서드
+    private void callSubscriptionNotification(Product product) {
+        List<SubscriptionCategory> findBySubscriptionCategories = subscriptionCategoryRepository.findBySubscriptionCategory(product.getCategory().getValue());
+
+        findBySubscriptionCategories.stream()
+                .filter(sc -> sc.getSubscriptionCategory().equals(product.getCategory().getValue()))
+                .map(sc -> NotificationCreateDto.ofSubscription(product, sc.getUser().getUserId()))
+                .forEach(notificationClient::createAlarm);
     }
 }

@@ -11,6 +11,7 @@ import com.ddib.product.product.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.ws.rs.Path;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDate;
 import java.util.*;
 
 @Tag(name = "Product Server API Docs", description = "상품 서버 Swagger 입니다 ㅎ_ㅎ")
@@ -53,8 +55,9 @@ public class ProductController {
     @ApiResponse(responseCode = "200", description = "성공")
     @GetMapping("/search")
     public ResponseEntity<List<ProductResponseDto>> findProductsByConditions(@RequestParam(required = false) String keyword,
-                                                                             @RequestParam(required = false) String category) {
-        List<ProductResponseDto> dtos = productService.findProductsByConditions(keyword, category);
+                                                                             @RequestParam(required = false) String category,
+                                                                             @RequestParam(required = false) Boolean isOver) {
+        List<ProductResponseDto> dtos = productService.findProductsByConditions(keyword, category, isOver);
         return new ResponseEntity<>(dtos, HttpStatus.OK);
     }
 
@@ -120,6 +123,22 @@ public class ProductController {
     @DeleteMapping("/{productId}/{userId}")
     public ResponseEntity<?> cancelFavoriteProduct(@PathVariable("productId") int productId, @PathVariable("userId") int userId) {
         productService.cancelFavoriteProduct(productId, userId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Operation(summary = "해당 날짜에 어떤 시간대가 사용중인지에 대한 조회 API", description = "파라미터는 yyyy-mm-dd 로 입력합니다. 해당 날짜의 0~24시 시간대의 사용여부를 조회합니다.")
+    @ApiResponse(responseCode = "200", description = "성공")
+    @GetMapping("/time/{date}")
+    public ResponseEntity<?> getAvailableTime(@PathVariable("date") LocalDate date) {
+        boolean [] times = productService.getAvailableTime(date);
+        return new ResponseEntity<>(times, HttpStatus.OK);
+    }
+
+    @Operation(summary = "종료시간이 지난 상품들에 대해 상태 변경 API", description = "스케줄러로 작동 중인 타임딜 상품 종료에 따른 상태 변경에 대한 수동 호출 API 입니다.")
+    @ApiResponse(responseCode = "200", description = "성공")
+    @GetMapping("/checkTimeOver")
+    public ResponseEntity<?> updateProductTimeOver() {
+        productService.updateTimeOverProduct();
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

@@ -1,6 +1,8 @@
 package com.ddib.product.product.util.batch.scheduler;
 
+import com.ddib.product.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersBuilder;
@@ -15,19 +17,29 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class ProductJobScheduler {
 
     private final Job productJob;
 
     private final JobLauncher jobLauncher;
 
+    private final ProductService productService;
+
     //    @Scheduled(cron = "30 * * * * ?") // TEST 시 10초 주기로 스케줄링
-    @Scheduled(cron = "0 0 0 */3 * ?")
+    @Scheduled(cron = "0 0 0/1 * * *")
     public void runAlarmJob() throws JobInstanceAlreadyCompleteException, JobExecutionAlreadyRunningException, JobParametersInvalidException, JobRestartException {
+        log.info("[PRODUCT] ALARM BATCH JOB 실행");
         JobParameters jobParameters = new JobParametersBuilder()
                 .addLong("time", System.currentTimeMillis())
                 .toJobParameters();
 
         jobLauncher.run(productJob, jobParameters);
+    }
+
+    @Scheduled(cron = "0 0 0/1 * * *")
+    public void updateTimeOverProduct(){
+        log.info("[PRODUCT] UPDATE TIME OVER SCHEDULE 실행");
+        productService.updateTimeOverProduct();
     }
 }

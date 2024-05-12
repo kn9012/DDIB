@@ -65,7 +65,7 @@ public class Product {
         isStockShortage(amount);
         stock -= amount;
 
-        if (stock == 0) {
+        if (stock <= 0) {
             this.isOver = true;
         }
     }

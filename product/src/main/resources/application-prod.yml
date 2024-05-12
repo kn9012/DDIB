@@ -39,7 +39,7 @@ eureka:
   client:
     register-with-eureka: true
     fetch-registry: true
-    serviceUrl:
+    service-url:
       defaultZone: http://k10c102.p.ssafy.io:8761/eureka/
 
 logging:

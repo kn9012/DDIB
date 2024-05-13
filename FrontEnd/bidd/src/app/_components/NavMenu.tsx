@@ -34,10 +34,10 @@ export default function NavMenu() {
     <>
       <div className={styles.main}>
         <li className={styles.title}>
-          <Link href="/">BIDD</Link>
+          <Link href="/bidd">BIDD</Link>
         </li>
         <li>
-          <Link href="/apply">
+          <Link href="/bidd/apply">
             {segment === "apply" ? (
               <>
                 <div className={styles.subTitle} style={{ fontWeight: "bold" }}>
@@ -52,7 +52,7 @@ export default function NavMenu() {
           </Link>
         </li>
         <li>
-          <Link href="/paypolicy">
+          <Link href="/bidd/paypolicy">
             {segment === "paypolicy" ? (
               <>
                 <div className={styles.subTitle} style={{ fontWeight: "bold" }}>
@@ -76,22 +76,8 @@ export default function NavMenu() {
             </div>
           </Link>
         </li>
+
         <li className={styles.login}>
-          {jwt.length == 0 ? (
-            <div>
-              {/* <BiLogIn className={styles.icons} />
-              <TbLogin2 className={styles.icons} />
-              <CiLogin className={styles.icons} /> */}
-              {/* <ImEnter className={styles.icons} /> */}
-              <TbDoorEnter className={styles.icons} />
-            </div>
-          ) : (
-            <div></div>
-          )}
-        </li>
-        {/* {jwt.length != 0 && (
-        )} */}
-        <li>
           {jwt.length == 0 ? (
             <>
               <div onClick={kakaoLogin}>
@@ -100,14 +86,14 @@ export default function NavMenu() {
             </>
           ) : segment === "mypage" ? (
             <>
-              <Link href="/mypage">
+              <Link href="/bidd//mypage">
                 <div>
                   <GoPersonFill className={styles.icons} />
                 </div>
               </Link>
             </>
           ) : (
-            <Link href="/mypage">
+            <Link href="/bidd//mypage">
               <div>
                 <GoPerson className={styles.icons} />
               </div>

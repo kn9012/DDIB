@@ -20,8 +20,8 @@ public class CorsMvcConfig implements WebMvcConfigurer {
         corsRegistry.addMapping("/**")
                 .exposedHeaders("Set-Cookie")
                 .exposedHeaders("Authorization")
-                .allowedOrigins("http://"+ releaseHostName+":5173",
-                        "https://"+ releaseHostName, "https://" + releaseHostName + ":5173", "http://192.168.100.134:3000", "http://192.168.100.134:5173")
+                .allowedOrigins("http://"+ releaseHostName+":3001",
+                        "https://"+ releaseHostName, "https://" + releaseHostName + ":3001")
                 .allowCredentials(true);
 
     }

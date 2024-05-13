@@ -8,6 +8,20 @@ import java.util.List;
 
 public interface SubscriptionCategoryRepository extends JpaRepository<SubscriptionCategory, Integer> {
 
-    @Query("select sc from SubscriptionCategory sc where sc.subscriptionCategory = :subscriptionCategory")
-    List<SubscriptionCategory> findBySubscriptionCategory(String subscriptionCategory);
+    List<SubscriptionCategory> findBySubscribeFashion(boolean subscribeFashion);
+
+    List<SubscriptionCategory> findBySubscribeBeauty(boolean subscribeBeauty);
+
+    List<SubscriptionCategory> findBySubscribeFood(boolean subscribeFood);
+
+    List<SubscriptionCategory> findBySubscribeAppliance(boolean subscribeAppliance);
+
+    List<SubscriptionCategory> findBySubscribeSports(boolean subscribeSports);
+
+    List<SubscriptionCategory> findBySubscribeLiving(boolean subscribeLiving);
+
+    List<SubscriptionCategory> findBySubscribePet(boolean subscribePet);
+
+    List<SubscriptionCategory> findBySubscribeTravel(boolean subscribeTravel);
+
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, ChangeEvent } from "react";
 import styles from "./applyform.module.scss";
 import { useMutation } from "@tanstack/react-query";
 import { BusinessInfo } from "@/app/_types/types";
@@ -64,7 +64,7 @@ export default function ApplyForm() {
     }
   };
 
-  const onChangeEmail = (e) => {
+  const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.includes("@")) {
       setIsDropbox(true);
       setEmailList(emails.filter((e1) => e1.includes(e.target.value.split(`@`)[1])));
@@ -73,7 +73,7 @@ export default function ApplyForm() {
     }
   };
 
-  const clickEmail = (item) => {
+  const clickEmail = (item: string) => {
     //emailRef?.current?.value = setIsDropbox(false);
   };
 

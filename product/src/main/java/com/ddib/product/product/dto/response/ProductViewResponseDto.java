@@ -85,6 +85,9 @@ public class ProductViewResponseDto {
     @Schema(description = "종료 여부")
     private boolean isOver;
 
+    @Schema(description = "사용자가 해당 상품을 좋아요했는지에 대한 여부")
+    private boolean isLiked;
+
     public static ProductViewResponseDto of(Product product, boolean isLiked) {
         return ProductViewResponseDto.builder()
                 .productId(product.getProductId())
@@ -112,6 +115,7 @@ public class ProductViewResponseDto {
                 .ceoEmail(product.getSeller().getCeoEmail())
                 .ceoPhone(product.getSeller().getCeoPhone())
                 .isOver(product.isOver())
+                .isLiked(isLiked)
                 .build();
     }
 }

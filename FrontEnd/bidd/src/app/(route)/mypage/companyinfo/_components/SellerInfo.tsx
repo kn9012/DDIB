@@ -2,7 +2,7 @@
 
 import styles from "./sellerInfo.module.scss";
 import { useEffect, useRef } from "react";
-import { getSellerInfo } from "@/app/_api/uset";
+import { getSellerInfo } from "@/app/_api/user";
 import { BusinessInfos } from "@/app/_types/types";
 import { useQuery } from "@tanstack/react-query";
 

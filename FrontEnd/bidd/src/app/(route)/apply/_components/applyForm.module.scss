@@ -7,12 +7,16 @@
 }
 
 .item {
+  position: relative;
   display: flex;
   border-width: 0 0 1px 0;
   border-style: solid;
   border-color: black;
+  padding: 1vw;
   > div:nth-child(1) {
     flex: 1;
+    font-size: 1vw;
+    font-weight: bold;
   }
   > :nth-child(2) {
     flex: 3;
@@ -22,7 +26,19 @@
   }
 }
 
+.emailArea {
+  display: flex;
+  flex-direction: column;
+}
+
+.emailItem {
+  cursor: pointer;
+  display: flex;
+  font-size: 1vw;
+}
+
 .applyBtn {
+  margin-top: 1vw;
   background-color: black;
   color: white;
   text-align: center;

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import styles from "./applyform.module.scss";
 import { useMutation } from "@tanstack/react-query";
 import { BusinessInfo } from "@/app/_types/types";
@@ -11,7 +11,13 @@ export default function ApplyForm() {
   const numberRef = useRef<HTMLInputElement>(null);
   const nameRef = useRef<HTMLInputElement>(null);
   const phoneRef = useRef<HTMLInputElement>(null);
+  const emailFormRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
+
+  const [isDrobBox, setIsDropbox] = useState(false);
+
+  const emails = ["@naver.com", "@gmail.com", "@daum.net"];
+  const [emailList, setEmailList] = useState(emails);
 
   const applyBusiness = useMutation({
     mutationFn: async (data: BusinessInfo) => {
@@ -58,6 +64,15 @@ export default function ApplyForm() {
     }
   };
 
+  const onChangeEmail = (e) => {
+    if (e.target.value.includes("@")) {
+      setIsDropbox(true);
+      setEmailList(emails.filter((e1) => e1.includes(e.target.value.split(`@`)[1])));
+    } else {
+      setIsDropbox(false);
+    }
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.item}>
@@ -76,10 +91,27 @@ export default function ApplyForm() {
         <div>대표번호</div>
         <input type="text" ref={phoneRef} />
       </div>
-      <div className={styles.item}>
+      <div className={styles.item} ref={emailFormRef}>
         <div>대표이메일</div>
-        <input type="text" ref={emailRef} />
+        <input
+          type="text"
+          ref={emailRef}
+          onChange={(e) => {
+            onChangeEmail(e);
+          }}
+        />
       </div>
+      {isDrobBox && (
+        <div className={styles.emailArea}>
+          {emailList.map((item, index) => (
+            <div className={styles.emailItem}>
+              <div>{emailRef.current?.value.split("@")[0]}</div>
+              <div>{item}</div>
+            </div>
+          ))}
+        </div>
+      )}
+
       <div className={styles.applyBtn} onClick={sendApply}>
         신청하기
       </div>

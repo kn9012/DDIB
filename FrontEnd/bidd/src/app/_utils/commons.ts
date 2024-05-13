@@ -20,7 +20,7 @@ const ClientAxiosApi = () => {
   //const token = "";
   //instance.defaults.headers.common["Authorization"] = token;
   instance.defaults.headers.common["Authorization"] =
-    "BearereyJhbGciOiJIUzI1NiJ9.eyJjYXRlZ29yeSI6ImFjY2VzcyIsImVtYWlsIjoia245MDEyQG5hdmVyLmNvbSIsImlhdCI6MTcxNTE0NDA4NCwiZXhwIjoxNzE1MTQ3Njg0fQ.0LIE7oWR6C8nOhb-zykEZF3IEWecoSAyvkZiNG37fIY";
+    "BearereyJhbGciOiJIUzI1NiJ9.eyJjYXRlZ29yeSI6ImFjY2VzcyIsImVtYWlsIjoia245MDEyQG5hdmVyLmNvbSIsImlhdCI6MTcxNTUxMDIyOSwiZXhwIjoxNzE1NTEzODI5fQ.O5rZT12TyvHVDMkk4Ql1mN012HjkZEplF6Gr6q3ErZs";
 
   instance.defaults.headers.post["Content-Type"] = "application/json";
 

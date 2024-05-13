@@ -1,3 +1,9 @@
+import SellerInfo from "./_components/SellerInfo";
+
 export default function CompanyInfo() {
-  return <div>기업정보</div>;
+  return (
+    <div>
+      <SellerInfo />
+    </div>
+  );
 }

@@ -1,0 +1,34 @@
+.container {
+  padding: 3vw;
+}
+
+.title {
+  font-size: 2vw;
+  font-weight: bold;
+  text-align: center;
+  margin: 2vw 0;
+}
+
+.itemArea {
+  padding: 5vw 8vw;
+}
+
+.item {
+  display: flex;
+  margin-bottom: 3vw;
+  padding: 1vw;
+  border-width: 0 0 1px 0;
+  border-style: solid;
+  border-color: black;
+  div {
+    flex: 1;
+    font-size: 1.5vw;
+    font-weight: bold;
+  }
+  input {
+    flex: 2;
+    font-size: 1.5vw;
+    outline: none;
+    border: none;
+  }
+}

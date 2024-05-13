@@ -9,7 +9,7 @@ spring:
     gateway:
       routes:
         - id: user
-          uri: lb://user
+          uri: lb://USER
           predicates:
             - Path=/api/user/**, /api/oauth2/ddib/kakao, /login/oauth2/code/ddib/**, /login/done
 #          filters:
@@ -27,7 +27,7 @@ spring:
 #            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
 
         - id: seller
-          uri: lb://seller
+          uri: lb://SELLER
           predicates:
             - Path=/api/seller/**, /api/oauth2/bidd/kakao, /login/oauth2/code/bidd/**, /bidd/login/done
 #          filters:
@@ -36,7 +36,7 @@ spring:
 #            - AuthorizationHeaderFilter
 
         - id: notification
-          uri: lb://notification
+          uri: lb://NOTIFICATION
           predicates:
             - Path=/api/notification/**
 #          filters:
@@ -54,7 +54,7 @@ spring:
 #            - AuthorizationHeaderFilter
 
         - id: payment
-          uri: lb://payment
+          uri: lb://PAYMENT
           predicates:
             - Path=/api/payment/**, /api/order/**
 #          filters:
@@ -63,7 +63,7 @@ spring:
 #            - AuthorizationHeaderFilter
 
         - id: waiting
-          uri: lb://waiting
+          uri: lb://WAITING
           predicates:
             - Path=/api/v1/queue/**
 #          filters:

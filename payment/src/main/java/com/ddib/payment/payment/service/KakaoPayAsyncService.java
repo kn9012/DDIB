@@ -129,6 +129,7 @@ public class KakaoPayAsyncService {
                 .status(OrderStatus.PAYMENT_COMPLETED)
                 .build();
         orderRepository.save(order);
+        orderRepository.flush();
         log.info("===== Thread Name : " + Thread.currentThread().getName() + " 주문 데이터 insert 완료 =====");
     }
 

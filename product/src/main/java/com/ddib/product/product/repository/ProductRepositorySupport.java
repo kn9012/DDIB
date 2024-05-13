@@ -6,10 +6,12 @@ import com.ddib.product.product.domain.QProduct;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.catalina.util.ToStringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -18,10 +20,14 @@ import java.util.List;
 
 @Repository
 @Slf4j
+@RequiredArgsConstructor
+@Transactional
 public class ProductRepositorySupport {
 
     @Autowired
     private JPAQueryFactory jpaQueryFactory;
+
+    private final ProductRepository productRepository;
 
     private static final int WEEK_DAYS = 7;
 
@@ -155,6 +161,7 @@ public class ProductRepositorySupport {
     }
 
     public void updateTimeOverProduct() {
+        log.info("PRODUCT : Update Time Over Product ");
         LocalDate startOfDay = LocalDate.now().atStartOfDay().toLocalDate();
         LocalDate endOfDay = startOfDay.plusDays(ONE_DAY);
 
@@ -162,7 +169,8 @@ public class ProductRepositorySupport {
 
         BooleanExpression isTodayAndOverEndTime = qProduct.eventStartDate.goe(Timestamp.valueOf(startOfDay.atStartOfDay()))
                 .and(qProduct.eventStartDate.lt(Timestamp.valueOf(endOfDay.atStartOfDay())))
-                .and(qProduct.eventEndTime.loe(presentHour));
+                .and(qProduct.eventEndTime.loe(presentHour))
+                .and(qProduct.isOver.eq(false));
 
         List<Product> products = jpaQueryFactory
                 .selectFrom(qProduct)
@@ -170,6 +178,7 @@ public class ProductRepositorySupport {
                 .fetch();
 
         for (Product product : products) {
+            log.info("TIME OVER Product : {}", product.getProductId());
             product.updateIsOver(true);
         }
     }

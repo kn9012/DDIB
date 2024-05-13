@@ -60,6 +60,7 @@ releaseHostName: k10c102.p.ssafy.io
 eureka:
   instance:
     hostname: k10c102.p.ssafy.io
+    appname: seller
   client:
     register-with-eureka: true
     fetch-registry: true

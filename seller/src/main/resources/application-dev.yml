@@ -55,9 +55,9 @@ refresh:
     expiration:
       time: 864000000
 
-releaseHostName: k10c102.p.ssafy.io
+releaseHostName: localhost
 
 eureka:
   client:
     serviceUrl:
-      defaultZone: ${EUREKA_URL:http://k10c102.p.ssafy.io:8761/eureka/}
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}

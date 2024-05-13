@@ -73,6 +73,10 @@ export default function ApplyForm() {
     }
   };
 
+  const clickEmail = (item) => {
+    //emailRef?.current?.value = setIsDropbox(false);
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.item}>
@@ -104,7 +108,7 @@ export default function ApplyForm() {
       {isDrobBox && (
         <div className={styles.emailArea}>
           {emailList.map((item, index) => (
-            <div className={styles.emailItem}>
+            <div className={styles.emailItem} onClick={() => clickEmail(item)}>
               <div>{emailRef.current?.value.split("@")[0]}</div>
               <div>{item}</div>
             </div>

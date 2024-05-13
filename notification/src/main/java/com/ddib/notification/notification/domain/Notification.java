@@ -36,7 +36,6 @@ public class Notification {
     @Schema(description = "읽음 여부")
     private boolean isRead;
 
-    @ColumnDefault(value = "false")
     @Schema(description = "알림 생성 시각")
     private LocalDateTime generatedTime;
 

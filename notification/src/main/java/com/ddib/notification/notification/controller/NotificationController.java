@@ -14,8 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/notification")
 @RequiredArgsConstructor
@@ -37,7 +35,7 @@ public class NotificationController {
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -47,14 +45,14 @@ public class NotificationController {
             @ApiResponse(responseCode = "400", description = "구독 알림 신청 실패")
     })
     @PutMapping("/subscribe/{userId}")
-    public ResponseEntity<Void> applyNotification(@RequestBody List<SubscriptionCategoryRequestDto> categories, @PathVariable Integer userId) {
+    public ResponseEntity<?> applyNotification(@RequestBody SubscriptionCategoryRequestDto categories, @PathVariable Integer userId) {
         try {
             userService.findByUserId(userId).updateSubscribed();
             subscriptionCategoryService.createSubscriptionCategory(categories, userId);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -64,7 +62,7 @@ public class NotificationController {
             @ApiResponse(responseCode = "400", description = "구독 알림 취소 실패")
     })
     @PutMapping("/subscribe/cancel/{userId}")
-    public ResponseEntity<Void> cancelNotification(@PathVariable Integer userId) {
+    public ResponseEntity<?> cancelNotification(@PathVariable Integer userId) {
         try {
             userService.findByUserId(userId).updateNotSubscribed();
             subscriptionCategoryService.deleteSubscriptionCategory(userId);
@@ -86,7 +84,7 @@ public class NotificationController {
             return new ResponseEntity<>(notificationService.findNotificationList(userId), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 }

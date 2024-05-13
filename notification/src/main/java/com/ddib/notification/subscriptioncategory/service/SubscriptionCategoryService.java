@@ -17,17 +17,21 @@ public class SubscriptionCategoryService {
     private final SubscriptionCategoryRepository subscriptionCategoryRepository;
     private final UserRepository userRepository;
 
-    public void createSubscriptionCategory(List<SubscriptionCategoryRequestDto> categories, Integer userId) {
+    public void createSubscriptionCategory(SubscriptionCategoryRequestDto requestDto, Integer userId) {
         User user = userRepository.findByUserId(userId);
+        SubscriptionCategory subscriptionCategory = SubscriptionCategory.builder()
+                .user(user)
+                .subscribeFashion(requestDto.isSubscribeFashion())
+                .subscribeBeauty(requestDto.isSubscribeBeauty())
+                .subscribeFood(requestDto.isSubscribeFood())
+                .subscribeAppliance(requestDto.isSubscribeAppliance())
+                .subscribeSports(requestDto.isSubscribeSports())
+                .subscribeLiving(requestDto.isSubscribeLiving())
+                .subscribePet(requestDto.isSubscribePet())
+                .subscribeTravel(requestDto.isSubscribeTravel())
+                .build();
 
-        for (SubscriptionCategoryRequestDto category : categories) {
-            SubscriptionCategory subscriptionCategory = SubscriptionCategory.builder()
-                    .user(user)
-                    .subscriptionCategory(category.getSubscriptionCategory())
-                    .build();
-
-            subscriptionCategoryRepository.save(subscriptionCategory);
-        }
+        subscriptionCategoryRepository.save(subscriptionCategory);
     }
 
     @Transactional

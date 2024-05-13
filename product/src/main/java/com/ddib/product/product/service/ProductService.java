@@ -81,6 +81,7 @@ public class ProductService {
         callSubscriptionNotification(product);
     }
 
+    @Transactional(readOnly = true)
     public ProductMainResponseDto getMainPageData() {
         log.info("PRODUCT SERVICE : get main page data");
         // 하루, 종료되지 않은 이벤트 데이터
@@ -106,6 +107,7 @@ public class ProductService {
                 .build();
     }
 
+    @Transactional(readOnly = true)
     public List<ProductResponseDto> findProductsByConditions(String keyword, String category, Boolean isOver) {
         log.info("PRODUCT SERVICE : SEARCH BY CONDITIONS : {} , {}, {}", keyword, category, isOver);
         return productRepositorySupport.findByConditions(keyword, category, isOver)
@@ -141,6 +143,7 @@ public class ProductService {
         user.getLikedProducts().add(favoriteProduct);
     }
 
+    @Transactional(readOnly = true)
     public List<ProductResponseDto> findFavoriteProductByUserId(int userId) {
         return userRepository.findByUserId(userId)
                 .orElseThrow(UserNotFoundException::new)
@@ -151,6 +154,7 @@ public class ProductService {
                 .toList();
     }
 
+    @Transactional(readOnly = true)
     public List<ProductResponseDto> findProductsBySellerId(int sellerId) {
         return sellerRepository.findBySellerId(sellerId)
                 .orElseThrow(SellerNotFoundException::new)
@@ -160,6 +164,7 @@ public class ProductService {
                 .toList();
     }
 
+    @Transactional(readOnly = true)
     public List<List<ProductResponseDto>> findProductsInWeekend() {
         List<ProductResponseDto> dtos = productRepositorySupport.getWeekList()
                 .stream()
@@ -184,6 +189,7 @@ public class ProductService {
         return new ArrayList<>(resultMap.values());
     }
 
+    @Transactional(readOnly = true)
     public ProductViewResponseDto findProductByProductId(int productId, int userId) {
         Product product = productRepository.findByProductId(productId)
                 .orElseThrow(ProductNotFoundException::new);
@@ -211,6 +217,7 @@ public class ProductService {
         }
     }
 
+    @Transactional(readOnly = true)
     public boolean[] getAvailableTime(LocalDate date) {
         return productRepositorySupport.getAvailableTime(date);
     }
@@ -231,10 +238,9 @@ public class ProductService {
 
     //해당 카테고리를 좋아요한 유저를 찾은 다음 해당 유저들에게 알람 보내는 메서드
     private void callSubscriptionNotification(Product product) {
-        List<SubscriptionCategory> findBySubscriptionCategories = subscriptionCategoryRepository.findBySubscriptionCategory(product.getCategory().getValue());
+        List<SubscriptionCategory> findBySubscriptionCategories = product.getCategory().getListByCategory(subscriptionCategoryRepository);
 
         findBySubscriptionCategories.stream()
-                .filter(sc -> sc.getSubscriptionCategory().equals(product.getCategory().getValue()))
                 .map(sc -> NotificationCreateDto.ofSubscription(product, sc.getUser().getUserId()))
                 .forEach(notificationClient::createAlarm);
     }

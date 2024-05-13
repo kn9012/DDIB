@@ -17,6 +17,7 @@ spring:
     password: ssafy
     hikari:
       maximum-pool-size: 500
+      idle-timeout: 50000
 
   data:
     redis:

@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/api/seller", produces = "application/json")
 @RequiredArgsConstructor
 @Tag(name = "Seller Controller", description = "판매회원 API")
+@Slf4j
 public class SellerController {
 
     private final SellerService sellerService;
@@ -30,6 +32,7 @@ public class SellerController {
     })
     public ResponseEntity<?> sellerApply(@RequestBody SellerRequestDto requestDto, @PathVariable Integer sellerId) {
         try {
+            log.info("판매회원 신청 API");
             sellerService.applySeller(requestDto, sellerId);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {

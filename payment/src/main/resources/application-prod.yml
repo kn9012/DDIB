@@ -7,7 +7,7 @@ spring:
     name: payment
   jpa:
     hibernate:
-      ddl-auto: update
+#      ddl-auto: update
       show-sql: true
 
   datasource:
@@ -16,7 +16,7 @@ spring:
     username: ssafy
     password: ssafy
     hikari:
-      maximum-pool-size: 100
+      maximum-pool-size: 500
 
   data:
     redis:

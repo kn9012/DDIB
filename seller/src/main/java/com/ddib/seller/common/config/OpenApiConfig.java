@@ -12,7 +12,6 @@ import org.springframework.context.annotation.Configuration;
 public class OpenApiConfig {
     @Bean
     public OpenAPI openAPI() {
-
         Info info = new Info()
                 .version("v1.0.0")
                 .title("DDIB API")

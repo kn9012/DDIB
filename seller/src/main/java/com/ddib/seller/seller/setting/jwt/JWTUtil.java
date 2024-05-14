@@ -11,7 +11,6 @@ import java.util.Date;
 
 @Component
 public class JWTUtil {
-
     private SecretKey secretKey;
 
     // 생성자. JWT secretKey 설정

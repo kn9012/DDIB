@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @RequiredArgsConstructor
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
-
     private final SellerRepository sellerRepository;
 
     @Override

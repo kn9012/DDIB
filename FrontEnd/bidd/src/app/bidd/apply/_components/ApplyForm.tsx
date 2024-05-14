@@ -12,21 +12,23 @@ export default function ApplyForm() {
   const nameRef = useRef<HTMLInputElement>(null);
   const phoneRef = useRef<HTMLInputElement>(null);
   const emailFormRef = useRef<HTMLInputElement>(null);
-  const emailRef = useRef<HTMLInputElement>(null);
 
   const [isDrobBox, setIsDropbox] = useState(false);
 
   const emails = ["@naver.com", "@gmail.com", "@daum.net"];
   const [emailList, setEmailList] = useState(emails);
+  const [email, setEmail] = useState("");
 
   const applyBusiness = useMutation({
     mutationFn: async (data: BusinessInfo) => {
-      return putApplyBusiness(1, data);
+      return await putApplyBusiness(1, data);
     },
     async onSuccess(response) {
+      console.log(response);
       alert("기업신청이 완료되었습니다.");
     },
     onError(error) {
+      alert("기업신청 실패");
       console.error(error);
     },
   });
@@ -40,11 +42,10 @@ export default function ApplyForm() {
       nameRef.current?.value &&
       nameRef.current.value.length !== 0 &&
       phoneRef.current?.value &&
-      phoneRef.current.value.length !== 0 &&
-      emailRef.current?.value &&
-      emailRef.current.value.length !== 0
+      phoneRef.current.value.length !== 0
     ) {
       const result = await postBusinessCheck(numberRef.current.value);
+      console.log(result);
       if (result != "계속사업자") {
         alert("사업자 번호를 확인해주세요");
       } else {
@@ -52,11 +53,11 @@ export default function ApplyForm() {
           companyName: businessNameRef.current.value,
           businessNumber: numberRef.current.value as unknown as number,
           ceoName: nameRef.current.value,
-          ceoEmail: emailRef.current.value,
+          ceoEmail: email,
           ceoPhone: phoneRef.current.value,
         };
+        console.log(info);
         applyBusiness.mutate(info);
-        alert("신청이 완료되었습니다.");
         console.log("send");
       }
     } else {
@@ -65,6 +66,7 @@ export default function ApplyForm() {
   };
 
   const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
     if (e.target.value.includes("@")) {
       setIsDropbox(true);
       setEmailList(emails.filter((e1) => e1.includes(e.target.value.split(`@`)[1])));
@@ -73,8 +75,9 @@ export default function ApplyForm() {
     }
   };
 
-  const clickEmail = (item: string) => {
-    //emailRef?.current?.value = setIsDropbox(false);
+  const clickEmail = (email: string, item: string) => {
+    setEmail(`${email.split("@")[0]}${item}`);
+    setIsDropbox(false);
   };
 
   return (
@@ -99,7 +102,7 @@ export default function ApplyForm() {
         <div>대표이메일</div>
         <input
           type="text"
-          ref={emailRef}
+          value={email}
           onChange={(e) => {
             onChangeEmail(e);
           }}
@@ -108,8 +111,8 @@ export default function ApplyForm() {
       {isDrobBox && (
         <div className={styles.emailArea}>
           {emailList.map((item, index) => (
-            <div className={styles.emailItem} onClick={() => clickEmail(item)}>
-              <div>{emailRef.current?.value.split("@")[0]}</div>
+            <div className={styles.emailItem} onClick={() => clickEmail(email, item)} key={index}>
+              <div> {email.split("@")[0]}</div>
               <div>{item}</div>
             </div>
           ))}

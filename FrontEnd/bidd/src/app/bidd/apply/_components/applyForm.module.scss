@@ -28,7 +28,9 @@
 
 .emailArea {
   display: flex;
+  position: absolute;
   flex-direction: column;
+  background-color: white;
 }
 
 .emailItem {

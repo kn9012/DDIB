@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value = "/api/seller", produces = "application/json")
 @RequiredArgsConstructor
+@Slf4j
 @Tag(name = "Seller Controller", description = "판매회원 API")
 public class SellerController {
 
@@ -93,6 +95,7 @@ public class SellerController {
     })
     public ResponseEntity<?> logout(HttpServletResponse response) {
         try {
+            log.info("로그아웃!!");
             Cookie refresh = new Cookie("refresh", null);
             Cookie access = new Cookie("Authorization", null);
             Cookie num = new Cookie("num", null);

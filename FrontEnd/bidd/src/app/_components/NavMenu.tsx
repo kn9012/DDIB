@@ -39,6 +39,7 @@ export default function NavMenu() {
       localStorage.clear();
       Cookies.remove("Authorization");
       Cookies.remove("num");
+      Cookies.remove("refresh");
       router.replace("/");
     },
     onError(error) {

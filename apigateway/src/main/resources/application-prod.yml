@@ -96,6 +96,9 @@ spring:
               - "https://localhost:3000/"
               - "http://localhost/"
               - "https://localhost/"
+              - "https://bidd.kro.kr/"
+              - "http://bidd.kro.kr/"
+              -
             allowedOriginPatterns: "*"
             allow-credentials: true
             allowedMethods:

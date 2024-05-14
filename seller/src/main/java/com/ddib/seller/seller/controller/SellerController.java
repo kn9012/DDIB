@@ -104,6 +104,10 @@ public class SellerController {
             access.setMaxAge(0);
             num.setMaxAge(0);
 
+            refresh.setPath("/");
+            access.setPath("/");
+            num.setPath("/");
+
             response.addCookie(refresh);
             response.addCookie(access);
             response.addCookie(num);

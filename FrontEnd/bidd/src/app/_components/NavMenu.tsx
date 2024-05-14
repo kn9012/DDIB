@@ -32,7 +32,7 @@ export default function NavMenu() {
 
   const logOutUser = useMutation({
     mutationFn: async () => {
-      return postUser();
+      return await postUser();
     },
     async onSuccess(response) {
       console.log("로그아웃완료");

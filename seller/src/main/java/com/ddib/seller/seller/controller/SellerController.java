@@ -95,22 +95,25 @@ public class SellerController {
     })
     public ResponseEntity<?> logout(HttpServletResponse response) {
         try {
-            log.info("로그아웃!!");
             Cookie refresh = new Cookie("refresh", null);
             Cookie access = new Cookie("Authorization", null);
             Cookie num = new Cookie("num", null);
+            Cookie JSESSIONID = new Cookie("JSESSIONID", null);
 
             refresh.setMaxAge(0);
             access.setMaxAge(0);
             num.setMaxAge(0);
+            JSESSIONID.setMaxAge(0);
 
             refresh.setPath("/");
             access.setPath("/");
             num.setPath("/");
+            JSESSIONID.setPath("/");
 
             response.addCookie(refresh);
             response.addCookie(access);
             response.addCookie(num);
+            response.addCookie(JSESSIONID);
 
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {

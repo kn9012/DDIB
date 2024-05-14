@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, ChangeEvent } from "react";
-import styles from "./applyform.module.scss";
+import styles from "./applyForm.module.scss";
 import { useMutation } from "@tanstack/react-query";
 import { BusinessInfo } from "@/app/_types/types";
 import { putApplyBusiness, postBusinessCheck } from "@/app/_api/business";

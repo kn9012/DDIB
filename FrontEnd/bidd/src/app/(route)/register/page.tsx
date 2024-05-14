@@ -1,8 +1,10 @@
 "use client";
 
 import TimeSelect from "./_components/TimeSelect";
+import ThumbNail from "./_components/Thumbnail";
 import styles from "./register.module.scss";
 import { useRef, ChangeEvent, useState, useEffect } from "react";
+import ProductDetail from "./_components/ProductDetail";
 
 export default function Register() {
   const titleRef = useRef<HTMLInputElement>(null);
@@ -61,22 +63,11 @@ export default function Register() {
           </div>
           <div>
             <div>할인율</div>
-            <input
-              type="number"
-              max={4}
-              className={styles.input}
-              ref={discountRef}
-              onChange={calFinPrice}
-            />
+            <input type="number" max={4} className={styles.input} ref={discountRef} onChange={calFinPrice} />
           </div>
           <div>
             <div>최종할인가</div>
-            <input
-              type="number"
-              className={styles.input}
-              readOnly
-              ref={finalPriceRef}
-            />
+            <input type="number" className={styles.input} readOnly ref={finalPriceRef} />
           </div>
         </div>
         <div className={styles.item}>
@@ -85,11 +76,13 @@ export default function Register() {
             <TimeSelect year="2024" month="05" day="14" />
           </div>
         </div>
-        <div className={styles.item}>
+        <div>
           <div>상품 썸네일</div>
+          <ThumbNail />
         </div>
-        <div className={styles.item}>
+        <div>
           <div>상품 상세사진</div>
+          <ProductDetail />
         </div>
       </div>
     </div>

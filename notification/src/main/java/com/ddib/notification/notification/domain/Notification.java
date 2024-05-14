@@ -39,7 +39,6 @@ public class Notification {
     @Schema(description = "알림 생성 시각")
     private LocalDateTime generatedTime;
 
-    @ColumnDefault(value = "false")
     @Schema(description = "일반회원")
     @ManyToOne
     @JoinColumn(name = "user_id")

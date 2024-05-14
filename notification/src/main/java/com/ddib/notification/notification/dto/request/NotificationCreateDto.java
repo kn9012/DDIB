@@ -2,6 +2,7 @@ package com.ddib.notification.notification.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,11 +14,11 @@ import lombok.NoArgsConstructor;
 @Builder
 public class NotificationCreateDto {
     @Schema(description = "회원 식별키")
-    @Column(nullable = false)
+    @NotNull
     private Integer userId;
 
+    @NotNull
     @Schema(description = "알림 도메인")
-    @Column(nullable = false)
     private String domain;
 
     @Schema(description = "카테고리")

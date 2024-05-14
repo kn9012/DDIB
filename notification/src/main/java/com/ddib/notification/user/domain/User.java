@@ -21,9 +21,11 @@ public class User {
     private Integer userId;
 
     @Schema(description = "이름")
+    @Column(nullable = false)
     private String name;
 
     @Schema(description = "이메일")
+    @Column(nullable = false)
     private String email;
 
     @Schema(description = "핸드폰 번호")
@@ -36,7 +38,7 @@ public class User {
     private String detailAddress;
 
     @Schema(description = "우편번호")
-    private int zipcode;
+    private String zipcode;
 
     @ColumnDefault("false")
     @Column(columnDefinition = "TINYINT(1)")

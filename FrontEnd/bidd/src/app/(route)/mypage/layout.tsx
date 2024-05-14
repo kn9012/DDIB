@@ -8,7 +8,7 @@ export default function Layout({ children }: Props) {
   return (
     <>
       <div className={styles.container}>
-        <div className={styles.myTitle}>MY DDIB</div>
+        <div className={styles.myTitle}>MY BIDD</div>
         <MyPageMenu />
         <div className={styles.myPageSection}>{children}</div>
       </div>

@@ -110,25 +110,23 @@ export default function NavMenu() {
             </>
           ) : segment === "mypage" ? (
             <>
-              <Link href="/mypage">
-                <div className={styles.afterLogin}>
-                  <GoPersonFill className={styles.icons} />
-                  <div className={styles.logBtn} onClick={logOut}>
-                    Logout
-                  </div>
+              <div className={styles.afterLogin}>
+                <GoPersonFill className={styles.icons} />
+                <div className={styles.logBtn} onClick={logOut}>
+                  Logout
                 </div>
-              </Link>
+              </div>
             </>
           ) : (
             <>
-              <Link href="/mypage">
-                <div className={styles.afterLogin}>
+              <div className={styles.afterLogin}>
+                <Link href="/mypage">
                   <GoPerson className={styles.icons} />
-                  <div className={styles.logBtn} onClick={logOut}>
-                    Logout
-                  </div>
+                </Link>
+                <div className={styles.logBtn} onClick={logOut}>
+                  Logout
                 </div>
-              </Link>
+              </div>
             </>
           )}
         </li>

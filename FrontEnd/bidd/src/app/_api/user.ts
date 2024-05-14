@@ -14,4 +14,4 @@ async function postUser() {
   return data;
 }
 
-export { getSellerInfo };
+export { getSellerInfo, postUser };

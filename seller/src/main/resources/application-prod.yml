@@ -39,7 +39,7 @@ spring:
 
   data:
     redis:
-      host: k10c102.p.ssafy.io
+      host: bidd.kro.kr
       port: 6379
 
   jwt:

@@ -16,6 +16,7 @@ public class CorsMvcConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry corsRegistry) {
 
         corsRegistry.addMapping("/**")
+                .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
                 .exposedHeaders("Set-Cookie")
                 .exposedHeaders("Authorization")
                 .allowedOrigins("http://" + releaseHostName + ":3000",

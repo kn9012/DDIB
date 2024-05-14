@@ -17,10 +17,10 @@ spring:
 #            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
 #            - AuthorizationHeaderFilter
 
-        - id: seller
-          uri: lb://SELLER
-          predicates:
-            - Path=/api/seller/**, /api/oauth2/bidd/kakao, /login/oauth2/code/bidd/**, /bidd/login/done
+#        - id: seller
+#          uri: lb://SELLER
+#          predicates:
+#            - Path=/api/seller/**, /api/oauth2/bidd/kakao, /login/oauth2/code/bidd/**, /bidd/login/done
 #          filters:
 #            - RemoveRequestHeader=Cookie
 #            - RewritePath=/user-service/(?<segment>.*), /$\{segment}

@@ -57,11 +57,11 @@ refresh:
 
 releaseHostName: bidd.kro.kr
 
-eureka:
-  instance:
-    hostname: bidd.kro.kr
-  client:
-    register-with-eureka: true
-    fetch-registry: true
-    service-url:
-      defaultZone: http://k10c102.p.ssafy.io:8761/eureka/
+#eureka:
+#  instance:
+#    hostname: bidd.kro.kr
+#  client:
+#    register-with-eureka: true
+#    fetch-registry: true
+#    service-url:
+#      defaultZone: http://k10c102.p.ssafy.io:8761/eureka/

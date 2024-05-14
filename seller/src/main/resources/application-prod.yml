@@ -55,11 +55,11 @@ refresh:
     expiration:
       time: 864000000
 
-releaseHostName: ddib.kro.kr
+releaseHostName: bidd.kro.kr
 
 eureka:
   instance:
-    hostname: ddib.kro.kr
+    hostname: k10c102.p.ssafy.io
   client:
     register-with-eureka: true
     fetch-registry: true

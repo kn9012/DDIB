@@ -59,7 +59,7 @@ releaseHostName: ddib.kro.kr
 
 eureka:
   instance:
-    hostname: k10c102.p.ssafy.io
+    hostname: ddib.kro.kr
   client:
     register-with-eureka: true
     fetch-registry: true

@@ -14,10 +14,18 @@ export default function TimeSelect({ year, month, day }: Props) {
     [index: number]: boolean;
   }
 
+  const TimeObject = [];
+
   const { data } = useQuery<TimeArray>({
     queryKey: ["timelist", year, month, day],
     queryFn: () => getTimeInfo(year, month, day),
   });
 
-  return <div>시간선택</div>;
+  console.log(data);
+
+  return (
+    <div>
+      <div>시간선택</div>
+    </div>
+  );
 }

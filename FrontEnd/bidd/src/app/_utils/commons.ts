@@ -27,4 +27,15 @@ const ClientAxiosApi = () => {
   return instance;
 };
 
-export { PublicAxiosApi, ClientAxiosApi };
+const FileAxiosApi = () => {
+  const instanceFile = axios.create({
+    baseURL: `${BASE_URL}/api`,
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+
+  return instanceFile;
+};
+
+export { PublicAxiosApi, ClientAxiosApi, FileAxiosApi };

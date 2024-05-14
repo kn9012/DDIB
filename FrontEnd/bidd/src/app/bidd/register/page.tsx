@@ -32,7 +32,7 @@ export default function Register() {
       <div className={styles.title}>판매상품등록</div>
       <div className={styles.inputArea}>
         <div className={styles.item}>
-          <div className={styles.amount}>
+          <div>
             <div>상품명</div>
             <input type="text" className={styles.input} ref={titleRef} />
           </div>
@@ -42,7 +42,16 @@ export default function Register() {
           </div>
           <div>
             <div>카테고리</div>
-            <input type="text" className={styles.input} ref={categoryRef} />
+            <select className={styles.select}>
+              <option value="fashion">패션(Fashion)</option>
+              <option value="beauty">뷰티(Beauty)</option>
+              <option value="food">식품(Food)</option>
+              <option value="appliance">가전제품(Appliance)</option>
+              <option value="sports">스포츠(Sports)</option>
+              <option value="living">생활(Living)</option>
+              <option value="pet">반려동물(Pet)</option>
+              <option value="travel">여행(Travel)</option>
+            </select>
           </div>
         </div>
         <div className={styles.item}>
@@ -52,11 +61,22 @@ export default function Register() {
           </div>
           <div>
             <div>할인율</div>
-            <input type="number" max={4} className={styles.input} ref={discountRef} onChange={calFinPrice} />
+            <input
+              type="number"
+              max={4}
+              className={styles.input}
+              ref={discountRef}
+              onChange={calFinPrice}
+            />
           </div>
           <div>
             <div>최종할인가</div>
-            <input type="number" className={styles.input} readOnly ref={finalPriceRef} />
+            <input
+              type="number"
+              className={styles.input}
+              readOnly
+              ref={finalPriceRef}
+            />
           </div>
         </div>
         <div className={styles.item}>

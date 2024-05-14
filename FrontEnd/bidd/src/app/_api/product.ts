@@ -1,4 +1,4 @@
-import { ClientAxiosApi } from "@/app/_utils/commons";
+import { ClientAxiosApi, FileAxiosApi } from "@/app/_utils/commons";
 
 const api = ClientAxiosApi();
 
@@ -14,4 +14,8 @@ async function getTimeInfo(year: string, month: string, day: string) {
   return data;
 }
 
-export { getSellerProducts, getTimeInfo };
+async function postCreateProuct() {
+  await api.post(`/product/`);
+}
+
+export { getSellerProducts, getTimeInfo, postCreateProuct };

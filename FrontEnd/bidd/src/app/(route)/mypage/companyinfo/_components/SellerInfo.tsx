@@ -22,7 +22,10 @@ export default function SellerInfo() {
   const ceoEmailRef = useRef<HTMLInputElement>(null);
   const ceoPhoneRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    if (data) {
+    }
+  }, []);
 
   return (
     <div className={styles.container}>

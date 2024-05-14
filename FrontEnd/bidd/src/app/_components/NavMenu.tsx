@@ -37,6 +37,8 @@ export default function NavMenu() {
     async onSuccess(response) {
       console.log("로그아웃완료");
       localStorage.clear();
+      Cookies.remove("Authorization");
+      Cookies.remove("num");
       router.replace("/");
     },
     onError(error) {

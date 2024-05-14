@@ -21,7 +21,6 @@ public class SubscriptionCategory {
     private Integer subscriptionCategoryId;
 
     @Schema(description = "회원 식별키")
-    @Column(nullable = false)
     @ManyToOne
     private User user;
 

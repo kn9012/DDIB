@@ -10,7 +10,7 @@ async function getSellerInfo(userPk: number) {
 
 // 기업회원로그아웃
 async function postUser() {
-  const { data } = await api.post(`/api/seller/logout`);
+  const { data } = await api.post(`/seller/logout`);
   return data;
 }
 

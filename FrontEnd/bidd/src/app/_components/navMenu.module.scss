@@ -47,6 +47,43 @@
   }
 }
 
+.beforeLogin,
+.afterLogin {
+  position: relative;
+
+  &:hover {
+    .logBtn {
+      display: block;
+    }
+  }
+}
+
+.logBtn {
+  cursor: pointer;
+  display: none;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 0.3vw 0.5vw;
+  border-radius: 10px;
+  font-size: 0.5vw;
+  animation: horizontal 1s ease-in-out infinite;
+
+  &::before {
+    position: absolute;
+    top: -1.3vw;
+    left: 50%;
+    transform: translateX(-50%);
+    content: "";
+    border-top: 1vw solid transparent;
+    border-left: 0.5vw solid transparent;
+    border-right: 0.5vw solid transparent;
+    border-bottom: 0.5vw solid rgba(0, 0, 0, 0.8);
+  }
+}
+
 .alarm {
   cursor: pointer;
 }

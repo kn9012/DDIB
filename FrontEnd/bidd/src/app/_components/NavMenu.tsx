@@ -16,18 +16,41 @@ import { TbLogin2 } from "react-icons/tb";
 import { CiLogin } from "react-icons/ci";
 import { ImEnter } from "react-icons/im";
 import { TbDoorEnter } from "react-icons/tb";
+import { useMutation } from "@tanstack/react-query";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
+import { postUser } from "@/app/_api/user";
 
 export default function NavMenu() {
   const segment = useSelectedLayoutSegment();
   console.log(segment);
 
   const { jwt } = userStore();
+  const router = useRouter();
 
   const [bellOn, setBellOn] = useState(false);
 
+  const logOutUser = useMutation({
+    mutationFn: async () => {
+      return postUser();
+    },
+    async onSuccess(response) {
+      console.log("로그아웃완료");
+      localStorage.clear();
+      router.replace("/");
+    },
+    onError(error) {
+      console.error(error);
+    },
+  });
+
   const kakaoLogin = () => {
     //window.location.href = "http://localhost:8081/api/oauth2/ddib/kakao";
-    window.location.href = "https://k10c102.p.ssafy.io/api/oauth2/bidd/kakao";
+    window.location.href = "https://bidd.kro.kr/api/oauth2/bidd/kakao";
+  };
+
+  const logOut = () => {
+    logOutUser.mutate();
   };
 
   return (
@@ -78,26 +101,35 @@ export default function NavMenu() {
         </li>
 
         <li className={styles.login}>
-          {jwt.length == 0 ? (
+          {!Cookies.get("Authorization") ? (
             <>
-              <div onClick={kakaoLogin}>
+              <div onClick={kakaoLogin} className={styles.beforeLogin}>
                 <GoPerson className={styles.icons} />
+                <div className={styles.logBtn}>Login</div>
               </div>
             </>
           ) : segment === "mypage" ? (
             <>
               <Link href="/mypage">
-                <div>
+                <div className={styles.afterLogin}>
                   <GoPersonFill className={styles.icons} />
+                  <div className={styles.logBtn} onClick={logOut}>
+                    Logout
+                  </div>
                 </div>
               </Link>
             </>
           ) : (
-            <Link href="/mypage">
-              <div>
-                <GoPerson className={styles.icons} />
-              </div>
-            </Link>
+            <>
+              <Link href="/mypage">
+                <div className={styles.afterLogin}>
+                  <GoPerson className={styles.icons} />
+                  <div className={styles.logBtn} onClick={logOut}>
+                    Logout
+                  </div>
+                </div>
+              </Link>
+            </>
           )}
         </li>
       </div>

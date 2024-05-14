@@ -38,7 +38,6 @@ public class ReissueServiceImpl implements ReissueService {
         String refresh = null;
         Cookie[] cookies = request.getCookies();
         for (Cookie cookie : cookies) {
-            log.info(cookie.getName() + " " + cookie.getValue());
             if (cookie.getName().equals("refresh")) {
 
                 refresh = cookie.getValue();

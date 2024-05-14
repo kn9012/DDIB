@@ -21,7 +21,6 @@ public class ReissueController {
 
     @GetMapping("/reissue")
     public ResponseEntity<?> reissue(HttpServletRequest request, HttpServletResponse response) {
-        log.info("토큰 재발행 실행");
         try {
             return reissueService.reissueRefreshToken(request, response);
         } catch (Exception e){

@@ -49,14 +49,10 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        log.info("filter chain 입성!");
-
         http
                 .cors(corsCustomizer -> corsCustomizer.configurationSource(request -> {
 
                     CorsConfiguration configuration = new CorsConfiguration();
-
-//                    configuration.setAllowedOrigins(Collections.singletonList("https://" + releaseHostName));
                     configuration.setAllowedOrigins(Collections.singletonList("https://k10c102.p.ssafy.io"));
                     configuration.setAllowedMethods(Collections.singletonList("*"));
                     configuration.setAllowCredentials(true);
@@ -65,30 +61,26 @@ public class SecurityConfig {
 
                     configuration.setExposedHeaders(Collections.singletonList("Set-Cookie"));
                     configuration.setExposedHeaders(Collections.singletonList("Authorization"));
-//                        configuration.addExposedHeader("Authorization");
-
-//                        configuration.setExposedHeaders(Arrays.asList("Authorization", "refreshToken"));
-
                     return configuration;
                 }));
 
-        //csrf disable
+        // csrf disable
         http
                 .csrf(AbstractHttpConfigurer::disable);
 
-        //From 로그인 방식 disable
+        // From 로그인 방식 disable
         http
                 .formLogin(AbstractHttpConfigurer::disable);
 
-        //HTTP Basic 인증 방식 disable
+        // HTTP Basic 인증 방식 disable
         http
                 .httpBasic(AbstractHttpConfigurer::disable);
 
-        //JWTFilter 추가
+        // JWTFilter 추가
         http
                 .addFilterBefore(new JWTFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
 
-        //oauth2
+        // oauth2
         http
                 .oauth2Login((oauth2) -> oauth2
                         .userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig
@@ -99,23 +91,16 @@ public class SecurityConfig {
                 );
 
 
-        //경로별 인가 작업
+        // 경로별 인가 작업
         http
                 .authorizeHttpRequests((auth) -> auth
                         .requestMatchers("/**").permitAll()
                         .anyRequest().permitAll());
 
-        //세션 설정 : STATELESS
+        // 세션 설정 : STATELESS
         http
                 .sessionManagement((session) -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-
-//        http
-//                // HTTPS를 사용해야 하는 경로 설정
-//                .requiresChannel()
-//                .requestMatchers(r -> r.getRequestURI().startsWith("/secure"))
-//                .requiresSecure();
-
         return http.build();
     }
 }

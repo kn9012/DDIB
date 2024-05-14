@@ -32,7 +32,6 @@ public class SellerController {
     })
     public ResponseEntity<?> sellerApply(@RequestBody SellerRequestDto requestDto, @PathVariable Integer sellerId) {
         try {
-            log.info("판매회원 신청 API");
             sellerService.applySeller(requestDto, sellerId);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {

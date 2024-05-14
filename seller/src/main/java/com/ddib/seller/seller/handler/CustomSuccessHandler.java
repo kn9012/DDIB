@@ -53,9 +53,6 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         String access = jwtUtil.createJwt("access", email, accessExpireMs);
         String refresh = jwtUtil.createJwt("refresh", email, refreshExpireMs);
 
-        log.info("accesstoken : " + access);
-        log.info("refreshtoken : " + refresh);
-
         // redis 에 담아서 refresh token 관리
         redisService.setValues(email, refresh, refreshExpireMs);
 
@@ -65,7 +62,6 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
         response.addHeader("Authorization", "Bearer " + access);
         log.info("response " + response.getHeader("Authorization"));
-
 
         response.sendRedirect("https://k10c102.p.ssafy.io/bidd/login/done");
     }

@@ -42,8 +42,6 @@
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <!-- 에러로그를 설정하고 로그의 레벨이 맞으면 onMatch, 아니라면 onMismatch  -->
             <level>info</level>
-            <onMatch>ACCEPT</onMatch>
-            <onMismatch>DENY</onMismatch>
         </filter>
         <!-- Check tag and label fluentd info: https://docs.fluentd.org/configuration/config-file-->
         <tag>applog</tag>

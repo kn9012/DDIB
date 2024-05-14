@@ -1,3 +1,3 @@
 export default function LoginDone() {
-  return <>로그인완료</>;
+  return <div>로그인완료</div>;
 }

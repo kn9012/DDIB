@@ -17,15 +17,6 @@ spring:
 #            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
 #            - AuthorizationHeaderFilter
 
-#        - id: user
-#          uri: lb://USER
-#          predicates:
-#            - Path=/api/oauth2/ddib/kakao
-#            - Path=
-#          filters:
-#            - RemoveRequestHeader=Cookie
-#            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
-
         - id: seller
           uri: lb://SELLER
           predicates:
@@ -71,35 +62,6 @@ spring:
 #            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
 #            - AuthorizationHeaderFilter
 
-#      default-filters:
-#        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
-#      globalcors:
-#        corsConfigurations:
-#          '[/**]':
-#            allowed-origin-patterns: "*"
-#            allowedOrigins:
-#              - "http://k10c102.p.ssafy.io/"
-#              - "https://k10c102.p.ssafy.io/"
-#              - "http://localhost:3000/"
-#              - "https://localhost:3000/"
-#              - "http://localhost/"
-#              - "https://localhost/"
-#            allow-credentials: true
-#            allowedHeaders: "*"
-#              - x-requested-with
-#              - authorization
-#              - content-type
-#              - credential
-#              - X-AUTH-TOKEN
-#              - X-CSRF-TOKEN
-#            allowedMethods:
-#              - POST
-#              - GET
-#              - PUT
-#              - PATCH
-#              - OPTIONS
-#              - DELETE
-
 #springdoc:
 #  enable-native-support: true
 #  api-docs:
@@ -144,9 +106,6 @@ spring:
               - PATCH
               - OPTIONS
             allowedHeaders: "*"
-#            allowCredentials: true
-#            maxAge: 3600
-
 
 jwt:
   secret: ***REMOVED***

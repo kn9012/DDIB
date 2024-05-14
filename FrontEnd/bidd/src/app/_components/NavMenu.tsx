@@ -34,10 +34,10 @@ export default function NavMenu() {
     <>
       <div className={styles.main}>
         <li className={styles.title}>
-          <Link href="/bidd">BIDD</Link>
+          <Link href="/">BIDD</Link>
         </li>
         <li>
-          <Link href="/bidd/apply">
+          <Link href="/apply">
             {segment === "apply" ? (
               <>
                 <div className={styles.subTitle} style={{ fontWeight: "bold" }}>
@@ -52,7 +52,7 @@ export default function NavMenu() {
           </Link>
         </li>
         <li>
-          <Link href="/bidd/paypolicy">
+          <Link href="/paypolicy">
             {segment === "paypolicy" ? (
               <>
                 <div className={styles.subTitle} style={{ fontWeight: "bold" }}>
@@ -86,14 +86,14 @@ export default function NavMenu() {
             </>
           ) : segment === "mypage" ? (
             <>
-              <Link href="/bidd//mypage">
+              <Link href="/mypage">
                 <div>
                   <GoPersonFill className={styles.icons} />
                 </div>
               </Link>
             </>
           ) : (
-            <Link href="/bidd//mypage">
+            <Link href="/mypage">
               <div>
                 <GoPerson className={styles.icons} />
               </div>

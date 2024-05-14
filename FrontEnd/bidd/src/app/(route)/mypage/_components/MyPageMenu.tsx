@@ -11,13 +11,17 @@ export default function MyPageMenu() {
   return (
     <>
       <div className={styles.myPageMenu}>
-        <ul className={segment === "myitems" ? styles.menuMyItem : styles.menuCompanyInfo}>
+        <ul
+          className={
+            segment === "myitems" ? styles.menuMyItem : styles.menuCompanyInfo
+          }
+        >
           <div className={styles.horiselector}></div>
           <li className={styles.menuItemOne}>
-            <Link href={"/bidd/mypage/myitems"}>등록상품</Link>
+            <Link href={"/mypage/myitems"}>등록상품</Link>
           </li>
           <li className={styles.menuItemTwo}>
-            <Link href={"/bidd/mypage/companyinfo"}>기업정보</Link>
+            <Link href={"/mypage/companyinfo"}>기업정보</Link>
           </li>
         </ul>
       </div>

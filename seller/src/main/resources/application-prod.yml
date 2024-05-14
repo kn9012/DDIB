@@ -13,7 +13,7 @@ spring:
           kakao:
             client-id: ***REMOVED***
             client-secret: ***REMOVED***
-            redirect-uri: https://k10c102.p.ssafy.io/login/oauth2/code/bidd
+            redirect-uri: https://bidd.kro.kr/login/oauth2/code/bidd
             authorization-grant-type: authorization_code
             client-name: Kakao
             client-authentication-method: client_secret_post
@@ -55,7 +55,7 @@ refresh:
     expiration:
       time: 864000000
 
-releaseHostName: k10c102.p.ssafy.io
+releaseHostName: ddib.kro.kr
 
 eureka:
   instance:

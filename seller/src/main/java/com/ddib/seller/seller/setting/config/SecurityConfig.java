@@ -53,7 +53,7 @@ public class SecurityConfig {
                 .cors(corsCustomizer -> corsCustomizer.configurationSource(request -> {
 
                     CorsConfiguration configuration = new CorsConfiguration();
-                    configuration.setAllowedOrigins(Collections.singletonList("https://k10c102.p.ssafy.io"));
+                    configuration.setAllowedOrigins(Collections.singletonList("https://bidd.kro.kr"));
                     configuration.setAllowedMethods(Collections.singletonList("*"));
                     configuration.setAllowCredentials(true);
                     configuration.setAllowedHeaders(Collections.singletonList("*"));

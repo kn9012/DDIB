@@ -1,0 +1,32 @@
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1vw;
+}
+
+.items {
+  width: 10%;
+}
+
+.imPossible,
+.possible {
+  padding: 1vw;
+  text-align: center;
+}
+
+.imPossible {
+  color: gray;
+  background-color: #ebebeb;
+}
+
+.possible {
+  cursor: pointer;
+  color: black;
+  border: 1px solid #ebebeb;
+
+  &.checked {
+    background-color: blue;
+  }
+}

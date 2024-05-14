@@ -19,7 +19,7 @@ export default function Register() {
       const sale = now * (dis * 0.01);
       const fin = now - sale;
       if (finalPriceRef.current) {
-        finalPriceRef.current.value = fin;
+        finalPriceRef.current.value = fin + "";
       }
     } else {
       alert("가격을 먼저 입력해주세요");
@@ -82,7 +82,7 @@ export default function Register() {
         <div className={styles.item}>
           <div>
             <div>DDIB TIME</div>
-            <TimeSelect year="2024" month="05" day="12" />
+            <TimeSelect year="2024" month="05" day="14" />
           </div>
         </div>
         <div className={styles.item}>

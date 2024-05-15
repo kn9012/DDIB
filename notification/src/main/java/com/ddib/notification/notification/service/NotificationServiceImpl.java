@@ -39,7 +39,7 @@ public class NotificationServiceImpl implements NotificationService{
             title += userName + INTEREST_PRODUCT_REMAIN_TIME_FIRST_TITLE;
             title += dto.getProductName() + INTEREST_PRODUCT_REMAIN_TIME_SECOND_TITLE;
 
-            if (dto.getRemainTime() == 2) {
+            if (dto.getRemainTime() == 1) {
                 title += dto.getRemainTime() + INTEREST_PRODUCT_REMAIN_TIME_THIRD_TITLE;
             } else if (dto.getRemainTime() == 24) {
                 title += INTEREST_PRODUCT_REMAIN_TIME_FOURTH_TITLE;

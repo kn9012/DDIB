@@ -1,0 +1,23 @@
+server:
+  port: 9010
+
+scheduler:
+  enabled: true
+
+# -- Default spring configuration
+spring:
+  application:
+    name: waiting
+  data:
+    redis:
+      host: k10c102.p.ssafy.io
+      port: 6379
+
+eureka:
+  instance:
+    hostname: k10c102.p.ssafy.io
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    serviceUrl:
+      defaultZone: http://k10c102.p.ssafy.io:8761/eureka

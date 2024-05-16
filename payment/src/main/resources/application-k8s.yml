@@ -7,18 +7,19 @@ spring:
     name: payment
   jpa:
     hibernate:
-#      ddl-auto: update
+      #      ddl-auto: update
       show-sql: true
+    open-in-view: false
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://k10c102.p.ssafy.io:3306/ddib?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    url: jdbc:mysql://10.182.0.18:3306/ddib?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: ssafy
     password: ssafy
 
   data:
     redis:
-      host: k10c102.p.ssafy.io
+      host: ddib.kro.kr
       port: 6379
 
 # -- Eureka client
@@ -26,14 +27,14 @@ spring:
 #  client:
 #    serviceUrl:
 #      defaultZone: ${EUREKA_URL:http://k10c102.p.ssafy.io:8761/eureka/}
-eureka:
-  instance:
-    hostname: k10c102.p.ssafy.io
-  client:
-    register-with-eureka: true
-    fetch-registry: true
-    service-url:
-      defaultZone: http://k10c102.p.ssafy.io:8761/eureka/
+#eureka:
+#  instance:
+#    hostname: k10c102.p.ssafy.io
+#  client:
+#    register-with-eureka: true
+#    fetch-registry: true
+#    service-url:
+#      defaultZone: http://k10c102.p.ssafy.io:8761/eureka/
 
 host:
   address: https://ddib.kro.kr
@@ -47,9 +48,9 @@ pay:
 # KakaoPay API Url
 api:
   kakao:
-    approval-url: http://ddib.kro.kr:8083/api/payment/success
-    cancel-url: http://ddib.kro.kr:8083/api/payment/cancel
-    fail-url: http://ddib.kro.kr:8083/api/payment/fail
+    approval-url: https://ddib.kro.kr/api/payment/success
+    cancel-url: https://ddib.kro.kr/api/payment/cancel
+    fail-url: https://ddib.kro.kr/api/payment/fail
 
 # Redirect Url
 redirect:
@@ -62,8 +63,8 @@ redirect:
 
 # Feign Client Url
 feign-client:
-  waiting: http://ddib.kro.kr:9010
-  product: http://ddib.kro.kr:8082
+  waiting: http://ddib-waiting-service.ddib.svc.cluster.local:9010
+  product: http://ddib-product-service.ddib.svc.cluster.local:8082
 
 # Swagger
 springdoc:
@@ -75,3 +76,20 @@ springdoc:
     path: /api-docs
   default-consumes-media-type: application/json;charset=UTF-8
   default-produces-media-type: application/json;charset=UTF-8
+
+# metric 설정
+management:
+  endpoint:
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: prometheus
+      base-path: /actuator/payment
+  metrics:
+    export:
+      prometheus:
+        enabled: true

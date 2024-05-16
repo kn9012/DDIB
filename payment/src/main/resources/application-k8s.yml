@@ -7,7 +7,7 @@ spring:
     name: payment
   jpa:
     hibernate:
-#      ddl-auto: update
+      #      ddl-auto: update
       show-sql: true
     open-in-view: false
 

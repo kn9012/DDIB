@@ -9,4 +9,4 @@ VOLUME /tmp
 COPY build/libs/*.jar wating.jar
 
 # 실행할 명령어
-ENTRYPOINT ["java", "-jar", "wating.jar", "--spring.profiles.active=prod"]
+ENTRYPOINT ["java", "-jar", "wating.jar", "--spring.profiles.active=k8s"]

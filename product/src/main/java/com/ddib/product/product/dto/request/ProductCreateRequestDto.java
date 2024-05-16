@@ -9,7 +9,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 @Getter
 @AllArgsConstructor
@@ -22,11 +25,14 @@ public class ProductCreateRequestDto {
     @Schema(description = "총 재고량", defaultValue = "1000")
     private int totalStock;
 
-    @Schema(description = "타임딜 시작시간", defaultValue = "2024-04-25T10:00:00")
-    private LocalDateTime eventStartDate;
+    @Schema(description = "타임딜 시작날짜", defaultValue = "2024-04-25")
+    private String eventStartDate;
 
-    @Schema(description = "타임딜 종료시간", defaultValue = "2024-04-25T18:00:00")
-    private LocalDateTime eventEndDate;
+    @Schema(description = "타임딜 시작시각", defaultValue = "2")
+    private int startTime;
+
+    @Schema(description = "타임딜 종료시각", defaultValue = "15")
+    private int endTime;
 
     @Schema(description = "가격", defaultValue = "20000")
     private int price;
@@ -48,14 +54,25 @@ public class ProductCreateRequestDto {
                 .stock(getTotalStock())
                 .totalStock(getTotalStock())
                 .discount(getDiscount())
-                .eventStartDate(Timestamp.valueOf(eventStartDate))
-                .eventEndDate(Timestamp.valueOf(eventEndDate))
-                .eventStartTime(eventStartDate.getHour())
-                .eventEndTime(eventEndDate.getHour())
+                .eventStartDate(convertDate(eventStartDate, startTime))
+                .eventEndDate(convertDate(eventStartDate, endTime))
+                .eventStartTime(startTime)
+                .eventEndTime(endTime)
                 .isOver(false)
                 .seller(seller)
                 .category(ProductCategory.valueOf(category.toUpperCase()))
                 .build();
     }
 
+    private static Timestamp convertDate(String inputDate, int time){
+        LocalDate date = LocalDate.parse(inputDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+        // Combine the date with startTime and endTime to create LocalDateTime
+        LocalDateTime dateTime = LocalDateTime.of(date, LocalTime.of(time, 0));
+
+        // Convert LocalDateTime to Timestamp
+        Timestamp timestamp = Timestamp.valueOf(dateTime);
+
+        return timestamp;
+    }
 }

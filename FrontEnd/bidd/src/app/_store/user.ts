@@ -15,7 +15,7 @@ export const userStore = create(
   persist<UserInfo>(
     (set) => ({
       jwt: "",
-      userPk: 9,
+      userPk: 0,
       user: {
         name: "",
         phone: "",

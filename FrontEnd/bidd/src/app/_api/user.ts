@@ -2,7 +2,7 @@ import { ClientAxiosApi } from "@/app/_utils/commons";
 
 const api = ClientAxiosApi();
 
-async function getSellerInfo(userPk: number) {
+async function getSellerInfo(userPk: string) {
   const { data } = await api.get(`/seller/${userPk}`);
   console.log(data);
   return data;

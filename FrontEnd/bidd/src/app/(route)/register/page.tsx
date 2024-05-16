@@ -1,10 +1,18 @@
 "use client";
 
 import TimeSelect from "./_components/TimeSelect";
-import ThumbNail from "./_components/Thumbnail";
+import ThumbNail from "./_components/ThumbNail";
 import styles from "./register.module.scss";
 import { useRef, ChangeEvent, useState, useEffect } from "react";
 import ProductDetail from "./_components/ProductDetail";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
+import { BsFillCalendarHeartFill } from "react-icons/bs";
+import moment from "moment";
+
+type ValuePiece = Date | null;
+
+type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 export default function Register() {
   const titleRef = useRef<HTMLInputElement>(null);
@@ -13,6 +21,28 @@ export default function Register() {
   const priceRef = useRef<HTMLInputElement>(null);
   const discountRef = useRef<HTMLInputElement>(null);
   const finalPriceRef = useRef<HTMLInputElement>(null);
+
+  const [value, setValue] = useState(new Date());
+  const [showCal, setShowCal] = useState(false);
+  const [dateStr, setDateStr] = useState("");
+
+  const handleDateChange = (newValue: Date) => {
+    setValue(newValue);
+    console.log(newValue);
+  };
+
+  useEffect(() => {
+    const formattedDate = formatDate(value);
+    setDateStr(formattedDate);
+  }, [value]);
+
+  const formatDate = (date: Date) => {
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const month = `0${d.getMonth() + 1}`.slice(-2); // 월은 0부터 시작하므로 1을 더해주고, 항상 2자리로 표현
+    const day = `0${d.getDate()}`.slice(-2);
+    return `${year}-${month}-${day}`;
+  };
 
   const calFinPrice = (e: ChangeEvent<HTMLInputElement>) => {
     if (priceRef.current && priceRef.current.value) {
@@ -28,6 +58,10 @@ export default function Register() {
       e.target.value = "";
     }
   };
+
+  useEffect(() => {
+    //console.log(value);
+  }, [value]);
 
   return (
     <div className={styles.container}>
@@ -73,7 +107,16 @@ export default function Register() {
         <div className={styles.item}>
           <div>
             <div>DDIB TIME</div>
-            <TimeSelect year="2024" month="05" day="14" />
+            <div>
+              <div className={styles.dateArea} onClick={() => setShowCal((prev) => !prev)}>
+                <input type="text" className={styles.inputDate} readOnly value={dateStr} />
+                <div className={styles.icons}>
+                  <BsFillCalendarHeartFill />
+                </div>
+              </div>
+              {showCal && <Calendar locale="ko" onChange={handleDateChange} value={value} />}
+            </div>
+            <TimeSelect date={dateStr} />
           </div>
         </div>
         <div>

@@ -1,5 +1,8 @@
 .container {
   padding: 3vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .title {
@@ -10,6 +13,7 @@
 }
 
 .itemArea {
+  width: 100%;
   padding: 5vw 8vw;
 }
 
@@ -31,4 +35,26 @@
     outline: none;
     border: none;
   }
+}
+
+.btnArea {
+  width: 100%;
+  display: flex;
+  gap: 1vw;
+  padding: 0 8vw;
+}
+
+.modify {
+  width: 100%;
+  text-align: center;
+  padding: 1vw;
+  border: 1px solid black;
+}
+
+.quit {
+  width: 100%;
+  text-align: center;
+  background-color: black;
+  color: white;
+  padding: 1vw;
 }

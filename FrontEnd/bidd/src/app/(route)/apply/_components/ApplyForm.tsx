@@ -5,8 +5,11 @@ import styles from "./applyForm.module.scss";
 import { useMutation } from "@tanstack/react-query";
 import { BusinessInfo } from "@/app/_types/types";
 import { putApplyBusiness, postBusinessCheck } from "@/app/_api/business";
+import { useRouter } from "next/navigation";
 
 export default function ApplyForm() {
+  const router = useRouter();
+
   const businessNameRef = useRef<HTMLInputElement>(null);
   const numberRef = useRef<HTMLInputElement>(null);
   const nameRef = useRef<HTMLInputElement>(null);
@@ -26,6 +29,7 @@ export default function ApplyForm() {
     async onSuccess(response) {
       console.log(response);
       alert("기업신청이 완료되었습니다.");
+      router.replace("/");
     },
     onError(error) {
       alert("기업신청 실패");

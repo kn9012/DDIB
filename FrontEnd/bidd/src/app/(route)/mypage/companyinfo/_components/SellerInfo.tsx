@@ -5,11 +5,12 @@ import { useEffect, useRef } from "react";
 import { getSellerInfo } from "@/app/_api/user";
 import { BusinessInfos } from "@/app/_types/types";
 import { useQuery } from "@tanstack/react-query";
+import Cookies from "js-cookie";
 
 export default function SellerInfo() {
   // const { user, userPk } = userStore();
 
-  const pk = 2;
+  const pk = Cookies.get("num") as string;
 
   const { data } = useQuery<BusinessInfos>({
     queryKey: ["businessinfo", pk],
@@ -24,6 +25,13 @@ export default function SellerInfo() {
 
   useEffect(() => {
     if (data) {
+      if (companyNameRef.current && businessNumberRef.current && ceoNameRef.current && ceoEmailRef.current && ceoPhoneRef.current) {
+        companyNameRef.current.value = data.companyName;
+        businessNumberRef.current.value = data.businessNumber + "";
+        ceoNameRef.current.value = data.ceoName;
+        ceoEmailRef.current.value = data.ceoEmail;
+        ceoPhoneRef.current.value = data.ceoPhone;
+      }
     }
   }, []);
 
@@ -51,6 +59,10 @@ export default function SellerInfo() {
           <div>대표번호</div>
           <input type="text" ref={ceoPhoneRef} />
         </div>
+      </div>
+      <div className={styles.btnArea}>
+        <div className={styles.modify}>수정하기</div>
+        <div className={styles.quit}>탈퇴하기</div>
       </div>
     </div>
   );

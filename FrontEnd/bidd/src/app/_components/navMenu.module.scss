@@ -4,7 +4,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 2vw;
-  color: black;
+  color: var(--scarlet);
   // background-color: var(--scarlet);
 
   // background: linear-gradient(
@@ -64,11 +64,10 @@
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  color: white;
-  background-color: rgba(0, 0, 0, 0.8);
   padding: 0.3vw 0.5vw;
   border-radius: 10px;
-  font-size: 0.5vw;
+  font-size: 0.7vw;
+  font-weight: bold;
   animation: horizontal 1s ease-in-out infinite;
 
   &::before {
@@ -80,7 +79,28 @@
     border-top: 1vw solid transparent;
     border-left: 0.5vw solid transparent;
     border-right: 0.5vw solid transparent;
-    border-bottom: 0.5vw solid rgba(0, 0, 0, 0.8);
+  }
+}
+
+.beforeLogin {
+  .logBtn {
+    color: rgba(67, 47, 46, 1);
+    background-color: rgba(255, 228, 0, 1);
+
+    &::before {
+      border-bottom: 0.5vw solid rgba(255, 228, 0, 1);
+    }
+  }
+}
+
+.afterLogin {
+  .logBtn {
+    color: white;
+    background-color: rgb(0, 0, 0);
+
+    &::before {
+      border-bottom: 0.5vw solid rgb(0, 0, 0);
+    }
   }
 }
 

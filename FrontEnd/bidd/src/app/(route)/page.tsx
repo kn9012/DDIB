@@ -1,12 +1,11 @@
 import Image from "next/image";
 import styles from "./page.module.scss";
+import MainSlider from "../_components/MainSlider";
 
 export default function Home() {
   return (
-    <>
-      <main className={styles.main}>
-        <div>메인</div>
-      </main>
-    </>
+    <div className={styles.main}>
+      <MainSlider />
+    </div>
   );
 }

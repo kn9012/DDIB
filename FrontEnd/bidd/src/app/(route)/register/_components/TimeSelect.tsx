@@ -7,12 +7,10 @@ import { useEffect, useState } from "react";
 import cx from "classnames";
 
 interface Props {
-  year: string;
-  month: string;
-  day: string;
+  date: string;
 }
 
-export default function TimeSelect({ year, month, day }: Props) {
+export default function TimeSelect({ date }: Props) {
   interface TimeArray {
     [index: number]: boolean;
   }
@@ -49,8 +47,8 @@ export default function TimeSelect({ year, month, day }: Props) {
   const [end, setEnd] = useState(0);
 
   const { data } = useQuery<TimeArray>({
-    queryKey: ["timelist", year, month, day],
-    queryFn: () => getTimeInfo(year, month, day),
+    queryKey: ["timelist", date],
+    queryFn: () => getTimeInfo(date),
   });
 
   const handleValueChange = (index: number) => {
@@ -93,7 +91,7 @@ export default function TimeSelect({ year, month, day }: Props) {
     console.log(nowCheck);
   };
 
-  useEffect(() => {});
+  useEffect(() => {}, [date]);
 
   console.log(data);
 
@@ -107,13 +105,7 @@ export default function TimeSelect({ year, month, day }: Props) {
               {timeObject.map((item, index) => (
                 <div key={index} className={styles.items}>
                   {data[index] ? (
-                    <div
-                      className={cx(
-                        styles.possible,
-                        item.value && styles.checked
-                      )}
-                      onClick={() => setTime(index)}
-                    >
+                    <div className={cx(styles.possible, item.value && styles.checked)} onClick={() => setTime(index)}>
                       {item.time}
                     </div>
                   ) : (

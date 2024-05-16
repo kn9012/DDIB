@@ -7,7 +7,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class CorsMvcConfig implements WebMvcConfigurer {
-    private final String releaseHostName ;
+    private final String releaseHostName;
 
     public CorsMvcConfig(@Value("${releaseHostName}") String releaseHostName) {
         this.releaseHostName = releaseHostName;

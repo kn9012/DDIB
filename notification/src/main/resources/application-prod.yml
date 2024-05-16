@@ -31,6 +31,8 @@ spring:
           starttls:
             enable: true
 
+releaseHostName: ddib.kro.kr
+
 # -- Eureka client
 eureka:
   instance:

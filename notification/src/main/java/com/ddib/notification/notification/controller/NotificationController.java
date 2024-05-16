@@ -9,7 +9,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/notification")
 @RequiredArgsConstructor
 @Tag(name = "Notification Controller", description = "알림 API")
+@Slf4j
 public class NotificationController {
     private final UserServiceImpl userService;
     private final SubscriptionCategoryService subscriptionCategoryService;
@@ -101,5 +104,12 @@ public class NotificationController {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @GetMapping("/test/sleep")
+    public ResponseEntity<?> sleep() throws InterruptedException {
+        log.info("NOTIFICATION : CALL SLEEP");
+        Thread.sleep(10000);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

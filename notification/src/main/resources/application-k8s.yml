@@ -46,4 +46,4 @@ releaseHostName: ddib.kro.kr
 project:
   properties:
     firebase-create-scoped: "https://www.googleapis.com/auth/firebase.messaging"
-    firebase-topic: "ddib_subscribe_notification
+    firebase-topic: "ddib_subscribe_notification"

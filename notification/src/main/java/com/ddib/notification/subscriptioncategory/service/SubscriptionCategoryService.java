@@ -2,6 +2,7 @@ package com.ddib.notification.subscriptioncategory.service;
 
 import com.ddib.notification.subscriptioncategory.domain.SubscriptionCategory;
 import com.ddib.notification.subscriptioncategory.dto.request.SubscriptionCategoryRequestDto;
+import com.ddib.notification.subscriptioncategory.dto.response.SubscriptionCategoryResponseDto;
 import com.ddib.notification.subscriptioncategory.repository.SubscriptionCategoryRepository;
 import com.ddib.notification.user.domain.User;
 import com.ddib.notification.user.repository.UserRepository;
@@ -37,5 +38,9 @@ public class SubscriptionCategoryService {
     @Transactional
     public void deleteSubscriptionCategory(Integer userId) {
         subscriptionCategoryRepository.deleteSubscriptionCategoriesByUserUserId(userId);
+    }
+
+    public SubscriptionCategoryResponseDto findSubscriptionList(Integer userId) {
+        return subscriptionCategoryRepository.findSubscriptionCategoriesByUserUserId(userId);
     }
 }

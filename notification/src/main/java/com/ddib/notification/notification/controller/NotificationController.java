@@ -87,4 +87,19 @@ public class NotificationController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
+    @Operation(summary = "구독 목록 조회 API")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "구독 목록 조회 성공"),
+            @ApiResponse(responseCode = "400", description = "구독 목록 조회 실패")
+    })
+    @GetMapping("/subscription/{userId}")
+    public ResponseEntity<?> subscriptionDetails(@PathVariable Integer userId) {
+        try {
+            return new ResponseEntity<>(subscriptionCategoryService.findSubscriptionList(userId), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 }

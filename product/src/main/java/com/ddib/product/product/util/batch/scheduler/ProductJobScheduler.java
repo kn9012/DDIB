@@ -26,7 +26,7 @@ public class ProductJobScheduler {
 
     private final ProductService productService;
 
-    //    @Scheduled(cron = "30 * * * * ?") // TEST 시 10초 주기로 스케줄링
+//    @Scheduled(cron = "*/10 * * * * ?", zone = "Asia/Seoul")
     @Scheduled(cron = "0 0 0/1 * * *")
     public void runAlarmJob() throws JobInstanceAlreadyCompleteException, JobExecutionAlreadyRunningException, JobParametersInvalidException, JobRestartException {
         log.info("[PRODUCT] ALARM BATCH JOB 실행");
@@ -37,6 +37,7 @@ public class ProductJobScheduler {
         jobLauncher.run(productJob, jobParameters);
     }
 
+//    @Scheduled(cron = "*/10 * * * * ?", zone = "Asia/Seoul")
     @Scheduled(cron = "0 0 0/1 * * *")
     public void updateTimeOverProduct(){
         log.info("[PRODUCT] UPDATE TIME OVER SCHEDULE 실행");

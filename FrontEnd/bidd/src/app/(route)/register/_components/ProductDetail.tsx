@@ -28,7 +28,7 @@ export default function ProductDetail() {
     }
   };
 
-  const handleFileButtonClick = (e) => {
+  const handleFileButtonClick = () => {
     fileRef.current?.click();
   };
 

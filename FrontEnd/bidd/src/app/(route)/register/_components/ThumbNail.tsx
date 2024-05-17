@@ -9,9 +9,7 @@ export default function Thumbnail() {
   // 사용자가 불러온 파일 정보를 넣는 값
   const { setThumb } = productCreateStore();
   // 사용자가 불러온 파일의 URL
-  const [previewURL, setPreviewURL] = useState<string | ArrayBuffer | null>(
-    null
-  );
+  const [previewURL, setPreviewURL] = useState<string>("");
   const fileRef = useRef<HTMLInputElement>(null);
 
   const handleFileOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,7 +20,7 @@ export default function Thumbnail() {
 
       reader.onloadend = () => {
         setThumb(file);
-        setPreviewURL(reader.result);
+        setPreviewURL(reader.result as string);
       };
       console.log(previewURL);
 
@@ -30,7 +28,7 @@ export default function Thumbnail() {
     }
   };
 
-  const handleFileButtonClick = (e) => {
+  const handleFileButtonClick = () => {
     fileRef.current?.click();
   };
 

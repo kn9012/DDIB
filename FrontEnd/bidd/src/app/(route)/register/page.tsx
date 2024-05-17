@@ -2,7 +2,7 @@
 
 import TimeSelect from "./_components/TimeSelect";
 import ThumbNail from "./_components/ThumbNail";
-import styles, { select } from "./register.module.scss";
+import styles from "./register.module.scss";
 import { useRef, ChangeEvent, useState, useEffect } from "react";
 import ProductDetail from "./_components/ProductDetail";
 import Calendar from "react-calendar";
@@ -14,13 +14,14 @@ import Cookies from "js-cookie";
 import { productCreateStore } from "@/app/_store/product";
 import { postCreateProuct } from "@/app/_api/product";
 import { CreateItem } from "@/app/_types/types";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 type ValuePiece = Date | null;
 
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 export default function Register() {
+  const router = useRouter();
   const { start, end, thumb, details } = productCreateStore();
   const pk = Cookies.get("num") as string;
 
@@ -42,7 +43,7 @@ export default function Register() {
     },
     async onSuccess(response) {
       console.log("상품등록완료");
-      const router = useRouter();
+
       router.replace("/mypage");
     },
     onError(error) {
@@ -50,7 +51,7 @@ export default function Register() {
     },
   });
 
-  const handleSelect = (e) => {
+  const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelected(e.target.value);
     console.log(selected);
   };

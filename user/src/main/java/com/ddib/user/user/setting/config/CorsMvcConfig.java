@@ -19,7 +19,8 @@ public class CorsMvcConfig implements WebMvcConfigurer {
         corsRegistry.addMapping("/**")
                 .exposedHeaders("Set-Cookie")
                 .exposedHeaders("Authorization")
-                .allowedOrigins("http://"+ releaseHostName+":3000",
+                .allowedOrigins("https://k10c102.p.ssafy.io", "http://k10c102.p.ssafy.io:3000", "https://k10c102.p.ssafy.io:3000",
+                        "http://"+ releaseHostName+":3000",
                         "https://"+ releaseHostName, "https://" + releaseHostName + ":3000")
                 .allowCredentials(true);
 

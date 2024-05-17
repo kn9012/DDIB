@@ -29,7 +29,7 @@ export default function ApplyForm() {
     async onSuccess(response) {
       console.log(response);
       alert("기업신청이 완료되었습니다.");
-      router.replace("/");
+      router.push("/");
     },
     onError(error) {
       alert("기업신청 실패");
@@ -73,7 +73,9 @@ export default function ApplyForm() {
     setEmail(e.target.value);
     if (e.target.value.includes("@")) {
       setIsDropbox(true);
-      setEmailList(emails.filter((e1) => e1.includes(e.target.value.split(`@`)[1])));
+      setEmailList(
+        emails.filter((e1) => e1.includes(e.target.value.split(`@`)[1]))
+      );
     } else {
       setIsDropbox(false);
     }
@@ -115,7 +117,11 @@ export default function ApplyForm() {
       {isDrobBox && (
         <div className={styles.emailArea}>
           {emailList.map((item, index) => (
-            <div className={styles.emailItem} onClick={() => clickEmail(email, item)} key={index}>
+            <div
+              className={styles.emailItem}
+              onClick={() => clickEmail(email, item)}
+              key={index}
+            >
               <div> {email.split("@")[0]}</div>
               <div>{item}</div>
             </div>

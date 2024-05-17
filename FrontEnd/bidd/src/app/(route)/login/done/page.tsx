@@ -1,3 +1,8 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+
 export default function LoginDone() {
-  return <div>로그인완료</div>;
+  const router = useRouter();
+  router.replace("/");
 }

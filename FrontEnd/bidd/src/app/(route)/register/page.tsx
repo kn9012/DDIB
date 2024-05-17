@@ -10,12 +10,20 @@ import "react-calendar/dist/Calendar.css";
 import { BsFillCalendarHeartFill } from "react-icons/bs";
 import moment from "moment";
 import { useMutation } from "@tanstack/react-query";
+import Cookies from "js-cookie";
+import { productCreateStore } from "@/app/_store/product";
+import { postCreateProuct } from "@/app/_api/product";
+import { CreateItem } from "@/app/_types/types";
+import { useRouter } from "next/router";
 
 type ValuePiece = Date | null;
 
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 export default function Register() {
+  const { start, end, thumb, details } = productCreateStore();
+  const pk = Cookies.get("num") as string;
+
   const titleRef = useRef<HTMLInputElement>(null);
   const amountRef = useRef<HTMLInputElement>(null);
   const priceRef = useRef<HTMLInputElement>(null);
@@ -27,6 +35,20 @@ export default function Register() {
   const [dateStr, setDateStr] = useState("");
 
   const [selected, setSelected] = useState("카테고리 선택");
+
+  const createProduct = useMutation({
+    mutationFn: async (data: FormData) => {
+      return await postCreateProuct(data);
+    },
+    async onSuccess(response) {
+      console.log("상품등록완료");
+      const router = useRouter();
+      router.replace("/mypage");
+    },
+    onError(error) {
+      console.error(error);
+    },
+  });
 
   const handleSelect = (e) => {
     setSelected(e.target.value);
@@ -40,6 +62,7 @@ export default function Register() {
 
   useEffect(() => {
     const formattedDate = formatDate(value);
+    console.log(formattedDate);
     setDateStr(formattedDate);
   }, [value]);
 
@@ -74,7 +97,51 @@ export default function Register() {
     }
   };
 
-  const registerItem = () => {};
+  const registerItem = () => {
+    if (
+      titleRef.current &&
+      titleRef.current.value.length != 0 &&
+      amountRef.current &&
+      amountRef.current.value.length != 0 &&
+      priceRef.current &&
+      priceRef.current.value.length != 0 &&
+      discountRef.current &&
+      discountRef.current.value.length != 0 &&
+      start != 0 &&
+      end != 0 &&
+      thumb &&
+      details
+    ) {
+      const dto = {
+        name: titleRef.current.value,
+        totalStock: amountRef.current.value,
+        eventStartDate: dateStr,
+        startTime: start,
+        endTime: end,
+        price: priceRef.current.value,
+        discount: discountRef.current.value,
+        category: selected,
+        sellerId: 2,
+      };
+
+      const formData = new FormData();
+      formData.append("thumbnailImage", thumb);
+      details.forEach((file) => {
+        formData.append("productDetails", file);
+      });
+      formData.append(
+        "dto",
+        new Blob([JSON.stringify(dto)], {
+          type: "application/json",
+        })
+      );
+
+      console.log(formData);
+      createProduct.mutate(formData);
+    } else {
+      alert("비어있는 칸이 있습니다. 확인해주세요");
+    }
+  };
 
   return (
     <div className={styles.container}>
@@ -91,11 +158,14 @@ export default function Register() {
           </div>
           <div>
             <div>카테고리</div>
+
             <select
               className={styles.select}
               onChange={handleSelect}
               value={selected}
             >
+              <option value="">카테고리를 선택해주세요</option>
+
               <option value="fashion">패션(Fashion)</option>
               <option value="beauty">뷰티(Beauty)</option>
               <option value="food">식품(Food)</option>
@@ -167,15 +237,18 @@ export default function Register() {
             <TimeSelect date={dateStr} />
           </div>
         </div>
-        <div>
+
+        <div className={styles.itemTwo}>
           <div className={styles.subTitle}>상품 썸네일</div>
           <ThumbNail />
         </div>
-        <div>
+        <div className={styles.itemTwo}>
           <div className={styles.subTitle}>상품 상세사진</div>
           <ProductDetail />
         </div>
-        <div onClick={registerItem}>상품등록하기</div>
+        <div className={styles.register} onClick={registerItem}>
+          상품등록하기
+        </div>
       </div>
     </div>
   );

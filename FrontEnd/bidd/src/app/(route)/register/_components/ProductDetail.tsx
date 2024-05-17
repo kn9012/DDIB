@@ -3,11 +3,13 @@
 import styles from "./productDetail.module.scss";
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
+import { productCreateStore } from "@/app/_store/product";
 
 export default function ProductDetail() {
-  const [imageFilesValue, setImageFiles] = useState<File[]>([]);
   const [imageViewValue, setImageView] = useState<string[]>([]);
   const fileRef = useRef<HTMLInputElement>(null);
+
+  const { setDetail, resetDetails } = productCreateStore();
 
   const handleFileOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -16,7 +18,7 @@ export default function ProductDetail() {
       let reader = new FileReader();
 
       reader.onloadend = () => {
-        setImageFiles((prevFiles) => [...prevFiles, file]);
+        setDetail(file);
         // 이전 URL 목록에 새로운 미리보기 URL을 추가합니다.
         setImageView((prevURLs) => [...prevURLs, reader.result as string]);
         console.log(imageViewValue);
@@ -31,7 +33,7 @@ export default function ProductDetail() {
   };
 
   const clearFile = () => {
-    setImageFiles([]);
+    resetDetails();
     setImageView([]);
   };
 
@@ -46,6 +48,7 @@ export default function ProductDetail() {
           type="file"
           onChange={handleFileOnChange}
         />
+
         <div onClick={handleFileButtonClick} className={styles.upload}>
           상세이미지 선택
         </div>

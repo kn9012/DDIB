@@ -3,10 +3,11 @@
 import styles from "./thumbNail.module.scss";
 import { useState, useRef } from "react";
 import Image from "next/image";
+import { productCreateStore } from "@/app/_store/product";
 
 export default function Thumbnail() {
   // 사용자가 불러온 파일 정보를 넣는 값
-  const [file, setFile] = useState<string>("");
+  const { setThumb } = productCreateStore();
   // 사용자가 불러온 파일의 URL
   const [previewURL, setPreviewURL] = useState<string | ArrayBuffer | null>(
     null
@@ -20,7 +21,7 @@ export default function Thumbnail() {
       let reader = new FileReader();
 
       reader.onloadend = () => {
-        setFile(file.name);
+        setThumb(file);
         setPreviewURL(reader.result);
       };
       console.log(previewURL);

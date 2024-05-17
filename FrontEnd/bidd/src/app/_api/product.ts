@@ -1,4 +1,5 @@
 import { ClientAxiosApi, FileAxiosApi } from "@/app/_utils/commons";
+import { CreateItem } from "../_types/types";
 
 const api = ClientAxiosApi();
 const fileApi = FileAxiosApi();
@@ -16,9 +17,9 @@ async function getTimeInfo(date: string) {
   return data;
 }
 
-async function postCreateProuct() {
+async function postCreateProuct(data: FormData) {
   try {
-    await fileApi.post(`/product/`);
+    await fileApi.post(`/product`, data);
   } catch (error) {
     throw error;
   }

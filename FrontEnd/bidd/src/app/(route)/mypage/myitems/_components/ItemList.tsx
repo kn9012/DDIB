@@ -5,11 +5,12 @@ import { useQuery } from "@tanstack/react-query";
 import { getSellerProducts } from "@/app/_api/product";
 import { Product } from "@/app/_types/types";
 import Image from "next/image";
+import Cookies from "js-cookie";
 
 export default function ItemList() {
   // const { user, userPk } = userStore();
 
-  const pk = 1;
+  const pk = Cookies.get("num") as string;
 
   const { data } = useQuery<Product[]>({
     queryKey: ["ProductList", pk],

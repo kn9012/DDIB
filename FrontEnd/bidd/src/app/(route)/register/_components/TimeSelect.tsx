@@ -5,12 +5,15 @@ import { useQuery } from "@tanstack/react-query";
 import { getTimeInfo } from "@/app/_api/product";
 import { useEffect, useState } from "react";
 import cx from "classnames";
+import { productCreateStore } from "@/app/_store/product";
 
 interface Props {
   date: string;
 }
 
 export default function TimeSelect({ date }: Props) {
+  const { start, end, setStart, setEnd } = productCreateStore();
+
   interface TimeArray {
     [index: number]: boolean;
   }
@@ -44,8 +47,6 @@ export default function TimeSelect({ date }: Props) {
 
   const [nowCheck, setNowCheck] = useState(-1);
   const [checkCnt, setCheckCnt] = useState(0);
-  const [start, setStart] = useState(0);
-  const [end, setEnd] = useState(0);
 
   const { data } = useQuery<TimeArray>({
     queryKey: ["timelist", date],
@@ -124,6 +125,7 @@ export default function TimeSelect({ date }: Props) {
         <>
           <div>
             <div className={styles.title}>시간선택</div>
+
             <div className={styles.info}>
               시작시간과 끝시간을 선택해주세요. 최소 2시간
             </div>

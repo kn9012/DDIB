@@ -3,6 +3,10 @@ server:
 
 # -- Default spring configuration
 spring:
+  servlet:
+    multipart:
+      maxFileSize: 5000MB
+      maxRequestSize: 5000MB
   application:
     name: product
   datasource:

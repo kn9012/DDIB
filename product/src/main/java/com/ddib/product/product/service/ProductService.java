@@ -15,7 +15,6 @@ import com.ddib.product.product.dto.request.ProductStockUpdateRequestDto;
 import com.ddib.product.product.dto.response.ProductMainResponseDto;
 import com.ddib.product.product.dto.response.ProductResponseDto;
 import com.ddib.product.product.dto.response.ProductViewResponseDto;
-import com.ddib.product.product.exception.ProductNotAvailableTimeException;
 import com.ddib.product.product.exception.ProductNotFoundException;
 import com.ddib.product.product.repository.ProductRepository;
 import com.ddib.product.product.repository.ProductRepositorySupport;
@@ -27,6 +26,7 @@ import com.ddib.product.user.repository.SellerRepository;
 import com.ddib.product.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 import static com.ddib.product.common.file.constant.S3Domain.PRODUCT_DETAIL;
 import static com.ddib.product.common.file.constant.S3Domain.PRODUCT_THUMBNAIL;
@@ -78,7 +79,8 @@ public class ProductService {
         product.insertProductDetails(ProductDetail.of(detail, product));
 
         productRepository.save(product);
-        callSubscriptionNotification(product);
+//        callSubscriptionNotification(product);
+        CompletableFuture.runAsync(() -> callSubscriptionNotification(product));
     }
 
     @Transactional(readOnly = true)
@@ -237,11 +239,19 @@ public class ProductService {
     }
 
     //해당 카테고리를 좋아요한 유저를 찾은 다음 해당 유저들에게 알람 보내는 메서드
+    @Async
     private void callSubscriptionNotification(Product product) {
         List<SubscriptionCategory> findBySubscriptionCategories = product.getCategory().getListByCategory(subscriptionCategoryRepository);
+        log.info("좋아요한 회원 수 : {}", findBySubscriptionCategories.size());
 
+//        for(SubscriptionCategory sc : findBySubscriptionCategories){
+//            NotificationCreateDto dto = NotificationCreateDto.ofSubscription(product, sc.getUser().getUserId());
+//            log.info("요청보내는 DTO : {}, {}, {}", dto.getUserId(), dto.getCategory(), dto.getProductName());
+//            notificationClient.createAlarm(dto);
+//        }
         findBySubscriptionCategories.stream()
                 .map(sc -> NotificationCreateDto.ofSubscription(product, sc.getUser().getUserId()))
-                .forEach(notificationClient::createAlarm);
+//                .forEach(notificationClient::createAlarm);
+                .forEach(dto -> CompletableFuture.runAsync(() -> notificationClient.createAlarm(dto)));
     }
 }

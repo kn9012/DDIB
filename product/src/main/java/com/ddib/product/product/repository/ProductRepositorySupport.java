@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 @Repository
@@ -162,10 +163,10 @@ public class ProductRepositorySupport {
 
     public void updateTimeOverProduct() {
         log.info("PRODUCT : Update Time Over Product ");
-        LocalDate startOfDay = LocalDate.now().atStartOfDay().toLocalDate();
+        LocalDate startOfDay = LocalDate.now(ZoneId.of("Asia/Seoul")).atStartOfDay().toLocalDate();
         LocalDate endOfDay = startOfDay.plusDays(ONE_DAY);
 
-        int presentHour = LocalDateTime.now().getHour();
+        int presentHour = LocalDateTime.now(ZoneId.of("Asia/Seoul")).getHour();
 
         BooleanExpression isTodayAndOverEndTime = qProduct.eventStartDate.goe(Timestamp.valueOf(startOfDay.atStartOfDay()))
                 .and(qProduct.eventStartDate.lt(Timestamp.valueOf(endOfDay.atStartOfDay())))

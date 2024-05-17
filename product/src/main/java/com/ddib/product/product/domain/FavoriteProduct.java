@@ -25,11 +25,11 @@ public class FavoriteProduct {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer favoriteProductId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_product_id")
     private Product product;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_user_id")
     private User user;
 

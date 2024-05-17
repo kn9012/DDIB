@@ -62,7 +62,7 @@ public class NotificationServiceImpl implements NotificationService{
         notificationRepository.save(notification);
 
         if (user.getFcmToken() == null || user.getFcmToken().isEmpty()) {
-            log.info("FCM Token이 없습니다. 알림 허용을 확인해주세요.");
+            log.info("FCM 토큰이 존재하지 않습니다. 알람이 허용됐는지 확인해주세요.");
         }
 
         if (user.getFcmToken() != null && !user.getFcmToken().isEmpty()) {

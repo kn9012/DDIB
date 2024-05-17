@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Slf4j
 public class EmailUtil {
-
     private final JavaMailSender javaMailSender;
 
     private final String SUBJECT = "[DDIB] 새로운 타임딜 상품 등록 안내";

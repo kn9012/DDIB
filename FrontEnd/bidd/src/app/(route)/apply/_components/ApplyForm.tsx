@@ -5,7 +5,7 @@ import styles from "./applyForm.module.scss";
 import { useMutation } from "@tanstack/react-query";
 import { BusinessInfo } from "@/app/_types/types";
 import { putApplyBusiness, postBusinessCheck } from "@/app/_api/business";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 
 export default function ApplyForm() {
   const router = useRouter();

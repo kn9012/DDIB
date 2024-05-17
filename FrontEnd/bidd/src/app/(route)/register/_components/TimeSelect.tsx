@@ -5,12 +5,15 @@ import { useQuery } from "@tanstack/react-query";
 import { getTimeInfo } from "@/app/_api/product";
 import { useEffect, useState } from "react";
 import cx from "classnames";
+import { productCreateStore } from "@/app/_store/product";
 
 interface Props {
   date: string;
 }
 
 export default function TimeSelect({ date }: Props) {
+  const { start, end, setStart, setEnd } = productCreateStore();
+
   interface TimeArray {
     [index: number]: boolean;
   }
@@ -43,8 +46,7 @@ export default function TimeSelect({ date }: Props) {
   ]);
 
   const [nowCheck, setNowCheck] = useState(-1);
-  const [start, setStart] = useState(0);
-  const [end, setEnd] = useState(0);
+  const [checkCnt, setCheckCnt] = useState(0);
 
   const { data } = useQuery<TimeArray>({
     queryKey: ["timelist", date],
@@ -65,30 +67,52 @@ export default function TimeSelect({ date }: Props) {
     });
   };
 
-  const checkPossible = () => {};
+  const checkPossible = (min: number, max: number) => {
+    for (let i = min; i <= max; i++) {
+      if (data) {
+        if (data[i] === true) {
+          return false;
+        }
+      }
+    }
+    return true;
+  };
 
   const setTime = (index: number) => {
-    // 선택한거를 선택했는지 아니면 처음인지 확인
-    console.log(timeObject[index].value);
-    if (!timeObject[index].value) {
-      console.log("if니");
-      // 취소하기가 아니라 선택하기면 처음으로 누른 건지 확인
-      if (nowCheck == -1) {
-        // 처음이면 처음 값으로 세팅
-        setNowCheck(index);
-        // 값을 참으로 바꿈
+    if (checkCnt == 0) {
+      setCheckCnt((prev) => prev + 1);
+      handleValueChange(index);
+      setNowCheck(index);
+    } else if (checkCnt == 1) {
+      // 두번째 클릭했을 때 사이에 true가 있는지 확인
+      let min = Math.min(nowCheck, index);
+      let max = Math.max(nowCheck, index);
+      const result = checkPossible(min, max);
+      // 가능하면 클릭
+      if (result) {
+        setCheckCnt((prev) => prev + 1);
         handleValueChange(index);
+        for (let i = min + 1; i < max; i++) {
+          handleValueChange(i);
+        }
+        setStart(min);
+        setEnd(max + 1);
       } else {
-        // 처음이 아니면 지금 값이랑 값을 비교해서 작은거를 처음으로 큰거를 마지막 타임으로
-        const st = Math.min(index, nowCheck);
-        const ed = Math.max(index, nowCheck);
-        // 두 값의 사이가 다 false 인지 확인
+        alert("중간에 예약된 시간이 있습니다. 다시 선택해 주세요");
       }
     } else {
-      handleValueChange(index);
-      console.log("els니");
+      alert("다시 선택하기를 누르고 시도해주세요");
     }
-    console.log(nowCheck);
+  };
+
+  const clear = () => {
+    for (let i = start; i < end; i++) {
+      handleValueChange(i);
+    }
+    setStart(0);
+    setEnd(0);
+    setCheckCnt(0);
+    setNowCheck(-1);
   };
 
   useEffect(() => {}, [date]);
@@ -100,11 +124,12 @@ export default function TimeSelect({ date }: Props) {
       {data && (
         <>
           <div>
-            <div>시간선택</div>
+            <div className={styles.title}>시간선택</div>
+            <div className={styles.info}>시작시간과 끝시간을 선택해주세요. 최소 2시간</div>
             <div className={styles.container}>
               {timeObject.map((item, index) => (
                 <div key={index} className={styles.items}>
-                  {data[index] ? (
+                  {!data[index] ? (
                     <div className={cx(styles.possible, item.value && styles.checked)} onClick={() => setTime(index)}>
                       {item.time}
                     </div>
@@ -113,6 +138,12 @@ export default function TimeSelect({ date }: Props) {
                   )}
                 </div>
               ))}
+            </div>
+            <div className={styles.timeResult}>
+              <div>시작 : {start}시</div>
+              <div>종료 : {end}시</div>
+
+              <div onClick={() => clear()}>다시선택하기</div>
             </div>
           </div>
         </>

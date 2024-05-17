@@ -61,14 +61,4 @@
   border: 1px solid black;
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
-  &::after {
-    z-index: 2;
-    display: inline-block;
-    content: "";
-    width: 100%;
-    height: 20px;
-    position: absolute;
-    bottom: -3px;
-    background-color: white;
-  }
 }

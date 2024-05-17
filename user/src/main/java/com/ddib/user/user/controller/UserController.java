@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private final UserService userService;
 
+    @CrossOrigin
     @GetMapping("/{userId}")
     @Operation(summary = "일반회원 정보 조회 API")
     @ApiResponses(value = {
@@ -38,6 +39,7 @@ public class UserController {
         }
     }
 
+    @CrossOrigin
     @PutMapping("/{userId}")
     @Operation(summary = "일반회원 정보 수정 API")
     @ApiResponses(value = {
@@ -54,6 +56,7 @@ public class UserController {
         }
     }
 
+    @CrossOrigin
     @DeleteMapping("/{userId}")
     @Operation(summary = "일반회원 탈퇴 API")
     @ApiResponses(value = {

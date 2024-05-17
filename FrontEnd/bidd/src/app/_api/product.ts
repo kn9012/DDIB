@@ -1,6 +1,7 @@
 import { ClientAxiosApi, FileAxiosApi } from "@/app/_utils/commons";
 
 const api = ClientAxiosApi();
+const fileApi = FileAxiosApi();
 
 async function getSellerProducts(userPk: string) {
   const { data } = await api.get(`/product/seller/${userPk}`);
@@ -16,7 +17,11 @@ async function getTimeInfo(date: string) {
 }
 
 async function postCreateProuct() {
-  await api.post(`/product/`);
+  try {
+    await fileApi.post(`/product/`);
+  } catch (error) {
+    throw error;
+  }
 }
 
 export { getSellerProducts, getTimeInfo, postCreateProuct };

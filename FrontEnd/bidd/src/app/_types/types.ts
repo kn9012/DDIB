@@ -1,3 +1,5 @@
+import { LargeNumberLike } from "crypto";
+
 export interface User {
   name: string;
   phone: string;
@@ -38,7 +40,25 @@ export interface Product extends BusinessInfo {
   sellerEamil: string;
   over: boolean;
 }
+
 export interface DetailImage {
   productDetailId: number;
   imageUrl: string;
+}
+
+export interface CreateItem {
+  thumbnailImage: FormData;
+  productDetails: FormData;
+  dto: ProductInfo;
+}
+
+export interface ProductInfo {
+  name: string;
+  totalStock: number;
+  eventStartDate: string;
+  eventEndDate: string;
+  price: number;
+  discount: number;
+  category: string;
+  sellerId: number;
 }

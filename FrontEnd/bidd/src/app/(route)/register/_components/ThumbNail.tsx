@@ -8,7 +8,9 @@ export default function Thumbnail() {
   // 사용자가 불러온 파일 정보를 넣는 값
   const [file, setFile] = useState<string>("");
   // 사용자가 불러온 파일의 URL
-  const [previewURL, setPreviewURL] = useState<string | ArrayBuffer | null>(null);
+  const [previewURL, setPreviewURL] = useState<string | ArrayBuffer | null>(
+    null
+  );
   const fileRef = useRef<HTMLInputElement>(null);
 
   const handleFileOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,10 +34,24 @@ export default function Thumbnail() {
   };
 
   return (
-    <div className={styles.upload} onClick={handleFileButtonClick}>
-      {previewURL && <Image src={previewURL} alt="썸네일이미지" fill sizes="auto"></Image>}
-      <input ref={fileRef} hidden={true} type="file" onChange={handleFileOnChange} />
-      <div className={styles.notice}> {file ? "이미지 다시 선택하기" : "이미지 선택하기"}</div>
-    </div>
+    <>
+      <div className={styles.thumbBtn} onClick={handleFileButtonClick}>
+        <input
+          ref={fileRef}
+          hidden={true}
+          type="file"
+          onChange={handleFileOnChange}
+        />
+
+        {!previewURL && <div>썸네일선택</div>}
+        {previewURL && <div>다시선택</div>}
+        <div></div>
+      </div>
+      {previewURL && (
+        <div className={styles.upload}>
+          <Image src={previewURL} alt="썸네일이미지" fill sizes="auto"></Image>
+        </div>
+      )}
+    </>
   );
 }

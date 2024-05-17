@@ -1,8 +1,17 @@
+.thumbBtn {
+  cursor: pointer;
+  width: fit-content;
+  padding: 0.5vw 1vw;
+  margin-bottom: 1vw;
+  border: 1px solid black;
+  border-radius: 20px;
+}
+
 .upload {
   position: relative;
   height: 30vh;
   width: 30vh;
-  background-color: lightgray;
+  background-color: rgb(242, 242, 242);
   margin-bottom: 40px;
 
   img {

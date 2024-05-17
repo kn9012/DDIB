@@ -1,13 +1,10 @@
 .upload {
-  position: relative;
-  height: 30vh;
-  width: 30vh;
-  background-color: lightgray;
-  margin-bottom: 40px;
-
-  &:hover .notice {
-    display: block;
-  }
+  cursor: pointer;
+  width: fit-content;
+  padding: 0.5vw 1vw;
+  margin-bottom: 1vw;
+  border: 1px solid black;
+  border-radius: 20px;
 }
 
 .notice {
@@ -23,14 +20,16 @@
 }
 
 .details {
-  height: 30vh;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2vw;
 }
 
 .frame {
   position: relative;
   height: 30vh;
   width: 30vh;
-  background-color: lightgray;
+  background-color: rgb(242, 242, 242);
   margin-bottom: 40px;
 
   img {

@@ -30,19 +30,37 @@ export default function ProductDetail() {
     fileRef.current?.click();
   };
 
+  const clearFile = () => {
+    setImageFiles([]);
+    setImageView([]);
+  };
+
   useEffect(() => console.log("ddd"), [imageViewValue]);
 
   return (
     <div>
-      <div className={styles.upload} onClick={handleFileButtonClick}>
-        <input ref={fileRef} hidden={true} type="file" onChange={handleFileOnChange} />
+      <div>
+        <input
+          ref={fileRef}
+          hidden={true}
+          type="file"
+          onChange={handleFileOnChange}
+        />
+        <div onClick={handleFileButtonClick} className={styles.upload}>
+          상세이미지 선택
+        </div>
+        {imageViewValue.length != 0 && (
+          <div className={styles.upload} onClick={clearFile}>
+            다시 선택하기
+          </div>
+        )}
         {/* <div className={styles.notice}> {imageFilesValue.length  ? "이미지 다시 선택하기" : "이미지 선택하기"}</div> */}
       </div>
       <div className={styles.details}>
         <>
           {imageViewValue.map((item, index) => (
             <div key={index} className={styles.frame}>
-              <Image src={item} alt="Thumbnail Image" layout="fill" />
+              <Image src={item} alt="Thumbnail Detail" layout="fill" />
             </div>
           ))}
         </>

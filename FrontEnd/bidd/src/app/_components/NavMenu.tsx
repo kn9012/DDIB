@@ -5,17 +5,10 @@ import { useSelectedLayoutSegment } from "next/navigation";
 import Link from "next/link";
 import React, { useState } from "react";
 import { userStore } from "../_store/user";
-import { IoSearch } from "react-icons/io5";
-import { IoSearchOutline } from "react-icons/io5";
-import { GoBell } from "react-icons/go";
-import { GoBellFill } from "react-icons/go";
+
 import { GoPerson } from "react-icons/go";
 import { GoPersonFill } from "react-icons/go";
-import { BiLogIn } from "react-icons/bi";
-import { TbLogin2 } from "react-icons/tb";
-import { CiLogin } from "react-icons/ci";
-import { ImEnter } from "react-icons/im";
-import { TbDoorEnter } from "react-icons/tb";
+
 import { useMutation } from "@tanstack/react-query";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";

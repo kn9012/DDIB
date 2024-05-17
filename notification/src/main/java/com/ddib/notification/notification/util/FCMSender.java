@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Slf4j
 public class FCMSender {
-
     private final FirebaseMessaging firebaseMessaging;
 
     public void sendFCM(FCMDto fcmDto) {

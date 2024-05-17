@@ -9,6 +9,7 @@ import com.ddib.notification.notification.util.FCMSender;
 import com.ddib.notification.user.domain.User;
 import com.ddib.notification.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -18,6 +19,7 @@ import java.util.List;
 import static com.ddib.notification.notification.domain.NotificationText.*;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class NotificationServiceImpl implements NotificationService{
     private final NotificationRepository notificationRepository;
@@ -58,6 +60,10 @@ public class NotificationServiceImpl implements NotificationService{
                 .build();
 
         notificationRepository.save(notification);
+
+        if (user.getFcmToken() == null || user.getFcmToken().isEmpty()) {
+            log.info("FCM 토큰이 존재하지 않습니다. 알람이 허용됐는지 확인해주세요.");
+        }
 
         if (user.getFcmToken() != null && !user.getFcmToken().isEmpty()) {
             FCMDto fcmDto = FCMDto.builder()

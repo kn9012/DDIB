@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Getter
@@ -31,6 +33,7 @@ public class FavoriteProduct {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_user_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
 }

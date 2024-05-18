@@ -229,8 +229,12 @@ public class ProductService {
     }
 
     public void createFavoriteAlarm(FavoriteProduct favoriteProduct) {
-        NotificationCreateDto dto = NotificationCreateDto.ofFavorite(favoriteProduct.getProduct(), favoriteProduct.getUser().getUserId());
-        notificationClient.createAlarm(dto);
+        Product product = favoriteProduct.getProduct();
+        if(product.isBefore1Hour() || product.isBefore24Hours()) {
+            NotificationCreateDto dto = NotificationCreateDto.ofFavorite(favoriteProduct.getProduct(), favoriteProduct.getUser().getUserId());
+            notificationClient.createAlarm(dto);
+            log.info("{} : 알람 호출 성공", product.getProductId());
+        }
     }
 
 

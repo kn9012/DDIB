@@ -22,7 +22,6 @@ public class ProductWriterConfig {
         return chunk -> {
             for (FavoriteProduct favoriteProduct : chunk.getItems()) {
                 try {
-                    log.info("[PRODUCT] FCM 개별 좋아요 ALARM 호출");
                     productService.createFavoriteAlarm(favoriteProduct);
                 } catch (Exception e) {
                     log.info("productAlarmWriter ERROR : {} ", e.getMessage());

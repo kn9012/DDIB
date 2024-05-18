@@ -38,7 +38,6 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        log.info("Success 로그인!!!");
         //OAuth2User
         CustomOAuth2User customUserDetails = (CustomOAuth2User) authentication.getPrincipal();
 
@@ -66,7 +65,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
         response.addHeader("Authorization", "Bearer " + access);
 
-        response.sendRedirect("https://k10c102.p.ssafy.io/login/done");
+        response.sendRedirect("https://ddib.kro.kr");
     }
 
     private Cookie createCookie(String key, String value) {

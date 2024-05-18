@@ -50,7 +50,6 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        log.info("filter chain 입성!");
         http
                 .cors(corsCustomizer -> corsCustomizer.configurationSource(request -> {
 

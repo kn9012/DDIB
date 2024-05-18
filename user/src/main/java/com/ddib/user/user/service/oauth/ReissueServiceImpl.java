@@ -90,7 +90,6 @@ public class ReissueServiceImpl implements ReissueService {
         response.addCookie(createCookie("refresh", newRefresh));
         response.addCookie(createCookie("num", String.valueOf(userId)));
         response.addCookie(createCookie("fcm", String.valueOf(user.isSubscribed())));
-        log.info(String.valueOf(user.isSubscribed()));
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

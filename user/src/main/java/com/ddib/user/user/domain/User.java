@@ -1,13 +1,10 @@
 package com.ddib.user.user.domain;
 
-import com.ddib.user.notification.domain.Notification;
 import com.ddib.user.user.dto.request.UserModifyRequestDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
-
-import java.util.List;
 
 @Entity
 @AllArgsConstructor

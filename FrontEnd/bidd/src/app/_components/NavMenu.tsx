@@ -86,7 +86,7 @@ export default function NavMenu() {
           </Link>
         </li>
         <li>
-          <Link href="https://www.naver.com">
+          <Link href="https://ddib.kro.kr/">
             <div className={styles.subTitle} style={{ paddingRight: "1.5vw" }}>
               <div>DDIB</div>
               {/* <div className={styles.goIcon}>

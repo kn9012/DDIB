@@ -50,6 +50,7 @@ public class PaymentController {
             @ApiResponse(responseCode = "400", description = "재고 없음")
     })
     @PostMapping("/ready/{userId}")
+    // 1. 동기 방식
 //    public ResponseEntity<?> readyToKakaoPay(@RequestBody KakaoReadyRequestDto kakaoReadyRequestDto, @PathVariable int userId) {
 //        // 재고 조회
 //        int stock = productService.checkStock(kakaoReadyRequestDto.getProductId());

@@ -16,6 +16,10 @@ public class SalesHistoryResponseDto {
     @NotNull
     private int productId;
 
+    @Schema(description = "총 판매수")
+    @NotNull
+    private int totalSoldCount;
+
     @Schema(description = "판매내역 목록")
     @NotNull
     private List<SalesHistory> salesHistoryList;

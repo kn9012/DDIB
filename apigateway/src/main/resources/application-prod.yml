@@ -12,77 +12,55 @@ spring:
           uri: lb://USER
           predicates:
             - Path=/api/user/**, /api/oauth2/ddib/kakao, /login/oauth2/code/ddib/**, /login/done
-#          filters:
-#            - RemoveRequestHeader=Cookie
-#            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
-#            - AuthorizationHeaderFilter
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+            - AuthorizationHeaderFilter
 
-#        - id: seller
-#          uri: lb://SELLER
-#          predicates:
-#            - Path=/api/seller/**, /api/oauth2/bidd/kakao, /login/oauth2/code/bidd/**, /bidd/login/done
-#          filters:
-#            - RemoveRequestHeader=Cookie
-#            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
-#            - AuthorizationHeaderFilter
+        - id: seller
+          uri: lb://SELLER
+          predicates:
+            - Path=/api/seller/**, /api/oauth2/bidd/kakao, /login/oauth2/code/bidd/**, /bidd/login/done
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+            - AuthorizationHeaderFilter
 
         - id: notification
           uri: lb://NOTIFICATION
           predicates:
             - Path=/api/notification/**
-#          filters:
-#            - RemoveRequestHeader=Cookie
-#            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
-#            - AuthorizationHeaderFilterx
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+            - AuthorizationHeaderFilterx
 
         - id: product
           uri: lb://PRODUCT
           predicates:
             - Path=/api/product/**
-#          filters:
-#            - RemoveRequestHeader=Cookie
-#            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
-#            - AuthorizationHeaderFilter
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+            - AuthorizationHeaderFilter
 
         - id: payment
           uri: lb://PAYMENT
           predicates:
             - Path=/api/payment/**, /api/order/**
-#          filters:
-#            - RemoveRequestHeader=Cookie
-#            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
-#            - AuthorizationHeaderFilter
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+            - AuthorizationHeaderFilter
 
         - id: waiting
           uri: lb://WAITING
           predicates:
             - Path=/api/v1/queue/**
-#          filters:
-#            - RemoveRequestHeader=Cookie
-#            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
-#            - AuthorizationHeaderFilter
-
-#springdoc:
-#  enable-native-support: true
-#  api-docs:
-#    enabled: true
-#  swagger-ui:
-#    enabled: true
-#    path: /swagger-ui.html
-#    urls:
-#      - url: /user/swagger-ui/index.html
-#        name: User
-#      - url: /seller/swagger-ui/index.html
-#        name: Seller
-#      - url: /notification/swagger-ui/index.html
-#        name: Notification
-#      - url: /product/swagger-ui/index.html
-#        name: Product
-#      - url: /payment/swagger-ui/index.html
-#        name: Payment
-#      - url: /waiting/swagger-ui/index.html
-#        name: Waiting
-#    use-root-path: true
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+            - AuthorizationHeaderFilter
 
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials

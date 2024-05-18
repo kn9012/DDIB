@@ -19,6 +19,7 @@ public class FCMSender {
         Notification notification = Notification.builder()
                 .setTitle(fcmDto.getTitle())
                 .setBody(fcmDto.getBody())
+                .setImage("/DDIB.PNG")
                 .build();
 
         Message message = Message.builder()

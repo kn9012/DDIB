@@ -90,6 +90,8 @@ public class UserController {
             response.addCookie(access);
             response.addCookie(num);
 
+            response.sendRedirect("https://ddib.kro.kr");
+
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

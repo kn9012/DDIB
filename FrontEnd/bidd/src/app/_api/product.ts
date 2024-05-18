@@ -1,7 +1,6 @@
-import { ClientAxiosApi, FileAxiosApi } from "@/app/_utils/commons";
-import { CreateItem } from "../_types/types";
+import { ProductAxiosApi, FileAxiosApi } from "@/app/_utils/commons";
 
-const api = ClientAxiosApi();
+const api = ProductAxiosApi();
 const fileApi = FileAxiosApi();
 
 async function getSellerProducts(userPk: string) {

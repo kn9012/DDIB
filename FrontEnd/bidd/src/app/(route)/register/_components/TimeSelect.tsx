@@ -12,7 +12,7 @@ interface Props {
 }
 
 export default function TimeSelect({ date }: Props) {
-  const { start, end, setStart, setEnd } = productCreateStore();
+  const { start, end, checkCnt, setStart, setEnd, setCheckCnt } = productCreateStore();
 
   interface TimeArray {
     [index: number]: boolean;
@@ -46,7 +46,6 @@ export default function TimeSelect({ date }: Props) {
   ]);
 
   const [nowCheck, setNowCheck] = useState(-1);
-  const [checkCnt, setCheckCnt] = useState(0);
 
   const { data } = useQuery<TimeArray>({
     queryKey: ["timelist", date],
@@ -80,7 +79,7 @@ export default function TimeSelect({ date }: Props) {
 
   const setTime = (index: number) => {
     if (checkCnt == 0) {
-      setCheckCnt((prev) => prev + 1);
+      setCheckCnt(1);
       handleValueChange(index);
       setNowCheck(index);
     } else if (checkCnt == 1) {
@@ -90,7 +89,7 @@ export default function TimeSelect({ date }: Props) {
       const result = checkPossible(min, max);
       // 가능하면 클릭
       if (result) {
-        setCheckCnt((prev) => prev + 1);
+        setCheckCnt(2);
         handleValueChange(index);
         for (let i = min + 1; i < max; i++) {
           handleValueChange(i);
@@ -106,7 +105,8 @@ export default function TimeSelect({ date }: Props) {
   };
 
   const clear = () => {
-    for (let i = start; i < end; i++) {
+    handleValueChange(start);
+    for (let i = start + 1; i < end; i++) {
       handleValueChange(i);
     }
     setStart(0);
@@ -126,20 +126,12 @@ export default function TimeSelect({ date }: Props) {
           <div>
             <div className={styles.title}>시간선택</div>
 
-            <div className={styles.info}>
-              시작시간과 끝시간을 선택해주세요. 최소 2시간
-            </div>
+            <div className={styles.info}>시작시간과 끝시간을 선택해주세요. 최소 2시간</div>
             <div className={styles.container}>
               {timeObject.map((item, index) => (
                 <div key={index} className={styles.items}>
                   {!data[index] ? (
-                    <div
-                      className={cx(
-                        styles.possible,
-                        item.value && styles.checked
-                      )}
-                      onClick={() => setTime(index)}
-                    >
+                    <div className={cx(styles.possible, item.value && styles.checked)} onClick={() => setTime(index)}>
                       {item.time}
                     </div>
                   ) : (

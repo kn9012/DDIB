@@ -18,10 +18,7 @@ export default function NavMenu() {
   const segment = useSelectedLayoutSegment();
   console.log(segment);
 
-  const { jwt } = userStore();
   const router = useRouter();
-
-  const [bellOn, setBellOn] = useState(false);
 
   const logOutUser = useMutation({
     mutationFn: async () => {
@@ -55,21 +52,23 @@ export default function NavMenu() {
         <li className={styles.title}>
           <Link href="/">BIDD</Link>
         </li>
-        <li>
-          <Link href="/apply">
-            {segment === "apply" ? (
-              <>
-                <div className={styles.subTitle} style={{ fontWeight: "bold" }}>
-                  기업신청
-                </div>
-              </>
-            ) : (
-              <>
-                <div className={styles.subTitle}>기업신청</div>
-              </>
-            )}
-          </Link>
-        </li>
+        {Cookies.get("Authorization") && (
+          <li>
+            <Link href="/apply">
+              {segment === "apply" ? (
+                <>
+                  <div className={styles.subTitle} style={{ fontWeight: "bold" }}>
+                    기업신청
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className={styles.subTitle}>기업신청</div>
+                </>
+              )}
+            </Link>
+          </li>
+        )}
         <li>
           <Link href="/paypolicy">
             {segment === "paypolicy" ? (

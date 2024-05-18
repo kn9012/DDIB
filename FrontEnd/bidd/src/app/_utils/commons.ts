@@ -1,15 +1,18 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 
 // const BASE_URL = "http://localhost:9090";
-// const BASE_URL = "https://bidd.kro.kr";
-const BASE_URL = "https://ddib.kro.kr";
+const BASE_URL = "https://bidd.kro.kr";
+//const BASE_URL = "https://ddib.kro.kr";
 //const BASE_URL = "https://k10c102.p.ssafy.io";
 
-const PublicAxiosApi = () => {
+const ProductAxiosApi = () => {
   const instance = axios.create({
-    baseURL: `${BASE_URL}`,
+    baseURL: `https://ddib.kro.kr`,
   });
 
+  const token = Cookies.get("jwt");
+  instance.defaults.headers.common["Authorization"] = token;
   instance.defaults.headers.put["Content-Type"] = "application/json";
   return instance;
 };
@@ -19,11 +22,8 @@ const ClientAxiosApi = () => {
     baseURL: `${BASE_URL}/api`,
   });
 
-  //const token = "";
-  //instance.defaults.headers.common["Authorization"] = token;
-  instance.defaults.headers.common["Authorization"] =
-    "BearereyJhbGciOiJIUzI1NiJ9.eyJjYXRlZ29yeSI6ImFjY2VzcyIsImVtYWlsIjoia245MDEyQG5hdmVyLmNvbSIsImlhdCI6MTcxNTUxMDIyOSwiZXhwIjoxNzE1NTEzODI5fQ.O5rZT12TyvHVDMkk4Ql1mN012HjkZEplF6Gr6q3ErZs";
-
+  const token = Cookies.get("jwt");
+  instance.defaults.headers.common["Authorization"] = token;
   instance.defaults.headers.post["Content-Type"] = "application/json";
 
   return instance;
@@ -40,4 +40,4 @@ const FileAxiosApi = () => {
   return instanceFile;
 };
 
-export { PublicAxiosApi, ClientAxiosApi, FileAxiosApi };
+export { ProductAxiosApi, ClientAxiosApi, FileAxiosApi };

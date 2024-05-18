@@ -8,8 +8,6 @@ import { useQuery } from "@tanstack/react-query";
 import Cookies from "js-cookie";
 
 export default function SellerInfo() {
-  // const { user, userPk } = userStore();
-
   const pk = Cookies.get("num") as string;
 
   const { data } = useQuery<BusinessInfos>({

@@ -31,7 +31,7 @@ public class OrderService {
         for(Order order : orderList) {
             OrderResponseDto orderResponseDto = OrderResponseDto.builder()
                     .orderId(order.getOrderId())
-                    .orderDate(sdf.format(order.getOrderDate()))
+                    .orderDate(sdf.format(order.getOrderDate().toLocalDateTime().plusHours(9)))
                     .status(order.getStatus().getStatus())
                     .companyName(order.getProduct().getSeller().getCompanyName())
                     .thumbnailImage(order.getProduct().getThumbnailImage())
@@ -59,7 +59,7 @@ public class OrderService {
         Order order = orderRepository.findByOrderId(orderId);
         OrderResponseDto orderResponseDto = OrderResponseDto.builder()
                 .orderId(orderId)
-                .orderDate(sdf.format(order.getOrderDate()))
+                .orderDate(sdf.format(order.getOrderDate().toLocalDateTime().plusHours(9)))
                 .status(order.getStatus().getStatus())
                 .companyName(order.getProduct().getSeller().getCompanyName())
                 .thumbnailImage(order.getProduct().getThumbnailImage())
@@ -86,13 +86,14 @@ public class OrderService {
                     .orderId(order.getOrderId())
                     .name(order.getReceiverName())
                     .phone(order.getReceiverPhone())
-                    .address(order.getOrderRoadAddress() + " " + order.getOrderDetailAddress())
+                    .address(order.getOrderRoadAddress() + " " + order.getOrderDetailAddress() + " (" + order.getOrderZipcode() + ")")
                     .build();
             salesHistoryList.add(salesHistory);
         }
 
         return SalesHistoryResponseDto.builder()
                 .productId(productId)
+                .totalSoldCount(salesHistoryList.size())
                 .salesHistoryList(salesHistoryList)
                 .build();
     }

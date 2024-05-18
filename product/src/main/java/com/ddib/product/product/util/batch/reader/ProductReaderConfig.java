@@ -21,8 +21,8 @@ public class ProductReaderConfig {
     @StepScope
     public JpaPagingItemReader<FavoriteProduct> productAlarmReader() {
         // TODO : 24시간, 1시간 각각에 따라 구분해주는 칼럼 추가 필요
-        String query = ("select fp from FavoriteProduct fp where (day(fp.product.eventStartDate) - day(now()) = 1 and hour(fp.product.eventStartDate) = hour(now())) OR (day(fp.product.eventStartDate) - day(now()) = 0 and fp.product.eventStartTime - hour(now()) = 1 )");
-//        String query ="select fp from FavoriteProduct fp";
+//        String query = ("select fp from FavoriteProduct fp where (day(fp.product.eventStartDate) - day(now()) = 1 and hour(fp.product.eventStartDate) = hour(now())) OR (day(fp.product.eventStartDate) - day(now()) = 0 and fp.product.eventStartTime - hour(now()) = 1 )");
+        String query ="select fp from FavoriteProduct fp";
 //        String query = "SELECT \n" +
 //                "    fp,\n" +
 //                "    CASE \n" +

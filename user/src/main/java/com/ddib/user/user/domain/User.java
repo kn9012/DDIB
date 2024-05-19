@@ -4,6 +4,7 @@ import com.ddib.user.user.dto.request.UserModifyRequestDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.ColumnDefault;
 
 @Entity
@@ -12,6 +13,7 @@ import org.hibernate.annotations.ColumnDefault;
 @Builder
 @Getter
 @ToString
+@Slf4j
 @Schema(description = "일반회원")
 public class User {
     @Id

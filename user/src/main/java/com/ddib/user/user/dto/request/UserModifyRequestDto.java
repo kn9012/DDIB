@@ -1,17 +1,15 @@
 package com.ddib.user.user.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Schema(description = "일반회원 수정 요청 DTO")
-public class  UserModifyRequestDto {
+public class UserModifyRequestDto {
     @Schema(description = "이름")
     private String name;
 

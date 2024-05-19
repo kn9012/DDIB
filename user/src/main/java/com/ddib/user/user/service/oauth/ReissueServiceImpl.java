@@ -71,7 +71,6 @@ public class ReissueServiceImpl implements ReissueService {
             return new ResponseEntity<>("invalid refresh token", HttpStatus.BAD_REQUEST);
         }
 
-
         String email = jwtUtil.getEmail(refresh);
         Integer userId = userRepository.findUserIdByEmail(email).getUserId();
         User user = userRepository.findByUserId(userId);

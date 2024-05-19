@@ -1,0 +1,19 @@
+# -- Server Port
+server:
+  port: 8761
+
+spring:
+  application:
+    name: eureka
+  sleuth:
+    sampler:
+      probability: 1.0
+
+eureka:
+  instance:
+    hostname: k10c102.p.ssafy.io
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/

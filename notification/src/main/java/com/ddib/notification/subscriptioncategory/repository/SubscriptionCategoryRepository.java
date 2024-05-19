@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface SubscriptionCategoryRepository extends JpaRepository<SubscriptionCategory, Integer> {
     void deleteSubscriptionCategoriesByUserUserId(Integer userId);
-    SubscriptionCategoryResponseDto findSubscriptionCategoriesByUserUserId(Integer userId);
+    SubscriptionCategory findSubscriptionCategoryByUserUserId(Integer userId);
 }

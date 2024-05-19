@@ -1,5 +1,6 @@
 package com.ddib.notification.subscriptioncategory.domain;
 
+import com.ddib.notification.subscriptioncategory.dto.request.SubscriptionCategoryRequestDto;
 import com.ddib.notification.user.domain.User;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
@@ -47,4 +48,15 @@ public class SubscriptionCategory {
 
     @Schema(description = "여행 카테고리 구독 여부")
     private boolean subscribeTravel;
+
+    public void updateSubscriptionCategory(SubscriptionCategoryRequestDto requestDto) {
+        this.subscribeFashion = requestDto.isSubscribeFashion();
+        this.subscribeBeauty = requestDto.isSubscribeBeauty();
+        this.subscribeFood = requestDto.isSubscribeFood();
+        this.subscribeAppliance = requestDto.isSubscribeAppliance();
+        this.subscribeSports = requestDto.isSubscribeSports();
+        this.subscribeLiving = requestDto.isSubscribeLiving();
+        this.subscribePet = requestDto.isSubscribePet();
+        this.subscribeTravel = requestDto.isSubscribeTravel();
+    }
 }

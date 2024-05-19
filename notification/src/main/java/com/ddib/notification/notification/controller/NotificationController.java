@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.transaction.Transactional;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -48,10 +49,11 @@ public class NotificationController {
             @ApiResponse(responseCode = "400", description = "구독 알림 신청 실패")
     })
     @PutMapping("/subscribe/{userId}")
+    @Transactional
     public ResponseEntity<?> applyNotification(@RequestBody SubscriptionCategoryRequestDto categories, @PathVariable Integer userId) {
         try {
-            userService.findByUserId(userId).updateSubscribed();
             subscriptionCategoryService.createSubscriptionCategory(categories, userId);
+            userService.findByUserId(userId).updateSubscribed();
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

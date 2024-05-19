@@ -1,15 +1,13 @@
 package com.ddib.notification.subscriptioncategory.dto.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Getter
+@ToString
 @Schema(description = "구독 카테고리 응답 DTO")
 public class SubscriptionCategoryResponseDto {
     @Schema(description = "패션 카테고리 구독 여부")

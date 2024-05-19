@@ -44,8 +44,6 @@ public class KakaoPayService {
     private final OrderRepository orderRepository;
     private final TidRepository tidRepository;
 
-//    private KakaoReadyResponseDto kakaoReadyResponseDto;
-
     /**
      * 1. Ready (결제 준비)
      * 서버에서 카카오페이 서버로 결제 정보 전달

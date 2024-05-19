@@ -4,7 +4,7 @@ import axios from "axios";
 
 const api = ClientAxiosApi();
 
-async function putApplyBusiness(sellerId: number, info: BusinessInfo) {
+async function putApplyBusiness(sellerId: string, info: BusinessInfo) {
   try {
     await api.put(`/seller/apply/${sellerId}`, info);
   } catch (error) {

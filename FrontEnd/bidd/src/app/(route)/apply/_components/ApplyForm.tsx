@@ -6,6 +6,7 @@ import { useMutation } from "@tanstack/react-query";
 import { BusinessInfo } from "@/app/_types/types";
 import { putApplyBusiness, postBusinessCheck } from "@/app/_api/business";
 import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 export default function ApplyForm() {
   const router = useRouter();
@@ -22,9 +23,11 @@ export default function ApplyForm() {
   const [emailList, setEmailList] = useState(emails);
   const [email, setEmail] = useState("");
 
+  const num = Cookies.get("num") as string;
+
   const applyBusiness = useMutation({
     mutationFn: async (data: BusinessInfo) => {
-      return await putApplyBusiness(1, data);
+      return await putApplyBusiness(num, data);
     },
     async onSuccess(response) {
       console.log(response);
@@ -73,9 +76,7 @@ export default function ApplyForm() {
     setEmail(e.target.value);
     if (e.target.value.includes("@")) {
       setIsDropbox(true);
-      setEmailList(
-        emails.filter((e1) => e1.includes(e.target.value.split(`@`)[1]))
-      );
+      setEmailList(emails.filter((e1) => e1.includes(e.target.value.split(`@`)[1])));
     } else {
       setIsDropbox(false);
     }
@@ -117,11 +118,7 @@ export default function ApplyForm() {
       {isDrobBox && (
         <div className={styles.emailArea}>
           {emailList.map((item, index) => (
-            <div
-              className={styles.emailItem}
-              onClick={() => clickEmail(email, item)}
-              key={index}
-            >
+            <div className={styles.emailItem} onClick={() => clickEmail(email, item)} key={index}>
               <div> {email.split("@")[0]}</div>
               <div>{item}</div>
             </div>

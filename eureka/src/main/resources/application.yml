@@ -1,0 +1,16 @@
+# -- Server Port
+server:
+  port: 8761
+
+# -- Eureka
+eureka:
+  instance:
+    hostname: k10c102.p.ssafy.io
+  client:
+    serviceUrl:
+      defaultZone: https://k10c102.p.ssafy.io:8761/eureka
+    register-with-eureka: false
+    fetch-registry: false
+spring:
+  profiles:
+    active: dev

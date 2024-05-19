@@ -53,7 +53,7 @@
      <b>[회원 서버 개발]</b><br>- Auth : Oauth2를 이용한 카카오 소셜로그인 구현<br>- Spring Security + JWT를 활용하여 토큰 검증을 통한 인증 및 인가<br>- 자주 접근하는 토큰 저장 위해 Redis 사용<br><br><b>[API Gateway & Eureka 서버 개발]</b><br>- 1차 개발 시 API Gateway 활용하여 인증/인가 처리 및 라우팅 처리<br>
     </td>
     <td>
-      <b>[Flutter]</b><br>- 블록체인 로직 이식<br>- 추모관 무한스크롤 퍼블리싱<br><b>[Block Chain]</b><br>- 스마트 컨트랙트 배포<br>- FE - Block Chain 이식<br>- IPFS : 설정 / 노드 구성<br>
+      <b>[Kubernetes]</b><br>- 개인 역할 작성해주세요.<br>
     </td>
     <td>
       <b>[상품 서버 개발]</b><br>- Spring Batch를 통한 상품 상태 관리 시스템 구현<br>- 스케줄링을 통해 알림 시스템 구현<br><br><b>[EFK 로깅 시스템]</b><br>- Logback 과 EFK 를 활용한 로깅 시스템 구축<br><br><b>[Tx 추적 시스템]</b><br>- Micrometer와 Sleuth 활용한 분산 트랜잭션 추적 시스템 구축<br>
@@ -104,7 +104,7 @@
      <b>[결제 서버 개발]</b><br>- 카카오페이 결제 및 주문 관련 API 구현<br>- 카카오페이 결제 시스템 비동기 처리 및 테스트 코드를 통한 성능 향상 확인<br>- Redisson을 활용한 재고 동시성 제어 구현 및 테스트 코드를 통한 적용 전후 테스트<br><br><b>[부하테스트]</b><br>- JMeter를 사용하여 테스트 시나리오 작성 및 부하테스트 진행<br>
     </td>
     <td>
-      <b>[Backend]</b><br>- 디지털 추모관 도메인 API 구현<br>- 추모관 리스트, 즐겨찾기, 디테일<br>- No-offset 기반의 사진/동영상/편지(이하 컨텐츠) 목록 조회, S3 기반의 컨텐츠 업로드 및 조회, 신고하기<br><b>[CI/CD]</b><br>- Jenkins 초기 설치 및 기본 설정<br>- Jenkinsfile 및 Dockerfile 작성<br>- Spring Boot 자동 빌드 및 자동 배포 구축
+      <b>[Next.js]</b><br>- 개인 역할 작성해주세요.<br>
     </td>
     <td>
       <b>[대기열 시스템 개발]</b><br>- Spring Webflux를 이용한 대기열 서버 구축<br>- Reactive Redis를 통한 사용자
@@ -151,8 +151,6 @@
 - Micrometer
 - Swagger
 
-<img src="https://img.shields.io/badge/IntellijIdea-554477?style=for-the-badge&logo=intellijidea&logoColor=white"> <img src="https://img.shields.io/badge/Springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white"> <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white"> <img src="https://img.shields.io/badge/AWS S3-DC382D?style=for-the-badge&logo=amazons3&logoColor=white"> <img src="https://img.shields.io/badge/AmazonEC2-FF9900?style=for-the-badge&logo=amazonec2&logoColor=white"> <img src="https://img.shields.io/badge/Java-BA5922?style=for-the-badge&logo=Jameson&logoColor=white"/> <img src="https://img.shields.io/badge/Swagger-7BB27F?style=for-the-badge&logo=Swagger&logoColor=white"/> <img src="https://img.shields.io/badge/Gradle-010101?style=for-the-badge&logo=gradle&logoColor=white"/> <img src="https://img.shields.io/badge/Netflix Eureka-BA5922?style=for-the-badge&logo=netflix&logoColor=white"/>
-
 ### **🎨** FrontEnd
 
 - Next.js
@@ -162,10 +160,6 @@
 - Zustand
 - React Query
 - node.js `10.5.0`
-
-<img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=black">
-<img src="https://img.shields.io/badge/ZUSTAND-764ABC?style=for-the-badge&logo=redux&logoColor=white">
-<img src="https://img.shields.io/badge/StyledComponents-DB7093?style=for-the-badge&logo=styledcomponents&logoColor=white"> <img src="https://img.shields.io/badge/pwa-FF6F00?style=for-the-badge&logo=pwa&logoColor=white"> <img src="https://img.shields.io/badge/node-6db33f?style=for-the-badge&logo=javascript&logoColor=white"/> <img src="https://img.shields.io/badge/Vite-db55ef?style=for-the-badge&logo=vite&logoColor=white"/> <img src="https://img.shields.io/badge/tailwind-000096?style=for-the-badge&logo=bootstrap&logoColor=white"/> <img src="https://img.shields.io/badge/vscode-0000ef?style=for-the-badge&logo=visualstudio&logoColor=white"/> <img src="https://img.shields.io/badge/storybook-f03ff3?style=for-the-badge&logo=storybook&logoColor=white"/>
 
 ### 🗑 Database
 
@@ -186,8 +180,6 @@
 - Docker `26.1.0`
 - Docker-Compose `1.28.2`
 - Zipkin
-
-<img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white"> <img src="https://img.shields.io/badge/Jenkins-D24939?style=for-the-badge&logo=jenkins&logoColor=white"/> <img src="https://img.shields.io/badge/Nginx-009639?style=for-the-badge&logo=nginx&logoColor=white"/>
 
 ### 🏁 Test
 

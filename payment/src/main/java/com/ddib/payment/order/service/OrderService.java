@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 @Slf4j
@@ -26,12 +27,15 @@ public class OrderService {
         List<OrderResponseDto> orderResponseDtoList = new ArrayList<>();
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Calendar cal = Calendar.getInstance();
 
         List<Order> orderList = orderRepository.findAllByUserId(userId);
         for(Order order : orderList) {
+            cal.setTime(order.getOrderDate());
+            cal.add(Calendar.HOUR, 9);
             OrderResponseDto orderResponseDto = OrderResponseDto.builder()
                     .orderId(order.getOrderId())
-                    .orderDate(sdf.format(order.getOrderDate().toLocalDateTime().plusHours(9)))
+                    .orderDate(sdf.format(cal.getTime()))
                     .status(order.getStatus().getStatus())
                     .companyName(order.getProduct().getSeller().getCompanyName())
                     .thumbnailImage(order.getProduct().getThumbnailImage())
@@ -55,11 +59,14 @@ public class OrderService {
 
     public OrderResponseDto viewOrderDetail(String orderId) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Calendar cal = Calendar.getInstance();
 
         Order order = orderRepository.findByOrderId(orderId);
+        cal.setTime(order.getOrderDate());
+        cal.add(Calendar.HOUR, 9);
         OrderResponseDto orderResponseDto = OrderResponseDto.builder()
                 .orderId(orderId)
-                .orderDate(sdf.format(order.getOrderDate().toLocalDateTime().plusHours(9)))
+                .orderDate(sdf.format(cal.getTime()))
                 .status(order.getStatus().getStatus())
                 .companyName(order.getProduct().getSeller().getCompanyName())
                 .thumbnailImage(order.getProduct().getThumbnailImage())

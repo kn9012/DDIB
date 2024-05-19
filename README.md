@@ -11,13 +11,13 @@
 <table>
   <tr>
     <td align="center">
-      <img src="https://avatars.githubusercontent.com/minzzikang" width="150px;" alt="김유나"/>
+      <img src="![image](/uploads/b981037aebc270d3c1749162a16f3b0c/image.png)" width="150px;" alt="김유나"/>
     </td>
     <td align="center">
-      <img src="https://avatars.githubusercontent.com/YooByWk" width="150px;" alt="김유산"/>
+      <img src="![image](/uploads/133971942a28fbb40e89b4a8f4a45618/image.png)" width="150px;" alt="김유산"/>
     </td>
    <td align="center">
-      <img src="https://avatars.githubusercontent.com/tlfahd2" width="150px;" alt="예준성 (팀장)"/>
+      <img src="![image](/uploads/b9525e3f165fb6a0e553de7fccdd4b1c/image.png)" width="150px;" alt="예준성 (팀장)"/>
     </td>
   </tr>
   <tr>    
@@ -321,6 +321,8 @@
 
 기존 하나의 서버로 운영되던 환경에서는 대용량 트래픽 발생에 따라 생길 수 있는 모든 문제가 SPOF 문제로 직결되었고, 이는 MSA 적용을 통해 해결할 수 있었습니다.
 
+<br>
+
 ### 2. Spring Webflux와 Redis를 활용한 대기열 시스템
 
 대기열 구축을 위해 Spring Webflux 와 Redis를 활용하였습니다.
@@ -336,6 +338,8 @@ Redis의 인-메모리 성능뿐만 아니라 Zset을 사용하여 우선순위�
 다음은 Spring Webflux와 Redis를 사용한 대기열 시스템의 시퀀스 다이어그램입니다.
 
 ![image](/uploads/817ad60d2ae6efe52fd015dc41118b01/image.png)
+
+<br>
 
 ### 3. 비동기 처리
 
@@ -355,6 +359,7 @@ Redis의 인-메모리 성능뿐만 아니라 Zset을 사용하여 우선순위�
     
     ⇒ 10개의 표본 평균 값 : `13.681초`
     
+<br>
 
 ### 4. Redisson을 활용한 재고 동시성 제어
 
@@ -366,11 +371,15 @@ Redis의 인-메모리 성능뿐만 아니라 Zset을 사용하여 우선순위�
 
 ![Untitled__3_](/uploads/7567b7f04a44421921f9ae9d0f619f24/Untitled__3_.png)
 
+<br>
+
 ### 5. Spring Batch
 
 상품 상태 관리를 위해 Spring Batch를 활용하였습니다. 해당 상품의 타임딜이 종료되는 시간에 맞춰 배치 작업이 실행되고, 종료된 상품에 맞게 상태를 업데이트합니다.
 
 또한 Spring Batch는 각 상품을 위시리스트에 담은 회원들을 위해 해당 상품의 타임딜 오픈 24시간, 1시간 전에 알림을 전송하는 기능에 사용됩니다. 이를 통해 원하는 상품의 타임딜을 놓치지 않을 수 있도록 해줍니다.
+
+<br>
 
 ### 6. Logging System - EFK
 
@@ -380,11 +389,15 @@ MSA 기반에서는 모든 로그를 각각의 서버에 접속하여 확인해�
 
 Docker Compose를 통해 Elastic Search, Fluentd, Kibana를 구동하고, Logback 설정을 통해 Fluentd로 로그를 수집하며, Elastic Search에 저장한 후 Kibana를 통해 로그를 시각화합니다.
 
+<br>
+
 ### 7. Tracing Tx - Micrometer & Zipkin
 
 MSA 환경에서 하나의 서버가 다른 서버를 호출하는 경우가 많기에 하나의 요청이 어떤 트랜잭션의 흐름을 가지고 실행되는지 확인하기 어려운 경우가 많습니다. 따라서 Tx 추적을 위해 Micrometer와 Zipkin을 통해 로그 수집 및 트랜잭션 추적을 구현하였습니다.
 
 로그를 수집한다는 점에서 EFK 와 성격이 유사하지만, EFK는 모든 Logging Level에 대한 수집이 가능하고 Micrometer와 Zipkin은 하나의 Rest API 요청이 발생했을 때 실행되는 모든 메소드와 트랜잭션에 대한 추적을 가능하게 합니다. 따라서 성격이 비슷하지만 사용되는 목적에서 좀 더 각자만의 분명한 이유가 있습니다.
+
+<br>
 
 ### 8. Kubernetes
 
@@ -399,6 +412,8 @@ MSA 환경에서 하나의 서버가 다른 서버를 호출하는 경우가 많
 3. 효율적인 리소스 관리
     - 리소스 요청 및 제한을 설정하여 클러스터 내에서 효율적인 리소스 분배와 사용을 보장할 수 있습니다.
     - 클러스터 내 모든 애플리케이션에 대해 리소스 사용을 최적화합니다.
+
+<br>
 
 ### 9. Jmeter를 사용한 부하테스트
 
@@ -416,14 +431,15 @@ MSA 환경에서 하나의 서버가 다른 서버를 호출하는 경우가 많
     
     ![Untitled__6_](/uploads/eb312fb1458d47408bf43fd958db54a3/Untitled__6_.png)
     
+<br>
 
 ### 10. Prometheus와 Grafana를 이용한 자원 관리
 
 Prometheus로 메트릭 데이터를 수집해 Grafana로 시각화합니다. Grafana로 파드의 CPU 메모리 사용량이나 생성된 파드들을 확인할 수 있습니다.
 
-## 💡 프로젝트 진행
+<br>
 
----
+## 💡 프로젝트 진행
 
 ### Git
 
@@ -447,24 +463,24 @@ Agile 방법론을 기반으로 한 프로젝트 관리 도구로서 Jira를 이
 
 매일 아침 9시에 어제 했던 일, 오늘 할 일, 이슈를 각자 정리해서 5~10분 동안 서로 공유하는 시간을 가졌습니다. 이를 통해 모든 팀원들이 프로젝트의 전반적인 상태를 이해함으로써 필요한 조치를 취할 수 있었고, 자신의 작업을 공유하고 문제점이나 진전 사항을 토론할 수 있었습니다.
 
+<br>
+
 ## 🔍 ERD
 
----
+![ERD](/uploads/52ddb6c59375d5188d94fc7f16d16fc4/ERD.PNG)
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/f8201c9e-b1b6-4af8-aa5f-7ad9d5973f99/9664c4f5-bd3e-4c55-9398-7ed3aff335ee/Untitled.png)
+<br>
 
 ## 📉 시스템 아키텍처
-
----
 
 ### 1️⃣차 개발
 
 1차로 MSA 구조에 Spring Cloud Gateway와 Eureka를 활용하여 개발하였습니다.
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/f8201c9e-b1b6-4af8-aa5f-7ad9d5973f99/74b11c8d-b664-46a7-a493-1696ed137620/Untitled.png)
+![image](/uploads/f25302606f3c99287e0bb6edcb4aa9c6/image.png)
 
 ### 2️⃣차 개발
 
 추후 쿠버네티스를 도입하여 2차 개발을 진행하였습니다.
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/f8201c9e-b1b6-4af8-aa5f-7ad9d5973f99/65b1a9cf-8891-4d63-a3ea-44b88ee5a46f/Untitled.png)
+![image](/uploads/54724db5163b51db9d3455d439cdcbc3/image.png)

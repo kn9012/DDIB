@@ -8,7 +8,7 @@ const BASE_URL = "https://bidd.kro.kr";
 
 const ProductAxiosApi = () => {
   const instance = axios.create({
-    baseURL: `https://ddib.kro.kr`,
+    baseURL: `https://ddib.kro.kr/api`,
   });
 
   const token = Cookies.get("jwt");

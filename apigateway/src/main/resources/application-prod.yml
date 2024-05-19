@@ -1,0 +1,101 @@
+server:
+  port: 8000
+
+spring:
+  application:
+    name: apigateway
+
+  cloud:
+    gateway:
+      routes:
+        - id: user
+          uri: lb://USER
+          predicates:
+            - Path=/api/user/**, /api/oauth2/ddib/kakao, /login/oauth2/code/ddib/**, /login/done
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+            - AuthorizationHeaderFilter
+
+        - id: seller
+          uri: lb://SELLER
+          predicates:
+            - Path=/api/seller/**, /api/oauth2/bidd/kakao, /login/oauth2/code/bidd/**, /bidd/login/done
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+            - AuthorizationHeaderFilter
+
+        - id: notification
+          uri: lb://NOTIFICATION
+          predicates:
+            - Path=/api/notification/**
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+            - AuthorizationHeaderFilterx
+
+        - id: product
+          uri: lb://PRODUCT
+          predicates:
+            - Path=/api/product/**
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+            - AuthorizationHeaderFilter
+
+        - id: payment
+          uri: lb://PAYMENT
+          predicates:
+            - Path=/api/payment/**, /api/order/**
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+            - AuthorizationHeaderFilter
+
+        - id: waiting
+          uri: lb://WAITING
+          predicates:
+            - Path=/api/v1/queue/**
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+            - AuthorizationHeaderFilter
+
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins:
+              - "http://k10c102.p.ssafy.io/"
+              - "https://k10c102.p.ssafy.io/"
+              - "http://localhost:3000/"
+              - "https://localhost:3000/"
+              - "http://localhost/"
+              - "https://localhost/"
+              - "https://bidd.kro.kr/"
+              - "http://bidd.kro.kr/"
+              -
+            allowedOriginPatterns: "*"
+            allow-credentials: true
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - PATCH
+              - OPTIONS
+            allowedHeaders: "*"
+
+jwt:
+  secret: adkafjlsdjgldkfjskdlakjdjkfljdkjkdkkkksjakslfejfghlajsdflaksjdgljadk
+
+eureka:
+  instance:
+    hostname: k10c102.p.ssafy.io
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://k10c102.p.ssafy.io:8761/eureka/

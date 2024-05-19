@@ -101,7 +101,7 @@
   </tr>
    <tr>    
     <td>
-     <b>[결제 서버 개발]</b><br>- 카카오페이 결제 및 주문 관련 API 구현<br>- 카카오페이 결제 시스템 비동기 처리 및 테스트 코드를 통한 성능 향상 확인<br>- Redisson을 활용한 재고 동시성 제어 구현 및 테스트 코드를 통한 적용 전후 테스트<br><b>[부하테스트]</b><br>- JMeter를 사용하여 테스트 시나리오 작성 및 부하테스트 진행<br>
+     <b>[결제 서버 개발]</b><br>- 카카오페이 결제 및 주문 관련 API 구현<br>- 카카오페이 결제 시스템 비동기 처리 및 테스트 코드를 통한 성능 향상 확인<br>- Redisson을 활용한 재고 동시성 제어 구현 및 테스트 코드를 통한 적용 전후 테스트<br><br><b>[부하테스트]</b><br>- JMeter를 사용하여 테스트 시나리오 작성 및 부하테스트 진행<br>
     </td>
     <td>
       <b>[Backend]</b><br>- 디지털 추모관 도메인 API 구현<br>- 추모관 리스트, 즐겨찾기, 디테일<br>- No-offset 기반의 사진/동영상/편지(이하 컨텐츠) 목록 조회, S3 기반의 컨텐츠 업로드 및 조회, 신고하기<br><b>[CI/CD]</b><br>- Jenkins 초기 설치 및 기본 설정<br>- Jenkinsfile 및 Dockerfile 작성<br>- Spring Boot 자동 빌드 및 자동 배포 구축
@@ -212,7 +212,7 @@
 <img src="https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=notion&logoColor=white"> 
 <img src="https://img.shields.io/badge/mattermost-224477?style=for-the-badge&logo=mattermost&logoColor=white">
 
-<br>
+<br><br>
 
 ## ⚒ 서비스 기능 소개
 

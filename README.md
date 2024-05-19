@@ -152,6 +152,7 @@
 
 [부하테스트 진행]
 - Artillery, Jmeter를 사용하여 부하테스트 진행 |
+<br>
 
 ## ✏ 개요
 
@@ -160,6 +161,8 @@
  할인 이벤트를 위한 서버 유지비가 부담되는 중소기업들을 위해 타임딜 이벤트 대여 플랫폼인 DDIB과 BIDD를 개발했습니다.
 
  우리나라 중소기업의 비율은 무려 99%에 달하며, 중소기업의 온라인 매출 판매액은 약 80%에 달합니다. 온라인 시장이 커져가는 만큼, 기업들은 고가의 연예인 광고비에 힘을 쓰는 대신 네고왕처럼 온라인상에서 할인 이벤트를 진행함으로써 기업을 홍보하고 있으며 이는 소비자들에게 큰 호응을 얻고 있습니다. 기업은 수수료 없이 서버 대여비만 지불함으로써 대용량 트래픽에도 견딜 수 있는 환경을 구축할 수 있고, 소비자 입장에서는 같은 상품일지라도 더욱 저렴하게 구매할 수 있다는 장점이 있습니다. 지금 바로 BIDD에서 서버를 대여하고, 터지지 않는 타임딜 플랫폼인 DDIB을 만나러 가볼까요?
+
+<br>
 
 ## 🖥️ 개발 환경
 
@@ -238,6 +241,8 @@
 - Notion
 - Mattermost
 
+<br>
+
 ## ⚒ 서비스 기능 소개
 
 ### BIDD (기업)
@@ -306,6 +311,8 @@
 
 사용자는 좋아요를 누른 상품 목록을 조회할 수 있다.
 
+<br>
+
 ## 🔥 주요 기술 소개
 
 ### 1. MSA (MicroService Architecture)
@@ -328,7 +335,7 @@ Redis의 인-메모리 성능뿐만 아니라 Zset을 사용하여 우선순위�
 
 다음은 Spring Webflux와 Redis를 사용한 대기열 시스템의 시퀀스 다이어그램입니다.
 
-![시퀀스.PNG](https://prod-files-secure.s3.us-west-2.amazonaws.com/f8201c9e-b1b6-4af8-aa5f-7ad9d5973f99/0bcfc560-096d-41fe-86da-b23779efe363/%EC%8B%9C%ED%80%80%EC%8A%A4.png)
+![image](/uploads/817ad60d2ae6efe52fd015dc41118b01/image.png)
 
 ### 3. 비동기 처리
 
@@ -338,13 +345,13 @@ Redis의 인-메모리 성능뿐만 아니라 Zset을 사용하여 우선순위�
 
 - 동기 방식
     
-    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/f8201c9e-b1b6-4af8-aa5f-7ad9d5973f99/9d7cad03-e7d5-4d39-ab4a-711a71e23b34/Untitled.png)
+    ![Untitled__1_](/uploads/876d40c0a591a11c920872d6789a9c98/Untitled__1_.png)
     
     ⇒ 10개의 표본 평균 값 : `82.872초`
     
 - 비동기 방식
     
-    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/f8201c9e-b1b6-4af8-aa5f-7ad9d5973f99/24407bd4-f2ff-42ed-8c99-027eb0dbc5ad/Untitled.png)
+    ![Untitled__2_](/uploads/4b8c83904b78365f6d1731e415975340/Untitled__2_.png)
     
     ⇒ 10개의 표본 평균 값 : `13.681초`
     
@@ -357,7 +364,7 @@ Redis의 인-메모리 성능뿐만 아니라 Zset을 사용하여 우선순위�
 
 또한, Lettue를 사용하면 스핀 락 방식으로 계속해서 락 획득을 시도하지만, Redisson을 사용하면 `pub-sub` 방식으로 Redis에 부하를 줄일 수 있기에 대용량 트래픽에 적합하다 생각해 사용하였습니다. 다음은 pub-sub 방식에 의한 락 획득 방식입니다.
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/f8201c9e-b1b6-4af8-aa5f-7ad9d5973f99/8f7dfc1d-d1e7-458c-8998-b60f0e63d67d/Untitled.png)
+![Untitled__3_](/uploads/7567b7f04a44421921f9ae9d0f619f24/Untitled__3_.png)
 
 ### 5. Spring Batch
 
@@ -367,7 +374,7 @@ Redis의 인-메모리 성능뿐만 아니라 Zset을 사용하여 우선순위�
 
 ### 6. Logging System - EFK
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/f8201c9e-b1b6-4af8-aa5f-7ad9d5973f99/d67ed2cb-3281-4ef9-adf3-dfad51781a73/Untitled.png)
+![Untitled__4_](/uploads/d1caf0aec75141cf02c65d6ffaa7a573/Untitled__4_.png)
 
 MSA 기반에서는 모든 로그를 각각의 서버에 접속하여 확인해야 하는 어려움이 있기에, 이를 한 곳에서 확인할 수 있도록 EFK 로깅 시스템을 구축했습니다.
 
@@ -399,7 +406,7 @@ MSA 환경에서 하나의 서버가 다른 서버를 호출하는 경우가 많
 
 - 요청에 대한 Summary Report 확인
     
-    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/f8201c9e-b1b6-4af8-aa5f-7ad9d5973f99/f518d020-1f67-4995-98ee-5b340ffdc843/Untitled.png)
+    ![Untitled__5_](/uploads/e64c77b09445e6d7aae1d73e347ba214/Untitled__5_.png)
     
     ⇒ 10,000개의 요청에 대한 에러율 : 0.00%
     
@@ -407,7 +414,7 @@ MSA 환경에서 하나의 서버가 다른 서버를 호출하는 경우가 많
     
 - 대기열에 부하를 걸었을 때의 화면 확인
     
-    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/f8201c9e-b1b6-4af8-aa5f-7ad9d5973f99/5f4ed81f-3b44-432f-8c99-e4f5399cc5d8/bfc58d60-d6ab-4e52-9a0d-9531570c99b2.png)
+    ![Untitled__6_](/uploads/eb312fb1458d47408bf43fd958db54a3/Untitled__6_.png)
     
 
 ### 10. Prometheus와 Grafana를 이용한 자원 관리

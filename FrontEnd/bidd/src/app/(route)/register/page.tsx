@@ -106,7 +106,7 @@ export default function Register() {
       priceRef.current.value.length != 0 &&
       discountRef.current &&
       discountRef.current.value.length != 0 &&
-      checkCnt != 2 &&
+      checkCnt == 2 &&
       thumb &&
       details
     ) {
@@ -119,7 +119,7 @@ export default function Register() {
         price: priceRef.current.value,
         discount: discountRef.current.value,
         category: selected,
-        sellerId: 2,
+        sellerId: pk,
       };
 
       const formData = new FormData();
@@ -138,6 +138,8 @@ export default function Register() {
       createProduct.mutate(formData);
     } else {
       alert("비어있는 칸이 있습니다. 확인해주세요");
+
+      console.log(dateStr);
     }
   };
 

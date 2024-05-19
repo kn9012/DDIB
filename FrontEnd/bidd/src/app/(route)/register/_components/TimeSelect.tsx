@@ -82,6 +82,7 @@ export default function TimeSelect({ date }: Props) {
       setCheckCnt(1);
       handleValueChange(index);
       setNowCheck(index);
+      setStart(index);
     } else if (checkCnt == 1) {
       // 두번째 클릭했을 때 사이에 true가 있는지 확인
       let min = Math.min(nowCheck, index);
@@ -105,19 +106,24 @@ export default function TimeSelect({ date }: Props) {
   };
 
   const clear = () => {
-    handleValueChange(start);
-    for (let i = start + 1; i < end; i++) {
-      handleValueChange(i);
+    if (checkCnt == 1) {
+      handleValueChange(start);
+      setStart(0);
+      setEnd(0);
+      setCheckCnt(0);
+      setNowCheck(-1);
+    } else if (checkCnt == 2) {
+      for (let i = start; i < end; i++) {
+        handleValueChange(i);
+      }
+      setStart(0);
+      setEnd(0);
+      setCheckCnt(0);
+      setNowCheck(-1);
     }
-    setStart(0);
-    setEnd(0);
-    setCheckCnt(0);
-    setNowCheck(-1);
   };
 
   useEffect(() => {}, [date]);
-
-  console.log(data);
 
   return (
     <>

@@ -31,7 +31,7 @@ const ClientAxiosApi = () => {
 
 const FileAxiosApi = () => {
   const instanceFile = axios.create({
-    baseURL: `${BASE_URL}/api`,
+    baseURL: `https://ddib.kro.kr/api`,
     headers: {
       "Content-Type": "multipart/form-data",
     },

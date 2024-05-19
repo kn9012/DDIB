@@ -35,7 +35,7 @@ public class OrderService {
             cal.add(Calendar.HOUR, 9);
             OrderResponseDto orderResponseDto = OrderResponseDto.builder()
                     .orderId(order.getOrderId())
-                    .orderDate(sdf.format(cal.getTime()))
+                    .orderDate(sdf.format(cal.getTime().toString())) // Date(cal.getTime()) -> String
                     .status(order.getStatus().getStatus())
                     .companyName(order.getProduct().getSeller().getCompanyName())
                     .thumbnailImage(order.getProduct().getThumbnailImage())
@@ -66,7 +66,7 @@ public class OrderService {
         cal.add(Calendar.HOUR, 9);
         OrderResponseDto orderResponseDto = OrderResponseDto.builder()
                 .orderId(orderId)
-                .orderDate(sdf.format(cal.getTime()))
+                .orderDate(sdf.format(cal.getTime().toString())) // Date(cal.getTime()) -> String
                 .status(order.getStatus().getStatus())
                 .companyName(order.getProduct().getSeller().getCompanyName())
                 .thumbnailImage(order.getProduct().getThumbnailImage())

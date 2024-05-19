@@ -11,25 +11,8 @@
 | 김유나 | 김유산 | 예준성 (팀장) |
 | --- | --- | --- |
 | BackEnd | BackEnd, Infra | BackEnd |
-| **[회원 서버 개발]**<br>- Oauth2를 이용한 카카오 소셜로그인 구현<br>- Spring Security + JWT를 활용하여 토큰 검증을 통한 인증 및 인가<br>
-- 자주 접근하는 토큰 저장 위해 Redis 사용<br>
-<br>
-**[API Gateway & Eureka 서버 개발]**<br>
-- 1차 개발 시 API Gateway 활용하여 인증/인가 처리 및 라우팅 처리
-| **[Flutter]**<br>
-- 블록체인 로직 이식<br>
-- 추모관 무한스크롤 퍼블리싱<br>
-**[Block Chain]**<br>
-- 스마트 컨트랙트 배포<br>
-- FE - Block Chain 이식<br>
-- IPFS : 설정 / 노드 구성
-| **[상품 서버 개발]**<br>
-- Spring Batch를 통한 상품 상태 관리 시스템 구현<br>
-- 스케줄링을 통해 알림 시스템 구현<br>
-**[EFK 로깅 시스템]**<br>
-- Logback 과 EFK 를 활용한 로깅 시스템 구축<br>
-**[Tx 추적 시스템]**<br>
-- Micrometer와 Sleuth 활용한 분산 트랜잭션 추적 시스템 구축 |
+| **[회원 서버 개발]**<br>- Oauth2를 이용한 카카오 소셜로그인 구현<br>- Spring Security + JWT를 활용하여 토큰 검증을 통한 인증 및 인가<br>- 자주 접근하는 토큰 저장 위해 Redis 사용<br>
+<br>**[API Gateway & Eureka 서버 개발]**<br>- 1차 개발 시 API Gateway 활용하여 인증/인가 처리 및 라우팅 처리 | **[Flutter]**<br>- 블록체인 로직 이식<br>- 추모관 무한스크롤 퍼블리싱<br>**[Block Chain]**<br>- 스마트 컨트랙트 배포<br>- FE - Block Chain 이식<br>- IPFS : 설정 / 노드 구성 | **[상품 서버 개발]**<br>- Spring Batch를 통한 상품 상태 관리 시스템 구현<br>- 스케줄링을 통해 알림 시스템 구현<br>**[EFK 로깅 시스템]**<br>- Logback 과 EFK 를 활용한 로깅 시스템 구축<br>**[Tx 추적 시스템]**<br>- Micrometer와 Sleuth 활용한 분산 트랜잭션 추적 시스템 구축 |
 
 
 

@@ -22,7 +22,7 @@ type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 export default function Register() {
   const router = useRouter();
-  const { start, end, checkCnt, thumb, details } = productCreateStore();
+  const { start, end, checkCnt, thumb, details, resetAll } = productCreateStore();
   const pk = Cookies.get("num") as string;
 
   const titleRef = useRef<HTMLInputElement>(null);
@@ -44,7 +44,7 @@ export default function Register() {
     },
     async onSuccess(response) {
       console.log("상품등록완료");
-
+      resetAll();
       router.replace("/mypage");
     },
     onError(error) {
@@ -137,7 +137,6 @@ export default function Register() {
       console.log(formData);
       createProduct.mutate(formData);
     } else {
-      checkCnt(-1);
       alert("비어있는 칸이 있습니다. 확인해주세요");
 
       console.log(dateStr);

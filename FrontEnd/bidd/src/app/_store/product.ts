@@ -12,6 +12,7 @@ interface ProductCreate {
   setThumb: (name: File) => void;
   setDetail: (files: File) => void;
   resetDetails: () => void;
+  resetAll: () => void;
 }
 
 export const productCreateStore = create<ProductCreate>((set) => ({
@@ -26,4 +27,12 @@ export const productCreateStore = create<ProductCreate>((set) => ({
   setThumb: (name: File) => set(() => ({ thumb: name })),
   setDetail: (file) => set((state) => ({ details: [...state.details, file] })),
   resetDetails: () => set(() => ({ details: [] })),
+  resetAll: () =>
+    set(() => ({
+      start: 0,
+      end: 0,
+      checkCnt: 0,
+      thumb: null,
+      details: [],
+    })),
 }));

@@ -136,12 +136,12 @@ export default function TimeSelect({ date }: Props) {
             <div className={styles.container}>
               {timeObject.map((item, index) => (
                 <div key={index} className={styles.items}>
-                  {!data[index] || index != 23 ? (
+                  {data[index] || index == 23 ? (
+                    <div className={styles.imPossible}>{item.time}</div>
+                  ) : (
                     <div className={cx(styles.possible, item.value && styles.checked)} onClick={() => setTime(index)}>
                       {item.time}
                     </div>
-                  ) : (
-                    <div className={styles.imPossible}>{item.time}</div>
                   )}
                 </div>
               ))}

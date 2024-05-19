@@ -43,7 +43,7 @@ export default function Register() {
       return await postCreateProuct(data);
     },
     async onSuccess(response) {
-      console.log("상품등록완료");
+      alert("상품등록이 완료되었습니다.");
       resetAll();
       router.replace("/mypage");
     },

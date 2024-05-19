@@ -1,3 +1,12 @@
 .container {
+  position: relative;
   display: flex;
+  > div:nth-child(1) {
+    width: 50%;
+    height: 100vh;
+  }
+  > div:nth-child(2) {
+    width: 50%;
+    height: 100vh;
+  }
 }

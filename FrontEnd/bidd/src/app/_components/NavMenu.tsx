@@ -53,37 +53,39 @@ export default function NavMenu() {
           <Link href="/">BIDD</Link>
         </li>
         {Cookies.get("Authorization") && (
-          <li>
-            <Link href="/apply">
-              {segment === "apply" ? (
-                <>
-                  <div className={styles.subTitle} style={{ fontWeight: "bold" }}>
-                    기업신청
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div className={styles.subTitle}>기업신청</div>
-                </>
-              )}
-            </Link>
-          </li>
+          <>
+            <li>
+              <Link href="/apply">
+                {segment === "apply" ? (
+                  <>
+                    <div className={styles.subTitle} style={{ fontWeight: "bold" }}>
+                      기업신청
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className={styles.subTitle}>기업신청</div>
+                  </>
+                )}
+              </Link>
+            </li>
+            <li>
+              <Link href="/register">
+                {segment === "register" ? (
+                  <>
+                    <div className={styles.subTitle} style={{ fontWeight: "bold" }}>
+                      상품등록
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className={styles.subTitle}>상품등록</div>
+                  </>
+                )}
+              </Link>
+            </li>
+          </>
         )}
-        <li>
-          <Link href="/paypolicy">
-            {segment === "paypolicy" ? (
-              <>
-                <div className={styles.subTitle} style={{ fontWeight: "bold" }}>
-                  가격정책
-                </div>
-              </>
-            ) : (
-              <>
-                <div className={styles.subTitle}>가격정책</div>
-              </>
-            )}
-          </Link>
-        </li>
         <li>
           <Link href="https://ddib.kro.kr/">
             <div className={styles.subTitle} style={{ paddingRight: "1.5vw" }}>

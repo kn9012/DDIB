@@ -132,6 +132,8 @@
 - IntelliJ IDEA `2024.1`
 - Visual Studio Code
 
+
+
 ### **🔧** BackEnd
 
 - Oracle JDK `17`
@@ -149,6 +151,8 @@
 - Micrometer
 - Swagger
 
+<img src="https://img.shields.io/badge/IntellijIdea-554477?style=for-the-badge&logo=intellijidea&logoColor=white"> <img src="https://img.shields.io/badge/Springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white"> <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white"> <img src="https://img.shields.io/badge/AWS S3-DC382D?style=for-the-badge&logo=amazons3&logoColor=white"> <img src="https://img.shields.io/badge/AmazonEC2-FF9900?style=for-the-badge&logo=amazonec2&logoColor=white"> <img src="https://img.shields.io/badge/Java-BA5922?style=for-the-badge&logo=Jameson&logoColor=white"/> <img src="https://img.shields.io/badge/Swagger-7BB27F?style=for-the-badge&logo=Swagger&logoColor=white"/> <img src="https://img.shields.io/badge/Gradle-010101?style=for-the-badge&logo=gradle&logoColor=white"/> <img src="https://img.shields.io/badge/Netflix Eureka-BA5922?style=for-the-badge&logo=netflix&logoColor=white"/>
+
 ### **🎨** FrontEnd
 
 - Next.js
@@ -158,6 +162,10 @@
 - Zustand
 - React Query
 - node.js `10.5.0`
+
+<img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=black">
+<img src="https://img.shields.io/badge/ZUSTAND-764ABC?style=for-the-badge&logo=redux&logoColor=white">
+<img src="https://img.shields.io/badge/StyledComponents-DB7093?style=for-the-badge&logo=styledcomponents&logoColor=white"> <img src="https://img.shields.io/badge/pwa-FF6F00?style=for-the-badge&logo=pwa&logoColor=white"> <img src="https://img.shields.io/badge/node-6db33f?style=for-the-badge&logo=javascript&logoColor=white"/> <img src="https://img.shields.io/badge/Vite-db55ef?style=for-the-badge&logo=vite&logoColor=white"/> <img src="https://img.shields.io/badge/tailwind-000096?style=for-the-badge&logo=bootstrap&logoColor=white"/> <img src="https://img.shields.io/badge/vscode-0000ef?style=for-the-badge&logo=visualstudio&logoColor=white"/> <img src="https://img.shields.io/badge/storybook-f03ff3?style=for-the-badge&logo=storybook&logoColor=white"/>
 
 ### 🗑 Database
 
@@ -179,6 +187,8 @@
 - Docker-Compose `1.28.2`
 - Zipkin
 
+<img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white"> <img src="https://img.shields.io/badge/Jenkins-D24939?style=for-the-badge&logo=jenkins&logoColor=white"/> <img src="https://img.shields.io/badge/Nginx-009639?style=for-the-badge&logo=nginx&logoColor=white"/>
+
 ### 🏁 Test
 
 - JMeter `5.6.3`
@@ -195,12 +205,12 @@
 - Fluentd
 - Kibana
 
-### **🤝** 협업
+### **🤝** Communication Tools
 
-- GitLab
-- Jira
-- Notion
-- Mattermost
+<img src="https://img.shields.io/badge/GitLab-FC6D26?style=for-the-badge&logo=gitlab&logoColor=white"> 
+<img src="https://img.shields.io/badge/Jira-0052CC?style=for-the-badge&logo=jirasoftware&logoColor=white">
+<img src="https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=notion&logoColor=white"> 
+<img src="https://img.shields.io/badge/mattermost-224477?style=for-the-badge&logo=mattermost&logoColor=white">
 
 <br>
 

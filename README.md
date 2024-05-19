@@ -11,9 +11,7 @@
 | 김유나 | 김유산 | 예준성 (팀장) |
 | --- | --- | --- |
 | BackEnd | BackEnd, Infra | BackEnd |
-| **[회원 서버 개발]**<br>
-- Oauth2를 이용한 카카오 소셜로그인 구현<br>
-- Spring Security + JWT를 활용하여 토큰 검증을 통한 인증 및 인가<br>
+| **[회원 서버 개발]**<br>- Oauth2를 이용한 카카오 소셜로그인 구현<br>- Spring Security + JWT를 활용하여 토큰 검증을 통한 인증 및 인가<br>
 - 자주 접근하는 토큰 저장 위해 Redis 사용<br>
 <br>
 **[API Gateway & Eureka 서버 개발]**<br>

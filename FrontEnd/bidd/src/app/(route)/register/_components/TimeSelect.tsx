@@ -42,7 +42,7 @@ export default function TimeSelect({ date }: Props) {
     { time: "20:00", value: false },
     { time: "21:00", value: false },
     { time: "22:00", value: false },
-    { time: "23:00", value: true },
+    { time: "23:00", value: false },
   ]);
 
   const [nowCheck, setNowCheck] = useState(-1);
@@ -136,7 +136,7 @@ export default function TimeSelect({ date }: Props) {
             <div className={styles.container}>
               {timeObject.map((item, index) => (
                 <div key={index} className={styles.items}>
-                  {!data[index] ? (
+                  {!data[index] || index != 23 ? (
                     <div className={cx(styles.possible, item.value && styles.checked)} onClick={() => setTime(index)}>
                       {item.time}
                     </div>

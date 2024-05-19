@@ -137,6 +137,7 @@ export default function Register() {
       console.log(formData);
       createProduct.mutate(formData);
     } else {
+      checkCnt(-1);
       alert("비어있는 칸이 있습니다. 확인해주세요");
 
       console.log(dateStr);

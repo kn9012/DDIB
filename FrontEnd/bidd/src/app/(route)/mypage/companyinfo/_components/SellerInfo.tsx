@@ -31,7 +31,7 @@ export default function SellerInfo() {
         ceoPhoneRef.current.value = data.ceoPhone;
       }
     }
-  }, []);
+  }, [data]);
 
   return (
     <div className={styles.container}>

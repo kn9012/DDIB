@@ -33,9 +33,10 @@ public class OrderService {
         for(Order order : orderList) {
             cal.setTime(order.getOrderDate());
             cal.add(Calendar.HOUR, 9);
+            log.info("cal.getTime() : " + cal.getTime());
             OrderResponseDto orderResponseDto = OrderResponseDto.builder()
                     .orderId(order.getOrderId())
-                    .orderDate(sdf.format(cal.getTime().toString())) // Date(cal.getTime()) -> String
+                    .orderDate(sdf.format(cal.getTime()))
                     .status(order.getStatus().getStatus())
                     .companyName(order.getProduct().getSeller().getCompanyName())
                     .thumbnailImage(order.getProduct().getThumbnailImage())
@@ -64,9 +65,10 @@ public class OrderService {
         Order order = orderRepository.findByOrderId(orderId);
         cal.setTime(order.getOrderDate());
         cal.add(Calendar.HOUR, 9);
+        log.info("cal.getTime() : " + cal.getTime());
         OrderResponseDto orderResponseDto = OrderResponseDto.builder()
                 .orderId(orderId)
-                .orderDate(sdf.format(cal.getTime().toString())) // Date(cal.getTime()) -> String
+                .orderDate(sdf.format(cal.getTime()))
                 .status(order.getStatus().getStatus())
                 .companyName(order.getProduct().getSeller().getCompanyName())
                 .thumbnailImage(order.getProduct().getThumbnailImage())

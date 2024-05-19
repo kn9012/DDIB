@@ -11,61 +11,61 @@
 <table>
   <tr>
     <td align="center">
-      <img src="![image](/uploads/b981037aebc270d3c1749162a16f3b0c/image.png)" width="150px;" alt="김유나"/>
+      <img src="https://avatars.githubusercontent.com/kn9012" width="150px;" alt="김유나"/>
     </td>
     <td align="center">
-      <img src="![image](/uploads/133971942a28fbb40e89b4a8f4a45618/image.png)" width="150px;" alt="김유산"/>
+      <img src="https://avatars.githubusercontent.com/kimyusan" width="150px;" alt="김유산"/>
     </td>
    <td align="center">
-      <img src="![image](/uploads/b9525e3f165fb6a0e553de7fccdd4b1c/image.png)" width="150px;" alt="예준성 (팀장)"/>
+      <img src="https://avatars.githubusercontent.com/gnoesnooj" width="150px;" alt="예준성 (팀장)"/>
     </td>
   </tr>
   <tr>    
     <td align="center">
-      <a href="https://github.com/minzzikang">
-        <div>유세진</div>
+      <a href="https://github.com/kn9012">
+        <div>김유나</div>
       </a>
     </td>
     <td align="center">
-      <a href="https://github.com/YooByWk">
-        <div>조자영</div>
+      <a href="https://github.com/kimyusan">
+        <div>김유산</div>
       </a>
     </td>
     <td align="center">
-      <a href="![image](/uploads/c85d83d2d3f7c7ea7d82bb06486f74c9/image.png)">
-        <div>한재현</div>
+      <a href="https://github.com/gnoesnooj">
+        <div>예준성 (팀장)</div>
       </a>
     </td>
   </tr>
   <tr>    
     <td align="center">
-     <b>Frontend</b>
+     <b>BackEnd</b>
     </td>
     <td align="center">
-      <b>Frontend 리더 / Block Chain</b>
+      <b>BackEnd, Infra</b>
     </td>
     <td align="center">
-      <b>Frontend</b>
+      <b>BackEnd</b>
     </td>
   </tr>
    <tr>    
     <td>
-     <b>Flutter]</b><br>- Auth : 회원가입, 로그인, 휴대폰인증, 마이페이지<br>- Main : 메인 화면 및 배너, 하단 네비게이션<br><b>[React]</b><br><b>[Figma UI/UX 디자인]</b><br><b>[UCC 제작]</b>
+     <b>[회원 서버 개발]</b><br>- Auth : Oauth2를 이용한 카카오 소셜로그인 구현<br>- Spring Security + JWT를 활용하여 토큰 검증을 통한 인증 및 인가<br>- 자주 접근하는 토큰 저장 위해 Redis 사용<br><br><b>[API Gateway & Eureka 서버 개발]</b><br>- 1차 개발 시 API Gateway 활용하여 인증/인가 처리 및 라우팅 처리<br>
     </td>
     <td>
-      <b>[Flutter]</b><br>- 블록체인 로직 이식<br>- 추모관 무한스크롤 퍼블리싱<br><b>[Block Chain]</b><br>- 스마트 컨트랙트 배포<br>- FE - Block Chain 이식<br>- IPFS : 설정 / 노드 구성
+      <b>[Flutter]</b><br>- 블록체인 로직 이식<br>- 추모관 무한스크롤 퍼블리싱<br><b>[Block Chain]</b><br>- 스마트 컨트랙트 배포<br>- FE - Block Chain 이식<br>- IPFS : 설정 / 노드 구성<br>
     </td>
     <td>
-      <b>[Flutter]</b><br>- 추모관 : 파일 업로드, 즐겨찾기, 검색, 리스트<br>- 유언 생성 : 녹음, 재생, 열람인, 증인, 선택사항<br><b>[React]</b><br>- 증인 유언장 열람 신청, 열람인 유언장 열람 신청, 유언장
+      <b>[상품 서버 개발]</b><br>- Spring Batch를 통한 상품 상태 관리 시스템 구현<br>- 스케줄링을 통해 알림 시스템 구현<br><br><b>[EFK 로깅 시스템]</b><br>- Logback 과 EFK 를 활용한 로깅 시스템 구축<br><br><b>[Tx 추적 시스템]</b><br>- Micrometer와 Sleuth 활용한 분산 트랜잭션 추적 시스템 구축<br>
     </td>
   </tr>
  
   <tr>
     <td align="center">
-      <img src="https://avatars.githubusercontent.com/kn9012" width="150px;" alt="김유나"/>
+      <img src="https://avatars.githubusercontent.com/tpwls101" width="150px;" alt="유세진"/>
     </td>
     <td align="center">
-      <img src="https://avatars.githubusercontent.com/tpwls101" width="150px;" alt="유세진"/>
+      <img src="https://avatars.githubusercontent.com/mkwwd" width="150px;" alt="조자영"/>
     </td>
    <td align="center">
       <img src="https://avatars.githubusercontent.com/tneserp" width="150px;" alt="한재현"/>
@@ -73,85 +73,46 @@
   </tr>
   <tr>    
     <td align="center">
-      <a href="https://github.com/minzzikang">
-        <div>김유나</div>
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://github.com/YooByWk">
+      <a href="https://github.com/tpwls101">
         <div>유세진</div>
       </a>
     </td>
     <td align="center">
-      <a href="https://github.com/tlfahd2">
+      <a href="https://github.com/mkwwd">
+        <div>조자영</div>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/tneserp">
         <div>한재현</div>
       </a>
     </td>
   </tr>
   <tr>    
     <td align="center">
-     <b>팀장 / Backend / CI/CD</b>
+     <b>BackEnd 리더</b>
     </td>
     <td align="center">
-      <b>Backend / CI/CD</b>
+      <b>FrontEnd 리더</b>
     </td>
     <td align="center">
-      <b>Backend 리더 / Block Chain</b>
+      <b>BackEnd</b>
     </td>
   </tr>
    <tr>    
     <td>
-     <b>[Backend]</b><br>- 유언 도메인 API 구현<br>- 유언 생성, 관련 정보 저장, 나의 유언 조회 및 삭제, 유언 열람 신청, 인증 코드 확인<br>- 유언 파일, 묘비 사진 S3 컨텐츠 업로드, 조회 및 삭제<br><b>[CI/CD]</b><br>- AWS EC2 기본 설정 및 Docker, Jenkins 설치<br>- React 빌드 및 배포
+     <b>[결제 서버 개발]</b><br>- 카카오페이 결제 및 주문 관련 API 구현<br>- 카카오페이 결제 시스템 비동기 처리 및 테스트 코드를 통한 성능 향상 확인<br>- Redisson을 활용한 재고 동시성 제어 구현 및 테스트 코드를 통한 적용 전후 테스트<br>
     </td>
     <td>
       <b>[Backend]</b><br>- 디지털 추모관 도메인 API 구현<br>- 추모관 리스트, 즐겨찾기, 디테일<br>- No-offset 기반의 사진/동영상/편지(이하 컨텐츠) 목록 조회, S3 기반의 컨텐츠 업로드 및 조회, 신고하기<br><b>[CI/CD]</b><br>- Jenkins 초기 설치 및 기본 설정<br>- Jenkinsfile 및 Dockerfile 작성<br>- Spring Boot 자동 빌드 및 자동 배포 구축
     </td>
     <td>
-      <b>[Backend]</b><br>- 유저 도메인 API 구현<br>- Oauth2를 이용한 소셜 로그인 구현<br>- Spring Security + JWT를 활용하여 다른 로그인 시스템에 접근 및 권한 공유<br>- 자주 접근하고, 자주 바뀌지 않는 데이터를 저장하기 위해 Redis 사용
+      <b>[대기열 시스템 개발]</b><br>- Spring Webflux를 이용한 대기열 서버 구축<br>- Reactive Redis를 통한 사용자
+선착순 입장 보장<br><br><b>[부하테스트 진행]</b><br>- Artillery, Jmeter를 사용하여 부하테스트 진행<br>
     </td>
   </tr>
 </table>
 
-
-
-| 김유나 | 김유산 | 예준성 (팀장) |
-| --- | --- | --- |
-| BackEnd | BackEnd, Infra | BackEnd |
-| **[회원 서버 개발]**<br>- Oauth2를 이용한 카카오 소셜로그인 구현<br>- Spring Security + JWT를 활용하여 토큰 검증을 통한 인증 및 인가<br>- 자주 접근하는 토큰 저장 위해 Redis 사용<br>
-**[API Gateway & Eureka 서버 개발]**<br>- 1차 개발 시 API Gateway 활용하여 인증/인가 처리 및 라우팅 처리 | **[Flutter]**<br>- 블록체인 로직 이식<br>- 추모관 무한스크롤 퍼블리싱<br>**[Block Chain]**<br>- 스마트 컨트랙트 배포<br>- FE - Block Chain 이식<br>- IPFS : 설정 / 노드 구성 | **[상품 서버 개발]**<br>- Spring Batch를 통한 상품 상태 관리 시스템 구현<br>- 스케줄링을 통해 알림 시스템 구현<br>**[EFK 로깅 시스템]**<br>- Logback 과 EFK 를 활용한 로깅 시스템 구축<br>**[Tx 추적 시스템]**<br>- Micrometer와 Sleuth 활용한 분산 트랜잭션 추적 시스템 구축 |
-
-
-
-| 김유나 | 김유산 | 예준성 (팀장) |
-| --- | --- | --- |
-| BackEnd | BackEnd, Infra | BackEnd |
-| [회원 서버 개발]
-- Oauth2를 이용한 카카오 소셜로그인 구현
-- Spring Security + JWT를 활용하여 토큰 검증을 통한 인증 및 인가
-- 자주 접근하는 토큰 저장 위해 Redis 사용
-
-[API Gateway & Eureka 서버 개발]
-- 1차 개발 시 API Gateway 활용하여 인증/인가 처리 및 라우팅 처리 |  | [상품 서버 개발]
-- Spring Batch를 통한 상품 상태 관리 시스템 구현
-- 스케줄링을 통해 알림 시스템 구현
-[EFK 로깅 시스템]
-- Logback 과 EFK 를 활용한 로깅 시스템 구축
-[Tx 추적 시스템]
-- Micrometer와 Sleuth 활용한 분산 트랜잭션 추적 시스템 구축 |
-
-| 유세진 | 조자영 | 한재현 |
-| --- | --- | --- |
-| BackEnd 리더 | FrontEnd 리더 | BackEnd |
-| [결제 서버 개발]
-- 카카오페이 결제 및 주문 관련 API 구현
-- 카카오페이 결제 시스템 비동기 처리 및 테스트 코드를 통한 성능 향상 확인
-- Redisson을 활용한 재고 동시성 제어 구현 및 테스트 코드를 통한 적용 전후 테스트 |  | [대기열 시스템 개발]
-- Spring Webflux를 이용한 대기열 서버 구축
-- Reactive Redis를 통한 사용자
-선착순 입장 보장
-
-[부하테스트 진행]
-- Artillery, Jmeter를 사용하여 부하테스트 진행 |
 <br>
 
 ## ✏ 개요

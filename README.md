@@ -8,34 +8,32 @@
 - 팀명 : 쳇바퀴
 - 개발 기간 : 2024.04.08 ~ 2024.05.20 (6주)
 
-
-
 <table>
   <tr>
     <td align="center">
-      <img src="https://avatars.githubusercontent.com/minzzikang" width="150px;" alt="강민지"/>
+      <img src="https://avatars.githubusercontent.com/minzzikang" width="150px;" alt="김유나"/>
     </td>
     <td align="center">
-      <img src="https://avatars.githubusercontent.com/YooByWk" width="150px;" alt="유병욱"/>
+      <img src="https://avatars.githubusercontent.com/YooByWk" width="150px;" alt="김유산"/>
     </td>
    <td align="center">
-      <img src="https://avatars.githubusercontent.com/tlfahd2" width="150px;" alt="이현비"/>
+      <img src="https://avatars.githubusercontent.com/tlfahd2" width="150px;" alt="예준성 (팀장)"/>
     </td>
   </tr>
   <tr>    
     <td align="center">
       <a href="https://github.com/minzzikang">
-        <div>강민지</div>
+        <div>유세진</div>
       </a>
     </td>
     <td align="center">
       <a href="https://github.com/YooByWk">
-        <div>유병욱</div>
+        <div>조자영</div>
       </a>
     </td>
     <td align="center">
-      <a href="https://github.com/tlfahd2">
-        <div>이현비</div>
+      <a href="![image](/uploads/c85d83d2d3f7c7ea7d82bb06486f74c9/image.png)">
+        <div>한재현</div>
       </a>
     </td>
   </tr>

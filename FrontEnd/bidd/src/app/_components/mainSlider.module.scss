@@ -1,12 +1,70 @@
 .container {
   position: relative;
   display: flex;
-  > div:nth-child(1) {
-    width: 50%;
+  width: 100%;
+}
+
+.slide {
+  position: relative;
+  width: 100%;
+  img {
+    width: 100%;
     height: 100vh;
   }
-  > div:nth-child(2) {
-    width: 50%;
-    height: 100vh;
-  }
+}
+
+.titleOne {
+  font-family: "Pretendard-Regular";
+  position: absolute;
+  top: 270px;
+  right: 0;
+  font-size: 8vw;
+  color: rgba(247, 247, 247, 0.715);
+}
+
+.titleTwo {
+  font-family: "Tienne";
+  position: absolute;
+  right: 0;
+  color: white;
+  font-size: 10vw;
+  top: 350px;
+}
+
+.titleThree {
+  position: absolute;
+  top: 23%;
+  left: 5%;
+  color: black;
+  font-size: 6vw;
+  font-family: "Pretendard-Regular";
+}
+
+.titleFour {
+  position: absolute;
+  top: 38%;
+  right: 0;
+  color: black;
+  font-size: 4vw;
+  font-family: "Pretendard-Regular";
+}
+
+.titleFive {
+  width: 100%;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translateX(-30%);
+  color: black;
+  font-size: 5vw;
+  font-family: "Pretendard-Regular";
+}
+
+.titleSix {
+  position: absolute;
+  top: 40%;
+  right: 0;
+  color: black;
+  font-size: 5vw;
+  font-family: "Pretendard-Regular";
 }

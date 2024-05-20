@@ -1,0 +1,66 @@
+.myPageMenu {
+  background: black;
+  float: left;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  margin-top: 2vw;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.menuMyItem,
+.menuCompanyInfo {
+  display: flex;
+  justify-content: space-around;
+
+  li {
+    padding: 1.5vw;
+  }
+}
+
+.menuMyItem {
+  .horiselector {
+    left: 0%;
+  }
+
+  .menuItemOne a {
+    color: black;
+    background-color: transparent;
+    transition: all 0.7s;
+  }
+}
+
+.menuCompanyInfo {
+  .horiselector {
+    left: 50%;
+  }
+  .menuItemTwo a {
+    color: black;
+    background-color: transparent;
+    transition: all 0.7s;
+  }
+}
+
+.menuItemOne a,
+.menuItemTwo a {
+  color: #fff;
+  font-size: 1.3vw;
+  position: relative;
+}
+
+.horiselector {
+  display: inline-block;
+  position: absolute;
+  height: 100%;
+  width: (50%);
+  left: 0;
+  transition-duration: 0.6s;
+  transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  background-color: #fff;
+  border-width: 1px 1px 0 1px;
+  border-style: solid;
+  border-color: black;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}

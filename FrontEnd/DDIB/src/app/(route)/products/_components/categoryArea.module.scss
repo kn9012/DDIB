@@ -1,0 +1,23 @@
+.category {
+  display: flex;
+  flex-wrap: nowrap;
+  margin-bottom: 3vh;
+  justify-content: space-between;
+}
+
+.categoryItem {
+  cursor: pointer;
+  position: relative;
+  font-size: 1.5vw;
+  width: 10%;
+  text-align: center;
+  padding-bottom: 2vh;
+}
+
+.underBar {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 3px;
+  background-color: var(--scarlet);
+}

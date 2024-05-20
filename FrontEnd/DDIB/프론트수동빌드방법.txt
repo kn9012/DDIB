@@ -1,0 +1,29 @@
+수동 빌드 방법
+*삭제는 조심 조심 또조심**
+
+##local 의  cmd frontend/ddib 경로 
+ 
+docker build -t kimyusan/k8s_front:latest .
+ 
+docker push kimyusan/k8s_front:latest
+
+
+
+k8s master 서버 접속
+
+kubectl get deployment -n ddib     ( ddib 의 파드를 조회합니다.)
+
+
+kubectl delete deployment ddib-front-deployment -n ddib         (ddib 에서 ddib-product-pod 를 삭제합니다)
+
+cd ~/ddib/front/    (파드 설정파일있는 위치로 들어갑니다.)
+
+kubectl apply -f ddib-front-deployment.yaml  (ddib-product-pod 의 설정이담겨있는 yaml 파일을 적용합니다.) 
+
+
+
+
+kubectl get pod -n ddib (  ***** ddib 의 파드를 조회합니다. ******* running 인지 확인하세요) 
+
+
+kubectl logs ddib-product-pod -n ddib (해당 파드의 로그를 조회합니다.)

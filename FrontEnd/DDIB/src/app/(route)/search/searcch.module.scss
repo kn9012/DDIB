@@ -1,0 +1,84 @@
+.container {
+  width: 100%;
+  padding: 15%;
+  display: flex;
+  flex-direction: column;
+}
+
+.searchTitle {
+  font-size: 8vw;
+  font-family: "Oooh Baby";
+  color: var(--scarlet);
+}
+
+.searchInput {
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  height: 5vh;
+  border-width: 0 0 2px 0;
+  border-style: solid;
+  border-color: var(--scarlet);
+  padding: 0 1vw;
+  input {
+    width: 100%;
+    height: 100%;
+    border-width: 0;
+    font-size: 1.5vw;
+    outline: none;
+  }
+}
+
+.icons {
+  margin-bottom: 1vw;
+  font-size: 2.5vw;
+  color: var(--scarlet);
+}
+
+.resultArea {
+  width: 100%;
+}
+
+.result {
+  width: 100%;
+  margin-top: 2vh;
+  font-size: 1.3vw;
+  color: gray;
+  margin-left: 1vw;
+}
+
+.category {
+  display: flex;
+  flex-wrap: nowrap;
+  margin-top: 2vw;
+  margin-bottom: 3vw;
+  gap: 2vw;
+  justify-content: space-between;
+}
+
+.categoryItem,
+.selectedItem {
+  cursor: pointer;
+  flex: 1;
+  text-align: center;
+  padding: 0.5vw 1vw;
+  border-radius: 30px;
+  font-size: 1vw;
+}
+
+.categoryItem {
+  border: 1px solid black;
+}
+
+.selectedItem {
+  color: var(--scarlet);
+  border: 1px solid var(--scarlet);
+}
+
+.overYes {
+  color: var(--scarlet);
+}
+
+.overNo {
+  color: black;
+}

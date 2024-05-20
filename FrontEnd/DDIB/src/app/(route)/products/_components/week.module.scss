@@ -1,0 +1,34 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4vh;
+}
+
+.dayBox {
+  cursor: pointer;
+  position: relative;
+  text-align: center;
+  width: 4vw;
+  padding-bottom: 1vh;
+}
+
+.sun {
+  color: red;
+}
+
+.sat {
+  color: #156fb9;
+}
+
+.dayNum {
+  font-size: 1.5vw;
+  font-weight: bold;
+}
+
+.underBar {
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  background-color: var(--scarlet);
+}

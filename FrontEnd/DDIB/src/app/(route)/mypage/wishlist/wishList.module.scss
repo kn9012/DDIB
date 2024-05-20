@@ -1,0 +1,17 @@
+.title {
+  font-size: 5vw;
+  text-align: center;
+  margin-top: 1vw;
+  margin-bottom: 4vw;
+  font-family: "Oooh Baby";
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4%;
+}
+
+.listItem {
+  width: 22%;
+}

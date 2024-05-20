@@ -1,0 +1,45 @@
+.upload {
+  cursor: pointer;
+  width: fit-content;
+  padding: 0.5vw 1vw;
+  margin-bottom: 1vw;
+  border: 1px solid black;
+  border-radius: 20px;
+}
+
+.notice {
+  display: none;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  text-align: center;
+  padding-top: 5vw;
+}
+
+.details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2vw;
+}
+
+.frame {
+  position: relative;
+  height: 30vh;
+  width: 30vh;
+  background-color: rgb(242, 242, 242);
+  margin-bottom: 40px;
+
+  img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(50, 50);
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    margin: auto;
+  }
+}

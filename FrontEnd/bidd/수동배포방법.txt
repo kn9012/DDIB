@@ -1,0 +1,13 @@
+1.  front/bidd 서버에서 cmd 창 명령어 입력
+// 도커 빌드 
+docker build -t kimyusan/bidd_front:latest .
+// 도커 허브 repo에 푸쉬
+docker push kimyusan/bidd_front:latest 
+
+
+2./bidd 서버 접속 (접속방법은 김유산한테 물어보세요)
+docker stop [현재container Id] 
+docker rm [현재container Id] 
+docker pull kimyusan/bidd_front:latest
+
+docker run -d -p 3001:3001 kimyusan/bidd_front:latest

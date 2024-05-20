@@ -53,7 +53,7 @@
      <b>[회원 서버 개발]</b><br>- Auth : Oauth2를 이용한 카카오 소셜로그인 구현<br>- Spring Security + JWT를 활용하여 토큰 검증을 통한 인증 및 인가<br>- 자주 접근하는 토큰 저장 위해 Redis 사용<br><br><b>[API Gateway & Eureka 서버 개발]</b><br>- 1차 개발 시 API Gateway 활용하여 인증/인가 처리 및 라우팅 처리<br>
     </td>
     <td>
-      <b>[Kubernetes]</b><br>- 개인 역할 작성해주세요!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!<br>
+      <b>[Kubernetes 설계]</b><br>- SVC를 통한 MSA 설계 및 구축<br>- 인그라스 컨트롤러 설정<br>- Helm을 이용한 상태관리<br><br><b>[Prometheus + Grafana]</b><br>- 메트릭 데이터를 수집해 시스템 모니터링 구축<br>
     </td>
     <td>
       <b>[상품 서버 개발]</b><br>- Spring Batch를 통한 상품 상태 관리 시스템 구현<br>- 스케줄링을 통해 알림 시스템 구현<br><br><b>[EFK 로깅 시스템]</b><br>- Logback 과 EFK 를 활용한 로깅 시스템 구축<br><br><b>[Tx 추적 시스템]</b><br>- Micrometer와 Sleuth 활용한 분산 트랜잭션 추적 시스템 구축<br>

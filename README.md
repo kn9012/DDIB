@@ -104,7 +104,7 @@
      <b>[결제 서버 개발]</b><br>- 카카오페이 결제 및 주문 관련 API 구현<br>- 카카오페이 결제 시스템 비동기 처리 및 테스트 코드를 통한 성능 향상 확인<br>- Redisson을 활용한 재고 동시성 제어 구현 및 테스트 코드를 통한 적용 전후 테스트<br><br><b>[부하테스트]</b><br>- JMeter를 사용하여 테스트 시나리오 작성 및 부하테스트 진행<br>
     </td>
     <td>
-      <b>[프론트엔드 설계 및 개발]</b><br>- Next.js를 이용하여 SSL방식 사용<br>- Recoil을 사용하여 Client에서의 데이터를 관리<br>- react-query를 사용하여 Server에서의 데이터를 관리하고 데이터의 변경이 없으면 호출없이 데이터를 사용하도록 구현<br>
+      <b>[프론트엔드 설계 및 개발]</b><br>- Next.js를 이용하여 SSL방식 사용<br>- Recoil을 사용하여 Client에서의 데이터를 관리<br>- react-query를 사용하여 Server에서의 데이터를 관리하고<br>데이터의 변경이 없으면 호출없이 데이터를 사용하도록 구현<br>
     </td>
     <td>
       <b>[대기열 시스템 개발]</b><br>- Spring Webflux를 이용한 대기열 서버 구축<br>- Reactive Redis를 통한 사용자

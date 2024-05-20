@@ -1,0 +1,46 @@
+server:
+  port: 9010
+
+scheduler:
+  enabled: true
+
+# -- Default spring configuration
+spring:
+  application:
+    name: waiting
+  data:
+    redis:
+      host: redis-master.default.svc.cluster.local
+      port: 6379
+      #      cluster:
+      #        nodes:
+      #          - redis-master.default.svc.cluster.local:6379
+      #          - redis-replicas.default.svc.cluster.local:6379
+      password: jG87zG5UKc  # 비밀번호 설정
+
+# metric 설정
+management:
+  endpoint:
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: prometheus
+      base-path: /actuator/waiting
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+
+
+#eureka:
+#  instance:
+#    hostname: k10c102.p.ssafy.io
+#  client:
+#    register-with-eureka: true
+#    fetch-registry: true
+#    serviceUrl:
+#      defaultZone: http://k10c102.p.ssafy.io:8761/eureka

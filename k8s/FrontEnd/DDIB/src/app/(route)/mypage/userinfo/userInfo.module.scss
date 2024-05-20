@@ -1,0 +1,35 @@
+.title {
+  font-size: 5vw;
+  text-align: center;
+  margin-top: 3vw;
+  margin-bottom: 5vw;
+  font-family: "Oooh Baby";
+}
+
+.categoryArea {
+  padding: 0 4vh 8vh;
+}
+
+.btnArea {
+  margin-top: 15vh;
+  display: flex;
+  gap: 2vw;
+}
+
+.modifyBtn {
+  cursor: pointer;
+  flex: 1;
+  padding: 1vh;
+  text-align: center;
+  background-color: var(--scarlet);
+  color: white;
+}
+
+.quitBtn {
+  cursor: pointer;
+  flex: 1;
+  padding: 1vh;
+  text-align: center;
+  color: var(--scarlet);
+  border: 1px solid var(--scarlet);
+}

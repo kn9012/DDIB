@@ -1,0 +1,62 @@
+server:
+  port: 8083
+
+# -- Default spring configuration
+spring:
+  application:
+    name: payment-sejin
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/ddib?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
+    password: 1234
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+# -- Eureka client
+eureka:
+  instance:
+    hostname: k10c102.p.ssafy.io
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: ${EUREKA_URL:http://127.0.0.1:8761/eureka/}
+
+host:
+  address: https://k10c102.p.ssafy.io
+
+# -- KakaoPay
+pay:
+  kakao:
+    cid: TC0ONETIME
+    secret-key: DEVAE9FEAE218AFEA4E18CD6B53A4589DD8E8F3F
+
+# KakaoPay API Url
+api:
+  kakao:
+    approval-url: http://localhost:8083/api/payment/success
+    cancel-url: http://localhost:8083/api/payment/cancel
+    fail-url: http://localhost:8083/api/payment/fail
+
+# Redirect Url
+redirect:
+  order:
+    complete-url: ${host.address}/order/complete/
+    fail-url: ${host.address}/order/fail
+  pay:
+    cancel-url: ${host.address}/order/cancel
+    fail-url: ${host.address}/order/fail
+
+# Feign Client Url
+feign-client:
+  waiting: http://k10c102.p.ssafy.io:9010
+  product: http://k10c102.p.ssafy.io:8082

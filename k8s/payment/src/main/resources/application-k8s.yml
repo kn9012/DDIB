@@ -1,0 +1,85 @@
+server:
+  port: 8083
+
+# -- Default spring configuration
+spring:
+  application:
+    name: payment
+  jpa:
+    hibernate:
+      #      ddl-auto: update
+      show-sql: true
+    open-in-view: false
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://10.182.0.18:3306/ddib?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: ssafy
+    password: ssafy
+
+  data:
+    redis:
+      host: redis-master.default.svc.cluster.local
+      port: 6379
+      password: jG87zG5UKc  # 비밀번호 설정
+
+# -- Eureka client
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: ${EUREKA_URL:http://k10c102.p.ssafy.io:8761/eureka/}
+#eureka:
+#  instance:
+#    hostname: k10c102.p.ssafy.io
+#  client:
+#    register-with-eureka: true
+#    fetch-registry: true
+#    service-url:
+#      defaultZone: http://k10c102.p.ssafy.io:8761/eureka/
+
+host:
+  address: https://ddib.kro.kr
+
+# -- KakaoPay
+pay:
+  kakao:
+    cid: TC0ONETIME
+    secret-key: DEVAE9FEAE218AFEA4E18CD6B53A4589DD8E8F3F
+
+# KakaoPay API Url
+api:
+  kakao:
+    approval-url: https://ddib.kro.kr/api/payment/success
+    cancel-url: https://ddib.kro.kr/api/payment/cancel
+    fail-url: https://ddib.kro.kr/api/payment/fail
+
+# Redirect Url
+redirect:
+  order:
+    complete-url: ${host.address}/order/complete/
+    fail-url: ${host.address}/order/fail
+  pay:
+    cancel-url: ${host.address}/order/cancel
+    fail-url: ${host.address}/order/fail
+
+# Feign Client Url
+feign-client:
+  waiting: http://ddib-waiting-service.ddib.svc.cluster.local:9010
+  product: http://ddib-product-service.ddib.svc.cluster.local:8082
+
+# metric 설정
+management:
+  endpoint:
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: prometheus
+      base-path: /actuator/payment
+  metrics:
+    export:
+      prometheus:
+        enabled: true

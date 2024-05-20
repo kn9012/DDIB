@@ -1,0 +1,65 @@
+server:
+  port: 8000
+
+spring:
+  application:
+    name: apigateway
+
+  cloud:
+    gateway:
+      routes:
+        - id: user
+          uri: http://ddib-user.ddib.svc.cluster.local
+          predicates:
+            - Path=/api/user/**
+          filters:
+            - AuthorizationHeaderFilter
+
+        - id: user
+          uri: http://ddib-user.ddib.svc.cluster.local
+          predicates:
+            - Path=/api/oauth2/ddib/**
+
+        - id: seller
+          uri: http://ddib-seller.ddib.svc.cluster.local
+          predicates:
+            - Path=/api/seller/**
+          filters:
+            - AuthorizationHeaderFilter
+
+        - id: seller
+          uri: http://ddib-seller.ddib.svc.cluster.local
+          predicates:
+            - Path=/api/oauth2/bidd/**
+
+        - id: notification
+          uri: http://ddib-notification.ddib.svc.cluster.local
+          predicates:
+            - Path=/api/notification/**
+          filters:
+            - AuthorizationHeaderFilter
+
+        - id: product
+          uri: http://ddib-product.ddib.svc.cluster.local
+          predicates:
+            - Path=/api/product/**
+          filters:
+            - AuthorizationHeaderFilter
+
+        - id: payment
+          uri: http://ddib-payment.ddib.svc.cluster.local
+          predicates:
+            - Path=/api/payment/**, /api/order/**
+          filters:
+            - AuthorizationHeaderFilter
+
+        - id: waiting
+          uri: http://ddib-waiting.ddib.svc.cluster.local
+          predicates:
+            - Path=/api/v1/queue/**
+          filters:
+            - AuthorizationHeaderFilter
+
+jwt:
+  secret: adkafjlsdjgldkfjskdlakjdjkfljdkjkdkkkksjakslfejfghlajsdflaksjdgljadk
+

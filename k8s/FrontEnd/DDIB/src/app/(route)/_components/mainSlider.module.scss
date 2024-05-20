@@ -1,0 +1,136 @@
+.container {
+  position: relative;
+  display: flex;
+  > div:nth-child(1) {
+    width: 50%;
+    height: 100vh;
+  }
+  > div:nth-child(2) {
+    width: 50%;
+    height: 100vh;
+  }
+}
+
+.background {
+  position: relative;
+  height: 100vh;
+}
+
+.timer {
+  position: absolute;
+  top: 23%;
+  left: 50%;
+  transform: translateX(-50%);
+  > div:nth-child(1) {
+    font-size: 7vw;
+    font-family: Montaga;
+    color: var(--scarlet);
+  }
+}
+
+.name {
+  margin-top: 1vw;
+  font-size: 2.6vw;
+  font-weight: bold;
+}
+
+.priceArea {
+  margin-top: 1vw;
+  margin-left: 4vw;
+  display: flex;
+  gap: 1vw;
+  align-items: center;
+  > div:nth-child(1) {
+    font-size: 1vw;
+    color: gray;
+    text-decoration: line-through;
+  }
+  > div:nth-child(2) {
+    font-size: 4vw;
+  }
+}
+
+.eventTime {
+  z-index: 1;
+  position: absolute;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5vw;
+  padding: 1vw 3vw;
+  top: 6vw;
+  right: 0;
+  background-color: var(--scarlet);
+  color: white;
+  > div:nth-child(1) {
+    font-size: 4vw;
+  }
+}
+
+.discount {
+  font-family: "Montaga";
+  font-style: italic;
+  position: absolute;
+  bottom: 10%;
+  left: 40%;
+  font-size: 15vw;
+  color: var(--scarlet);
+  animation: reveal 1s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+@keyframes reveal {
+  0% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.imageArea {
+  cursor: pointer;
+  position: absolute;
+  width: 60%;
+  height: 70vh;
+  top: 53%;
+  left: 5%;
+  transform: translateY(-50%);
+
+  &:hover {
+    .hover {
+      display: block;
+    }
+  }
+}
+
+.wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  box-shadow: 0 0 10px 2px rgb(232, 232, 232);
+
+  img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(50, 50);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    margin: auto;
+  }
+}
+
+.hover {
+  display: none;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.3);
+  div {
+    position: absolute;
+    bottom: 2%;
+    right: 2%;
+    font-size: 2vw;
+  }
+}

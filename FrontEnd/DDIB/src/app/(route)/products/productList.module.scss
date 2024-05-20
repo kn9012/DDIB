@@ -1,0 +1,28 @@
+.container {
+  width: 100%;
+  padding: 15%;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 15vh;
+  font-family: "Oooh Baby";
+  color: var(--scarlet);
+  margin-bottom: 5vw;
+}
+
+.sectionTwo {
+  margin-top: 20vh;
+}
+
+.titleTwo {
+  font-size: 15vh;
+  font-family: "Oooh Baby";
+  margin-top: 5vw;
+  margin-bottom: 5vw;
+}
+
+.categoryArea {
+  margin-top: 4vh;
+}

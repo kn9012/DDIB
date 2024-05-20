@@ -1,0 +1,170 @@
+// body {
+//   height: 100vh;
+//   display: grid;
+//   place-items: center;
+//   overflow: hidden;
+// }
+
+.main {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+
+.title {
+  font-size: 4vw;
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: "Oooh Baby";
+}
+
+.area {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  > div > div {
+    align-items: center;
+  }
+}
+
+.container {
+  margin: 10vw 3vw 0;
+}
+
+.time {
+  z-index: 3;
+  position: absolute;
+  top: -10%;
+  padding: 0 1vw;
+  font-size: 3vw;
+  font-family: "Oooh Baby";
+  color: white;
+  left: 50%;
+  transform: translateX(-50%);
+  font-weight: bold;
+  background-color: var(--scarlet);
+}
+
+.active {
+  .wrapper {
+    width: 100%;
+    height: 50vh;
+    box-shadow: 0 0 10px 2px rgb(232, 232, 232);
+  }
+}
+
+.wrapper {
+  position: relative;
+  width: 90%;
+  height: 40vh;
+  box-shadow: 0 0 10px 2px rgb(232, 232, 232);
+
+  img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(50, 50);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    margin: auto;
+  }
+
+  &:hover {
+    .reserve {
+      display: block;
+    }
+    .reserveLogo {
+      display: block;
+    }
+  }
+}
+
+.sold {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.soldLogo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--scarlet);
+  font-size: 4vw;
+  font-family: "Oooh Baby";
+  font-weight: bold;
+  // &::before {
+  //   content: "";
+  //   display: block;
+  //   position: absolute;
+  //   bottom: 3px;
+  //   left: 1vw;
+  //   width: 80%;
+  //   height: 2px;
+  //   background-color: var(--scarlet);
+  // }
+  // &::after {
+  //   content: "";
+  //   display: block;
+  //   position: absolute;
+  //   bottom: -1px;
+  //   left: 2.5vw;
+  //   width: 80%;
+  //   height: 2px;
+  //   background-color: var(--scarlet);
+  // }
+}
+
+.reserve {
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.reserveLogo {
+  display: none;
+  position: absolute;
+  font-size: 3vw;
+  font-weight: bold;
+  color: white;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.name {
+  margin-top: 0.5vw;
+  text-align: center;
+  font-size: 1.5vw;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.priceArea {
+  display: flex;
+  justify-content: center;
+  gap: 0.5vw;
+  > div:nth-child(1) {
+    font-size: 1vw;
+    color: gray;
+    text-decoration: line-through;
+  }
+  > div:nth-child(2) {
+    font-size: 1.5vw;
+    color: black;
+    font-weight: bold;
+  }
+  > div:nth-child(3) {
+    font-size: 1.5vw;
+    color: var(--scarlet);
+    font-weight: bold;
+  }
+}

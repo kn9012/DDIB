@@ -1,0 +1,21 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.alert {
+  font-size: 3vw;
+  font-weight: bold;
+}
+
+.home {
+  z-index: 3;
+  cursor: pointer;
+  margin-top: 3vh;
+  font-size: 3vw;
+  color: white;
+  background-color: black;
+  padding: 1vw;
+}

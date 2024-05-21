@@ -199,10 +199,10 @@
 
 ### **🤝** Communication Tools
 
-<img src="https://img.shields.io/badge/GitLab-FC6D26?style=for-the-badge&logo=gitlab&logoColor=white"> 
-<img src="https://img.shields.io/badge/Jira-0052CC?style=for-the-badge&logo=jirasoftware&logoColor=white">
-<img src="https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=notion&logoColor=white"> 
-<img src="https://img.shields.io/badge/mattermost-224477?style=for-the-badge&logo=mattermost&logoColor=white">
+- Git
+- Jira
+- Notion
+- Mattermost
 
 <br><br>
 
@@ -214,7 +214,7 @@
 
 기업 회원은 상품을 등록하기 위해 기업 신청을 할 수 있다.
 
-![기업신청.gif](./기업신청.gif)
+![기업신청](/uploads/11b73d2fd257774598c93d9763265ecb/기업신청.gif)
 
 **2️⃣ 상품 등록**
 

@@ -10,13 +10,13 @@
 
 <table>
   <tr>
-    <td align="center">
+    <td align="center" width="33%">
       <img src="https://avatars.githubusercontent.com/kn9012" width="150px;" alt="김유나"/>
     </td>
-    <td align="center">
+    <td align="center" width="33%">
       <img src="https://avatars.githubusercontent.com/kimyusan" width="150px;" alt="김유산"/>
     </td>
-   <td align="center">
+   <td align="center" width="33%">
       <img src="https://avatars.githubusercontent.com/gnoesnooj" width="150px;" alt="예준성 (팀장)"/>
     </td>
   </tr>

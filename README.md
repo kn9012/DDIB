@@ -204,7 +204,7 @@
 - Notion
 - Mattermost
 
-<br><br>
+<br>
 
 ## ⚒ 서비스 기능 소개
 

@@ -214,19 +214,19 @@
 
 기업 회원은 상품을 등록하기 위해 기업 신청을 할 수 있다.
 
-![기업신청](/uploads/11b73d2fd257774598c93d9763265ecb/기업신청.gif)
+![기업신청](https://github.com/tpwls101/DDIB/assets/97137124/0499ad27-17f2-4c48-82a1-c2d3b946f654)
 
 **2️⃣ 상품 등록**
 
 기업 회원은 타임딜 이벤트 진행을 원하는 날짜 및 시간대를 선택해 상품을 등록할 수 있다.
 
-![상품_등록](/uploads/c6ca19daf9f8dd706fe5a0d340195eec/상품_등록.gif)
+![상품 등록](https://github.com/tpwls101/DDIB/assets/97137124/c81b44b5-f3e1-4ee3-b205-79bfe71c79f7)
 
 **3️⃣ 판매내역 조회**
 
 기업회원은 등록한 상품에 대한 판매내역을 조회할 수 있다.
 
-![판매내역_조회](/uploads/d10cb164c12c05b3653739295b58a83e/판매내역_조회.gif)
+![판매내역 조회](https://github.com/tpwls101/DDIB/assets/97137124/d608bf22-f7a9-478d-a60d-48937d803e53)
 
 ### **DDIB (소비자)**
 
@@ -234,67 +234,67 @@
 
 사용자는 오늘의 타임딜과 주간 타임딜, 카테고리별 타임딜 이벤트를 조회할 수 있다.
 
-![타임딜_목록_조회](/uploads/5c6e6253bcde063f4d72e0332a4bbd0e/타임딜_목록_조회.gif)
+![타임딜 목록 조회-min (3)](https://github.com/tpwls101/DDIB/assets/97137124/bd43575c-843b-4445-9fb0-49a544ac4609)
 
 **2️⃣ 검색**
 
 사용자는 원하는 타임딜 이벤트를 검색할 수 있다.
 
-![상품_검색](/uploads/f86868c329d0eddb8126006ecb579dc0/상품_검색.gif)
+![상품 검색](https://github.com/tpwls101/DDIB/assets/97137124/5494c256-cab8-43e0-8d40-a79e44ea4922)
 
 **3️⃣ 상품 상세 조회**
 
 사용자는 상품에 대한 상세 정보 및 해당 기업에 대한 정보를 조회할 수 있다.
 
-![타임딜_상세_조회](/uploads/645a3c14f986cde294c4f0decaa4bf36/타임딜_상세_조회.gif)
+![타임딜 상세 조회-min (3) (1)](https://github.com/tpwls101/DDIB/assets/97137124/6577e40c-814e-41a9-a955-5ae20fd2bd44)
 
 **4️⃣ 상품 좋아요/취소**
 
 상품 개별 좋아요를 누르면 해당 상품에 대한 이벤트 시작 12시간 전, 1시간 전에 알림을 받을 수 있다.
 
-![상품_좋아요와_취소](/uploads/19066aa8cb346103da70ccb6bbc39134/상품_좋아요와_취소.gif)
+![상품 좋아요와 취소](https://github.com/tpwls101/DDIB/assets/97137124/cdf1f43f-0f89-4a10-82b3-030306a72925)
 
 **5️⃣ 대기열 입장**
 
 입장한 순서대로 대기열에서 순번을 가지게 되고, 새로고침 시 마지막 순번으로 들어가게 된다.
 
-![대기열](/uploads/e34359b05fc2602bd2192119e3d875bd/대기열.gif)
+![대기열 (1)](https://github.com/tpwls101/DDIB/assets/97137124/1ec24f65-a6fe-433a-afd0-9516e0a9de81)
 
 **6️⃣ 주문/결제하기**
 
 사용자는 주문하고자 하는 상품과 수량, 가격을 확인하고 배송지 정보를 입력한다. QR 코드를 통해 카카오페이로 결제를 진행한다.
 
-![주문결제](/uploads/f194f56890c298c3e3059ea4de402101/주문결제.gif)
+![주문결제](https://github.com/tpwls101/DDIB/assets/97137124/531f25c3-515e-4f9c-880b-f63807fc40be)
 
 **7️⃣ 마이페이지 - 주문내역 조회**
 
 사용자는 본인이 주문한 모든 주문내역에 대한 정보를 조회할 수 있다.
 
-![주문내역_조회](/uploads/274472ac8f40684a9586e6d100048a20/주문내역_조회.gif)
+![주문내역 조회](https://github.com/tpwls101/DDIB/assets/97137124/ce6f1f6c-5d7e-45ea-8a2a-f67e8328900a)
 
 **8️⃣ 마이페이지 - 환불**
 
 사용자는 구매를 취소하여 환불을 받을 수 있다.
 
-![환불](/uploads/b4f68d17b91071fd74512031674f6f62/환불.gif)
+![환불](https://github.com/tpwls101/DDIB/assets/97137124/e9c4399d-bbf4-4e10-8dd3-682f7fd5e424)
 
 **9️⃣ 마이페이지 - 회원 정보 조회**
 
 사용자는 마이페이지에서 기본 배송지로 사용할 주소를 저장할 수 있다.
 
-![회원_정보_조회](/uploads/1a41bad7d03257e14c129769b3aa8592/회원_정보_조회.gif)
+![회원 정보 조회](https://github.com/tpwls101/DDIB/assets/97137124/4c03826b-0a0d-4afd-9ac7-dcb9e90dfb2e)
 
 **🔟 마이페이지 - 키워드 알림 신청/취소**
 
 사용자는 키워드별로 알림을 신청해 해당 카테고리의 상품이 등록되면 알림을 받을 수 있다.
 
-![키워드_알림_신청_및_취소](/uploads/099ac41ffe2bead2fb6a1766568a709f/키워드_알림_신청_및_취소.gif)
+![키워드 알림 신청 및 취소](https://github.com/tpwls101/DDIB/assets/97137124/d449cdcc-69d0-462a-aeed-6d63d5d1ea92)
 
 **1️⃣1️⃣ 마이페이지 - 위시리스트**
 
 사용자는 좋아요를 누른 상품 목록을 조회할 수 있다.
 
-![위시리스트_조회](/uploads/efd7c3cc02dd9f039f3c6d1729b04b23/위시리스트_조회.gif)
+![위시리스트 조회-min](https://github.com/tpwls101/DDIB/assets/97137124/6e46cb71-216a-44bc-857d-54eabbd1bab6)
 
 <br>
 
@@ -322,7 +322,7 @@ Redis의 인-메모리 성능뿐만 아니라 Zset을 사용하여 우선순위�
 
 다음은 Spring Webflux와 Redis를 사용한 대기열 시스템의 시퀀스 다이어그램입니다.
 
-![image](/uploads/817ad60d2ae6efe52fd015dc41118b01/image.png)
+![대기열 흐름도](https://github.com/tpwls101/DDIB/assets/97137124/f5585600-29e5-4798-b35c-49abe69d7683)
 
 <br>
 
@@ -334,13 +334,13 @@ Redis의 인-메모리 성능뿐만 아니라 Zset을 사용하여 우선순위�
 
 - 동기 방식
     
-    ![Untitled__1_](/uploads/876d40c0a591a11c920872d6789a9c98/Untitled__1_.png)
+    ![동기 실행시간](https://github.com/tpwls101/DDIB/assets/97137124/4b3e0aae-3c43-4740-9421-50cd60eb3fa5)
     
     ⇒ 10개의 표본 평균 값 : `82.872초`
     
 - 비동기 방식
     
-    ![Untitled__2_](/uploads/4b8c83904b78365f6d1731e415975340/Untitled__2_.png)
+    ![비동기 실행시간](https://github.com/tpwls101/DDIB/assets/97137124/3eeff7fa-7e40-4139-aa65-3449db693180)
     
     ⇒ 10개의 표본 평균 값 : `13.681초`
     
@@ -354,7 +354,7 @@ Redis의 인-메모리 성능뿐만 아니라 Zset을 사용하여 우선순위�
 
 또한, Lettue를 사용하면 스핀 락 방식으로 계속해서 락 획득을 시도하지만, Redisson을 사용하면 `pub-sub` 방식으로 Redis에 부하를 줄일 수 있기에 대용량 트래픽에 적합하다 생각해 사용하였습니다. 다음은 pub-sub 방식에 의한 락 획득 방식입니다.
 
-![Untitled__3_](/uploads/7567b7f04a44421921f9ae9d0f619f24/Untitled__3_.png)
+![Redisson 동시성 제어](https://github.com/tpwls101/DDIB/assets/97137124/feffaa90-73be-46da-9e86-8bcccd9be9e6)
 
 <br>
 
@@ -368,7 +368,7 @@ Redis의 인-메모리 성능뿐만 아니라 Zset을 사용하여 우선순위�
 
 ### 6. Logging System - EFK
 
-![Untitled__4_](/uploads/d1caf0aec75141cf02c65d6ffaa7a573/Untitled__4_.png)
+![로깅 시스템](https://github.com/tpwls101/DDIB/assets/97137124/6c5cdb19-41b0-4483-9030-a56a237cfd62)
 
 MSA 기반에서는 모든 로그를 각각의 서버에 접속하여 확인해야 하는 어려움이 있기에, 이를 한 곳에서 확인할 수 있도록 EFK 로깅 시스템을 구축했습니다.
 
@@ -406,7 +406,7 @@ MSA 환경에서 하나의 서버가 다른 서버를 호출하는 경우가 많
 
 - 요청에 대한 Summary Report 확인
     
-    ![Untitled__5_](/uploads/e64c77b09445e6d7aae1d73e347ba214/Untitled__5_.png)
+    ![JMeter](https://github.com/tpwls101/DDIB/assets/97137124/2277d258-01cf-4418-8327-9e6d8f979908)
     
     ⇒ 10,000개의 요청에 대한 에러율 : 0.00%
     
@@ -414,7 +414,7 @@ MSA 환경에서 하나의 서버가 다른 서버를 호출하는 경우가 많
     
 - 대기열에 부하를 걸었을 때의 화면 확인
     
-    ![Untitled__6_](/uploads/eb312fb1458d47408bf43fd958db54a3/Untitled__6_.png)
+    ![대기열](https://github.com/tpwls101/DDIB/assets/97137124/0bef8c09-e1c4-4645-a3b6-f138ab93389b)
     
 <br>
 
@@ -422,7 +422,7 @@ MSA 환경에서 하나의 서버가 다른 서버를 호출하는 경우가 많
 
 Prometheus로 메트릭 데이터를 수집해 Grafana로 시각화합니다. Grafana로 파드의 CPU 메모리 사용량이나 생성된 파드들을 확인할 수 있습니다.
 
-![bandicam_2024-05-20_04-09-41-551](/uploads/800f8789ab1992ac12a62ac59b7c0fcc/bandicam_2024-05-20_04-09-41-551.mp4)
+https://github.com/tpwls101/DDIB/assets/97137124/45b6c6c2-d378-455b-8720-7ff23ed0e776
 
 <br>
 
@@ -454,7 +454,7 @@ Agile 방법론을 기반으로 한 프로젝트 관리 도구로서 Jira를 이
 
 ## 🔍 ERD
 
-![ERD](/uploads/52ddb6c59375d5188d94fc7f16d16fc4/ERD.PNG)
+![ERD](https://github.com/tpwls101/DDIB/assets/97137124/be8e07ff-2f92-403f-98c0-46bd49576969)
 
 <br>
 
@@ -464,10 +464,10 @@ Agile 방법론을 기반으로 한 프로젝트 관리 도구로서 Jira를 이
 
 1차로 MSA 구조에 Spring Cloud Gateway와 Eureka를 활용하여 개발하였습니다.
 
-![image](/uploads/f25302606f3c99287e0bb6edcb4aa9c6/image.png)
+![시스템 아키텍처 (Docker Compose ver) 최종](https://github.com/tpwls101/DDIB/assets/97137124/52057221-942d-4834-9542-4a85ca622317)
 
 ### 2️⃣차 개발
 
 추후 쿠버네티스를 도입하여 2차 개발을 진행하였습니다.
 
-![image](/uploads/54724db5163b51db9d3455d439cdcbc3/image.png)
+![시스템 아키텍처 (Kubernates ver) 최종](https://github.com/tpwls101/DDIB/assets/97137124/6f883a24-9723-4fcc-9d6a-60d6cb0289b2)

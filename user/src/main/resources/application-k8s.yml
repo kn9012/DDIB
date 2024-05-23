@@ -11,8 +11,8 @@ spring:
       client:
         registration:
           kakao:
-            client-id: 3bdd477e0baccd07c4369a4cf8c31ed4
-            client-secret: 5qAnQWrFYkaO5inuXcDrvQbW5t6lejlR
+            client-id: <client-id>
+            client-secret: <client secret>
             redirect-uri: https://ddib.kro.kr/login/oauth2/code/ddib
             authorization-grant-type: authorization_code
             client-name: Kakao
@@ -28,17 +28,17 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://10.182.0.18:3306/ddib?useSSL=false&characterEncoding=UTF-8
-    username: ssafy
-    password: ssafy
+    username: <gcp서버 username>
+    password: <gcp서버 password>
 
   data:
     redis:
       host: redis-master.default.svc.cluster.local
       port: 6379
-      password: jG87zG5UKc  # 비밀번호 설정
+      password: <redis password>  # 비밀번호 설정
 
   jwt:
-    secret: adkafjlsdjgldkfjskdlakjdjkfljdkjkdkkkksjakslfejfghlajsdflaksjdgljadk
+    secret: <JWT secret key>
 
 access:
   token:

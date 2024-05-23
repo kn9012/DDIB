@@ -246,7 +246,7 @@
 
 사용자는 상품에 대한 상세 정보 및 해당 기업에 대한 정보를 조회할 수 있다.
 
-![타임딜 상세 조회-min (3) (1)](https://github.com/tpwls101/DDIB/assets/97137124/6577e40c-814e-41a9-a955-5ae20fd2bd44)
+![타임딜 상세 조회 - readme ver](https://github.com/tpwls101/DDIB/assets/97137124/32d4fe9a-d812-4cbf-a5ba-fe530b248ed3)
 
 **4️⃣ 상품 좋아요/취소**
 

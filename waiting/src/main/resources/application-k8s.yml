@@ -16,7 +16,7 @@ spring:
       #        nodes:
       #          - redis-master.default.svc.cluster.local:6379
       #          - redis-replicas.default.svc.cluster.local:6379
-      password: jG87zG5UKc  # 비밀번호 설정
+      password: <redis password>  # 비밀번호 설정
 
 # metric 설정
 management:

@@ -234,7 +234,7 @@
 
 사용자는 오늘의 타임딜과 주간 타임딜, 카테고리별 타임딜 이벤트를 조회할 수 있다.
 
-![제목 없는 동영상 - Clipchamp로 제작](https://github.com/tpwls101/DDIB/assets/97137124/6f2fe6e4-dec8-455a-9a7c-abbea164db27)
+![타임딜 목록 조회 - readme ver](https://github.com/tpwls101/DDIB/assets/97137124/78dc587c-8c43-4d90-bb89-6cc04b2ffc02)
 
 **2️⃣ 검색**
 

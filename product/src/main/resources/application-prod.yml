@@ -12,8 +12,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://k10c102.p.ssafy.io:3306/ddib?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true
-    username: ssafy
-    password: ssafy
+    username: <ec2서버 username>
+    password: <ec2서버 password>
   jpa:
     open-in-view: false
 #    hibernate:

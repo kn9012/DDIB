@@ -214,7 +214,7 @@
 
 기업 회원은 상품을 등록하기 위해 기업 신청을 할 수 있다.
 
-![기업신청](https://github.com/tpwls101/DDIB/assets/97137124/0499ad27-17f2-4c48-82a1-c2d3b946f654)
+![기업신청](https://github.com/tpwls101/DDIB/assets/97137124/a9bcce34-3117-432c-aa38-6d6bea65e439)
 
 **2️⃣ 상품 등록**
 

@@ -13,14 +13,14 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/ddib?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    username: root
-    password: ***REMOVED***
+    username: <로컬username>
+    password: <로컬password>
 
   data:
     redis:
       host: localhost
       port: 6379
-      password: ***REMOVED***
+      password: <redis password>
 
 # -- Eureka client
 #eureka:
@@ -39,7 +39,7 @@ host:
 pay:
   kakao:
     cid: TC0ONETIME
-    secret-key: ***REMOVED***
+    secret-key: <secret key>
 
 # KakaoPay API Url
 api:

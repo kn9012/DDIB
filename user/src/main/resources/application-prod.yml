@@ -11,8 +11,8 @@ spring:
       client:
         registration:
           kakao:
-            client-id: 3bdd477e0baccd07c4369a4cf8c31ed4
-            client-secret: 5qAnQWrFYkaO5inuXcDrvQbW5t6lejlR
+            client-id: <client-id>
+            client-secret: <client secret>
             redirect-uri: https://k10c102.p.ssafy.io/login/oauth2/code/ddib
             authorization-grant-type: authorization_code
             client-name: Kakao
@@ -34,8 +34,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://k10c102.p.ssafy.io:3306/ddib?useSSL=false&characterEncoding=UTF-8
-    username: ssafy
-    password: ssafy
+    username: <ec2서버 username>
+    password: <ec2서버 password>
 
   data:
     redis:
@@ -43,7 +43,7 @@ spring:
       port: 6379
 
   jwt:
-    secret: adkafjlsdjgldkfjskdlakjdjkfljdkjkdkkkksjakslfejfghlajsdflaksjdgljadk
+    secret: <JWT secret key>
 
 access:
   token:

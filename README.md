@@ -50,7 +50,7 @@
   </tr>
    <tr>    
     <td>
-     <b>[회원 서버 개발]</b><br>- Auth : Oauth2를 이용한 카카오 소셜로그인 구현<br>- Spring Security + JWT를 활용하여 토큰 검증을 통한 인증 및 인가<br>- 자주 접근하는 토큰 저장 위해 Redis 사용<br><br><b>[API Gateway & Eureka 서버 개발]</b><br>- 1차 개발 시 API Gateway 활용하여 인증/인가 처리 및 라우팅 처리<br>
+     <b>[회원 서버 개발]</b><br>- Oauth2를 이용한 카카오 소셜로그인 구현<br>- Spring Security와 JWT를 이용한 인증/인가<br>- 단위 테스트 코드 작성<br><br><b>[API Gateway & Eureka 서버 개발]</b><br>- 1차 개발 시 API Gateway 활용하여 인증/인가 처리 및 라우팅 처리<br><br><b>[알림 서버 개발]</b><br>- FCM 알림 기능 구현<br>- 단위 테스트 코드 작성</b>
     </td>
     <td>
       <b>[Kubernetes 설계]</b><br>- SVC를 통한 MSA 설계 및 구축<br>- 인그라스 컨트롤러 설정<br>- Helm을 이용한 상태관리<br><br><b>[Prometheus + Grafana]</b><br>- 메트릭 데이터를 수집해 시스템 모니터링 구축<br>

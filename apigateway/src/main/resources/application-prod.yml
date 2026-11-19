@@ -33,7 +33,7 @@ spring:
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/user-service/(?<segment>.*), /$\{segment}
-            - AuthorizationHeaderFilterx
+            - AuthorizationHeaderFilter
 
         - id: product
           uri: lb://PRODUCT

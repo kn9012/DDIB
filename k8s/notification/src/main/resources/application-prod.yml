@@ -9,8 +9,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://k10c102.p.ssafy.io:3306/ddib?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    username: ssafy
-    password: ***REMOVED***
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
 
   jpa:
     #    hibernate:
@@ -22,8 +22,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: ***REMOVED***
-    password: ***REMOVED***
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
     properties:
       mail:
         smtp:

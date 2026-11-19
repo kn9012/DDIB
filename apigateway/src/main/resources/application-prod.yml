@@ -89,7 +89,7 @@ spring:
             allowedHeaders: "*"
 
 jwt:
-  secret: <JWT secret key>
+  secret: ${JWT_SECRET}
 
 eureka:
   instance:

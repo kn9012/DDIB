@@ -61,5 +61,5 @@ spring:
             - AuthorizationHeaderFilter
 
 jwt:
-  secret: ***REMOVED***
+  secret: ${JWT_SECRET}
 

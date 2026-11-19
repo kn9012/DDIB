@@ -11,8 +11,8 @@ spring:
       client:
         registration:
           kakao:
-            client-id: <cleint-id>
-            client-secret: <client secret>
+            client-id: ${KAKAO_CLIENT_ID}
+            client-secret: ${KAKAO_CLIENT_SECRET}
             redirect-uri: https://bidd.kro.kr/login/oauth2/code/bidd
             authorization-grant-type: authorization_code
             client-name: Kakao
@@ -34,8 +34,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://34.16.220.92:3306/ddib?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    username: <ec2서버 username>
-    password: <ec2서버 password>
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
 
   data:
     redis:
@@ -43,7 +43,7 @@ spring:
       port: 6379
 
   jwt:
-    secret: <JWT secret key>
+    secret: ${JWT_SECRET}
 
 access:
   token:

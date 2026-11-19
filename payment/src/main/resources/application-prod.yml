@@ -13,8 +13,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://k10c102.p.ssafy.io:3306/ddib?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    username: <ec2서버 username>
-    password: <ec2서버 password>
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     hikari:
       maximum-pool-size: 500
       connection-timeout: 50000
@@ -45,7 +45,7 @@ host:
 pay:
   kakao:
     cid: TC0ONETIME
-    secret-key: <secret key>
+    secret-key: ${KAKAO_PAY_SECRET_KEY}
     
 # KakaoPay API Url
 api:

@@ -6,7 +6,8 @@ import com.google.firebase.FirebaseOptions;
 import com.google.firebase.messaging.FirebaseMessaging;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,11 +15,17 @@ import java.util.List;
 
 @Configuration
 public class FCMConfig {
+    /**
+     * Firebase 서비스 계정 키 위치. 키 파일은 저장소에 커밋하지 않고
+     * FCM_CREDENTIALS_PATH 환경 변수(예: file:/etc/ddib/firebase-adminsdk.json)로 주입한다.
+     * 형식은 firebase/firebase-adminsdk.example.json 참고.
+     */
+    @Value("${fcm.credentials.path:classpath:firebase/firebase-adminsdk.json}")
+    private Resource credentialsResource;
+
     @Bean
     FirebaseMessaging firebaseMessaging() throws IOException {
-        ClassPathResource resource = new ClassPathResource("firebase/ddib-17d11-firebase-adminsdk-cbmvc-22ed36311c.json");
-
-        InputStream refreshToken = resource.getInputStream();
+        InputStream refreshToken = credentialsResource.getInputStream();
 
         FirebaseApp firebaseApp = null;
         List<FirebaseApp> fireBaseAppList = FirebaseApp.getApps();

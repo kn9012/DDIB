@@ -61,7 +61,7 @@ spring:
             - AuthorizationHeaderFilter
 
 jwt:
-  secret: <JWT secret key>
+  secret: ${JWT_SECRET}
 
 eureka:
   client:

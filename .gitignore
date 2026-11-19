@@ -1,0 +1,5 @@
+# 비밀 값은 커밋하지 않는다. 예시는 .env.example / firebase-adminsdk.example.json 참고
+.env
+**/firebase/*.json
+!**/firebase/*.example.json
+**/build/
